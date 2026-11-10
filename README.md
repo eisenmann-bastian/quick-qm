@@ -46,6 +46,66 @@ The tool-suite reduces the complexity and speeds up the process by defining the 
 
 ## Getting Started
 
+### Download structures from PubChem
+
+Install the downloader dependencies and run it from this repository:
+
+```bash
+python3 -m pip install -r pubchem/requirements.txt
+python3 pubchem/downloader.py compounds.csv --output-dir sdf
+```
+
+The CSV must have at least one of the case-insensitive headers `cid`, `name`,
+`inchi`, `smiles`, or `formula`. Other columns are ignored. For each row the
+first populated identifier is used in that order; lower-priority values are not
+used as fallbacks if the lookup fails.
+
+```csv
+name,inchi,smiles,formula
+benzene,,,
+,,CCO,
+```
+
+`pubchem/sample.csv` contains all five identifiers for each example compound;
+the downloader selects the CID in every row. `pubchem/sample-mixed.csv` uses a
+different identifier in each row. Its formula row may be rejected as
+ambiguous, since formulas can match multiple CIDs.
+
+Each successful match produces `row-<CSV line>-cid-<CID>.sdf`. Files are not
+overwritten. CID, name and InChI rows are downloaded directly with PubChemPy;
+their responses must contain exactly one SDF record.
+
+Formula and SMILES searches use `--result-selection`:
+
+- `exact` (default): require exactly one CID.
+- `first`: download the first CID returned by PubChem.
+- `all`: download every distinct CID returned by PubChem.
+
+For SMILES, `--filter-mode` chooses the PubChem search type: `identity`
+(default), `substructure`, `superstructure`, or `similarity`. Search modes
+other than identity can return different compounds and many results. For
+example:
+
+```bash
+python3 pubchem/downloader.py compounds.csv --filter-mode similarity --result-selection first
+```
+
+`--result-selection` does not apply to direct CID, name or InChI downloads.
+Rows with no results, ambiguous results in `exact` mode, or download failures
+are reported as errors. Processing continues, including remaining CIDs in
+`all` mode, and the command exits nonzero if any row fails.
+
+The default is a 3D SDF. Pass `--record-type 2d` or `--record-type 3d` to
+choose explicitly, and `--delimiter ';'` for a semicolon-separated file. A
+missing 3D structure is reported as an error; it is not automatically
+replaced with a 2D structure. PubChem searches may be slow and `all` may
+download many files.
+
+Python tools can share the logging configuration in `core.logging`: call
+`configure_logging()` at the application entry point and use
+`get_logger("tool_name")` in modules. The downloader requires Python 3.10 or
+newer.
+
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites

@@ -1,0 +1,119 @@
+175703458
+  -OEChem-11102613493D
+
+ 12 12  0     1  0  0  0  0  0999 V2000
+    1.2190    0.2153   -0.0629 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1079    0.5093    0.2004 N   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8534   -0.8556   -0.2385 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.5857   -1.0461    0.1850 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.1566    1.1771   -0.0841 C   0  0  1  0  0  0  0  0  0  0  0  0
+   -0.9478   -0.9226   -1.3287 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5284   -1.5814    0.2221 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.6714   -1.2675    1.2550 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0938   -1.8293   -0.3841 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.3644    1.9563    0.6550 H   1  0  0  0  0  0  0  0  0  0  0  0
+    0.1434    1.6362   -1.0787 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8707    0.9281   -0.3282 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+  5 11  1  0  0  0  0
+M  ISO  1  10   2
+M  END
+> <PUBCHEM_COMPOUND_CID>
+175703458
+
+> <PUBCHEM_CONFORMER_RMSD>
+0.4
+
+> <PUBCHEM_CONFORMER_DIVERSEORDER>
+1
+
+> <PUBCHEM_MMFF94_PARTIAL_CHARGES>
+6
+1 -0.56
+12 0.36
+2 -0.9
+3 0.27
+4 0.28
+5 0.55
+
+> <PUBCHEM_EFFECTIVE_ROTOR_COUNT>
+1
+
+> <PUBCHEM_PHARMACOPHORE_FEATURES>
+4
+1 1 acceptor
+1 2 cation
+1 2 donor
+5 1 2 3 4 5 rings
+
+> <PUBCHEM_HEAVY_ATOM_COUNT>
+5
+
+> <PUBCHEM_ATOM_DEF_STEREO_COUNT>
+0
+
+> <PUBCHEM_ATOM_UDEF_STEREO_COUNT>
+1
+
+> <PUBCHEM_BOND_DEF_STEREO_COUNT>
+0
+
+> <PUBCHEM_BOND_UDEF_STEREO_COUNT>
+0
+
+> <PUBCHEM_ISOTOPIC_ATOM_COUNT>
+1
+
+> <PUBCHEM_COMPONENT_COUNT>
+1
+
+> <PUBCHEM_CACTVS_TAUTO_COUNT>
+-1
+
+> <PUBCHEM_CONFORMER_ID>
+0A7905A200000001
+
+> <PUBCHEM_MMFF94_ENERGY>
+5.5478
+
+> <PUBCHEM_FEATURE_SELFOVERLAP>
+20.297
+
+> <PUBCHEM_SHAPE_MULTIPOLES>
+92.05
+1.35
+1.27
+0.61
+0.05
+0.01
+0.01
+0
+0.04
+-0.05
+-0.03
+-0.03
+-0.02
+0.08
+
+> <PUBCHEM_SHAPE_SELFOVERLAP>
+173.459
+
+> <PUBCHEM_SHAPE_VOLUME>
+57.9
+
+> <PUBCHEM_COORDINATE_TYPE>
+2
+5
+10
+
+$$$$

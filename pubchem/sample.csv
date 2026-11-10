@@ -1,0 +1,6 @@
+cid,name,inchi,smiles,formula
+241,Benzene,InChI=1S/C6H6/c1-2-4-6-5-3-1/h1-6H,C1=CC=CC=C1,C6H6
+175,Acetate,"InChI=1S/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/p-1",CC(=O)[O-],C2H3O2-
+878,Methanethiol,"InChI=1S/CH4S/c1-2/h2H,1H3",CS,CH4S
+1068,Dimethyl Sulfide,InChI=1S/C2H6S/c1-3-2/h1-2H3,CSC,C2H6S
+6582,N-Methylacetamide,"InChI=1S/C3H7NO/c1-3(5)4-2/h1-2H3,(H,4,5)",CC(=O)NC,C3H7NO
