@@ -13,6 +13,20 @@ class NamedSelector:
     aliases: tuple[str, ...] = ()
 
 
+CARBOXYLATE_SMARTS = "[C;+0;X3;$([C]-[#6]),$([C;H1])](=[O;+0;X1;H0:1])-[O-;X1;H0:2]"
+CARBOXYLATE_QUERY = Chem.MolFromSmarts(CARBOXYLATE_SMARTS)
+
+
+def carboxylate_sites(mol):
+    """Map each oxygen in a carboxylate group to its carbon and oxygen indices."""
+    groups = {}
+    for carbon, oxygen1, oxygen2 in mol.GetSubstructMatches(CARBOXYLATE_QUERY, maxMatches=0):
+        group = (carbon, *sorted((oxygen1, oxygen2)))
+        groups[oxygen1] = group
+        groups[oxygen2] = group
+    return groups
+
+
 SELECTORS = {
     "thioether": NamedSelector("[#6]-[S;X2;H0:1]-[#6]", ("sulfide",)),
     "thiol": NamedSelector("[S;X2;H1;+0:1]-[#6]"),
@@ -23,6 +37,7 @@ SELECTORS = {
     "amine": NamedSelector("[N;X3;+0;!$(N-[C,S,P]=[O,S,N]):1]"),
     "amide": NamedSelector("[N:1]-[C](=[O:2])"),
     "carboxylic acid": NamedSelector("[C](=[O:1])-[O;H1;+0:2]"),
+    "carboxylate": NamedSelector(CARBOXYLATE_SMARTS, ("carboxylate anion",)),
     "ester": NamedSelector("[C](=[O:1])-[O;H0:2]-[#6]"),
     "aldehyde": NamedSelector("[C;H1](=[O:1])-[#6]"),
     "ketone": NamedSelector("[#6]-[C](=[O:1])-[#6]"),

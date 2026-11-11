@@ -143,6 +143,22 @@ class SelectorTests(unittest.TestCase):
                 self.assertTrue(records[0]["matches"])
                 self.assertFalse(records[1]["matches"])
 
+    def test_carboxylate_selects_both_oxygens_in_both_resonance_forms(self):
+        self.write_molecules([
+            "CC(=O)[O-]", "CC([O-])=O", "O=C[O-]",
+            "CC(=O)O", "CC(=O)OC", "C(=O)([O-])OC", "[O-]C(=O)[O-]",
+            "O=C([O-])C(=O)[O-]",
+        ])
+        records = selector.select_sdf(self.path, name="carboxylate")["molecules"]
+        for record in records[:3]:
+            self.assertEqual(len(record["matches"]), 1)
+            self.assertEqual(len(record["matches"][0]["site_atom_indices"]), 2)
+        self.assertEqual(records[0]["matches"][0]["site_atom_indices"], [2, 3])
+        self.assertEqual(set(records[1]["matches"][0]["site_atom_indices"]), {2, 3})
+        for record in records[3:7]:
+            self.assertEqual(record["matches"], [])
+        self.assertEqual(len(records[7]["matches"]), 2)
+
     def test_custom_smarts_returns_more_than_default_match_limit(self):
         self.write_molecules(["C." * 1004 + "C"])
         result = selector.select_sdf(self.path, smarts="[#6]")
