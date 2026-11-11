@@ -9,6 +9,10 @@ from pathlib import Path
 from rdkit import Chem
 
 import selector
+from selection.batch import BatchSelector
+from selection.definitions import NamedSelector, SelectorRegistry
+from selection.matching import MoleculeSelector
+from selection.output import CsvResultWriter
 
 
 class SelectorTests(unittest.TestCase):
@@ -24,6 +28,21 @@ class SelectorTests(unittest.TestCase):
             molecule.SetProp("_Name", f"molecule-{index}")
             writer.write(molecule)
         writer.close()
+
+    def test_components_share_custom_registry(self):
+        self.write_molecules(["CSC"])
+        registry = SelectorRegistry({"sulfur": NamedSelector("[S:1]", ("sulphur",))})
+        matcher = MoleculeSelector(registry)
+        input_file = self.path.parent / "custom.csv"
+        input_file.write_text("file,sulphur\nmolecules.sdf,x\n", encoding="utf-8")
+        result = BatchSelector(matcher).select(input_file)
+        output = io.StringIO()
+        CsvResultWriter().write(result, output)
+        rows = list(csv.DictReader(io.StringIO(output.getvalue())))
+        self.assertEqual(rows[0]["selector"], "sulfur")
+        self.assertEqual(json.loads(rows[0]["site_atom_indices"]), [1])
+        with self.assertRaisesRegex(ValueError, "unknown selector"):
+            matcher.select(self.path, name="thioether")
 
     def test_thioether_highlights_only_sulfur(self):
         self.write_molecules(["CSC", "CSCCSC", "CC"])
