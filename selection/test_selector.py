@@ -2,6 +2,7 @@ import contextlib
 import csv
 import io
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -192,7 +193,7 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(rows[0]["site_atom_indices"], "[1]")
         self.assertEqual(rows[0]["atom_indices"], "[0,1,2]")
         self.assertEqual(rows[0]["atom_index_base"], "0")
-        self.assertEqual(rows[0]["sdf_file"], str(self.path))
+        self.assertEqual(rows[0]["sdf_file"], os.path.relpath(self.path))
         output = io.StringIO()
         with contextlib.redirect_stdout(output):
             self.assertEqual(selector.main(["--list-selectors"]), 0)
@@ -324,6 +325,30 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(rows[1]["match_index"], "")
         self.assertEqual(selector.main(["--csv", str(input_file), "-o", str(input_file)]), 1)
         self.assertEqual(input_file.read_text(encoding="utf-8"), content)
+
+    def test_batch_output_paths_are_relative_to_working_directory(self):
+        self.write_molecules(["CSC"])
+        input_file = self.path.parent / "input.csv"
+        output_file = self.path.parent / "output.csv"
+        input_file.write_text(
+            f"file,thioether\nmolecules.sdf,x\n{self.path},x\n",
+            encoding="utf-8",
+        )
+        self.assertEqual(selector.main(["--csv", str(input_file), "-o", str(output_file)]), 0)
+        with output_file.open(newline="", encoding="utf-8") as file:
+            rows = list(csv.DictReader(file))
+        self.assertTrue(all(not os.path.isabs(row["sdf_file"]) for row in rows))
+        self.assertTrue(all(Path(row["sdf_file"]).resolve() == self.path.resolve() for row in rows))
+
+    def test_single_relative_sdf_output_path(self):
+        self.write_molecules(["CSC"])
+        relative = os.path.relpath(self.path)
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            self.assertEqual(selector.main([relative, "--name", "thioether"]), 0)
+        row = next(csv.DictReader(io.StringIO(output.getvalue())))
+        self.assertEqual(row["sdf_file"], relative)
+        self.assertFalse(os.path.isabs(row["sdf_file"]))
 
     def test_failed_batch_does_not_create_output(self):
         self.write_molecules(["CSC"])

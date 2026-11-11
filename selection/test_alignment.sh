@@ -1,0 +1,1 @@
+python3 alignment.py test_out.csv -o test_out_aligned.csv

@@ -2,6 +2,7 @@
 
 import csv
 import json
+import os
 
 
 class CsvResultWriter:
@@ -21,6 +22,7 @@ class CsvResultWriter:
         else:
             groups = [(None, str(sdf_file), result)]
         for line, path, item in groups:
+            path = os.path.relpath(path)
             for molecule in item["molecules"]:
                 matches = molecule["matches"]
                 common = [
