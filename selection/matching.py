@@ -37,6 +37,26 @@ class MoleculeSelector:
 
     def select(self, sdf_file, *, name=None, smarts=None):
         """Return one entry per SDF record with zero-based atom-index matches."""
+        path = Path(sdf_file)
+        if not path.is_file():
+            raise ValueError(f"SDF file does not exist: {path}")
+        molecules = list(self._read_sdf(path))
+        if not molecules:
+            raise ValueError("SDF file contains no molecule records")
+        return self.select_molecules(molecules, name=name, smarts=smarts)
+
+    def select_all(self, sdf_file):
+        """Apply every canonical named selector to the records in one SDF."""
+        path = Path(sdf_file)
+        if not path.is_file():
+            raise ValueError(f"SDF file does not exist: {path}")
+        molecules = list(self._read_sdf(path))
+        if not molecules:
+            raise ValueError("SDF file contains no molecule records")
+        return [self.select_molecules(molecules, name=name) for name in self.registry.definitions]
+
+    def select_molecules(self, records, *, name=None, smarts=None):
+        """Apply one selector to previously parsed SDF records."""
         if (name is None) == (smarts is None):
             raise ValueError("specify exactly one of name or smarts")
         if name is not None:
@@ -58,11 +78,8 @@ class MoleculeSelector:
             if not site_positions:
                 site_positions = list(range(query.GetNumAtoms()))
 
-        path = Path(sdf_file)
-        if not path.is_file():
-            raise ValueError(f"SDF file does not exist: {path}")
         molecules = []
-        for index, mol in enumerate(self._read_sdf(path)):
+        for index, mol in enumerate(records):
             matches = []
             seen_sites = set()
             if aromatic_ring:

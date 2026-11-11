@@ -1,6 +1,6 @@
-sdf,aromatic ring,negative charge,thiol,thioether,amide,carbonyl,hydrogen bond donor,hydrogen bond acceptor,carboxylate
-reference_molecules/241.sdf,x,,,,,,,,
-reference_molecules/175.sdf,,x,,,,x,,x,x
-reference_molecules/878.sdf,,,x,,,,x,x,
-reference_molecules/1068.sdf,,,,x,,,,x,
-reference_molecules/6582.sdf,,,,,x,x,x,x,
+sdf
+reference_molecules/241.sdf
+reference_molecules/175.sdf
+reference_molecules/878.sdf
+reference_molecules/1068.sdf
+reference_molecules/6582.sdf

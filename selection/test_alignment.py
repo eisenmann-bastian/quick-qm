@@ -183,6 +183,104 @@ class AlignmentTests(unittest.TestCase):
         self.assertTrue(all(any(s["selector"] == "carboxylate" for s in axis["sources"]) for axis in axes))
         self.assertTrue(all(s["group_charge"] == -1 for axis in axes for s in axis["sources"]))
 
+    def test_combined_cli_path_only_batch_all_formats(self):
+        sdf = ROOT / "selection" / "reference_molecules" / "175.sdf"
+        self.csv.write_text(f"sdf\n{sdf}\n", encoding="utf-8")
+        command = [sys.executable, str(ROOT / "selection" / "selector.py"), "--csv", str(self.csv)]
+        selection = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(selection.returncode, 0, selection.stderr)
+        rows = list(csv.DictReader(io.StringIO(selection.stdout)))
+        self.assertIn("carboxylate", {row["selector"] for row in rows})
+        carboxylate = next(row for row in rows if row["selector"] == "carboxylate")
+        self.assertEqual(set(json.loads(carboxylate["site_atom_indices"])), {0, 1})
+        self.assertFalse(os.path.isabs(carboxylate["sdf_file"]))
+        alignment = subprocess.run(command + ["--format", "alignment"],
+                                   cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(alignment.returncode, 0, alignment.stderr)
+        axes = list(csv.DictReader(io.StringIO(alignment.stdout)))
+        carboxylate_axes = [row for row in axes if row["selector"] == "carboxylate"]
+        self.assertEqual(len(carboxylate_axes), 6)
+        self.assertEqual({row["center_atom_index"] for row in carboxylate_axes}, {"0", "1"})
+        self.assertTrue(all(row["group_charge"] == "-1" for row in carboxylate_axes))
+        output = self.directory / "combined.sdf"
+        sdf_result = subprocess.run(command + ["--format", "sdf", "-o", str(output)],
+                                    cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(sdf_result.returncode, 0, sdf_result.stderr)
+        annotated = list(MoleculeSelector._read_sdf(output))
+        self.assertEqual(len(annotated), 1)
+        metadata = json.loads(annotated[0].GetProp(SDF_AXES_PROPERTY))
+        self.assertEqual(len(metadata), 6)
+        self.assertTrue(all(any(s["selector"] == "carboxylate" for s in axis["sources"])
+                            for axis in metadata))
+        again = subprocess.run(command + ["--format", "sdf", "-o", str(output)],
+                               cwd=ROOT, capture_output=True, text=True)
+        self.assertNotEqual(again.returncode, 0)
+        self.assertEqual(len(list(MoleculeSelector._read_sdf(output))), 1)
+
+    def test_combined_cli_path_only_multirecord_and_unmatched(self):
+        writer = Chem.SDWriter(str(self.sdf))
+        writer.write(self.molecule("CCl"))
+        writer.write(self.molecule("CC"))
+        writer.close()
+        self.csv.write_text("sdf\nmolecule.sdf\n", encoding="utf-8")
+        output = self.directory / "multiple.sdf"
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "selection" / "selector.py"), "--csv", str(self.csv),
+             "--format", "sdf", "-o", str(output)],
+            cwd=ROOT, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        records = list(MoleculeSelector._read_sdf(output))
+        self.assertEqual(len(records), 2)
+        self.assertEqual(len(json.loads(records[0].GetProp(SDF_AXES_PROPERTY))), 1)
+        self.assertEqual(json.loads(records[1].GetProp(SDF_AXES_PROPERTY)), [])
+
+    def test_combined_cli_rejects_bad_batch_without_output(self):
+        self.prepare(self.molecule("CS"), name="thiol")
+        self.csv.write_text("sdf\nmolecule.sdf\nmissing.sdf\n", encoding="utf-8")
+        for output_format in ("selection", "alignment", "sdf"):
+            with self.subTest(format=output_format):
+                output = self.directory / f"bad-{output_format}"
+                result = subprocess.run(
+                    [sys.executable, str(ROOT / "selection" / "selector.py"), "--csv", str(self.csv),
+                     "--format", output_format, "-o", str(output)],
+                    cwd=ROOT, capture_output=True, text=True,
+                )
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("CSV line 3", result.stderr)
+                self.assertFalse(output.exists())
+
+    def test_combined_cli_complete_reference_batch(self):
+        output = self.directory / "reference-combined.sdf"
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "selection" / "selector.py"), "--csv",
+             str(ROOT / "selection" / "reference_molecules.csv"),
+             "--format", "sdf", "-o", str(output)],
+            cwd=ROOT, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        molecules = list(MoleculeSelector._read_sdf(output))
+        self.assertEqual([mol.GetProp("_Name") for mol in molecules], ["241", "175", "878", "1068", "6582"])
+        axes = {mol.GetProp("_Name"): json.loads(mol.GetProp(SDF_AXES_PROPERTY)) for mol in molecules}
+        self.assertEqual(len(axes["241"]), 2)
+        self.assertEqual(len(axes["175"]), 6)
+        self.assertEqual(len(axes["878"]), 6)
+        self.assertEqual(len(axes["1068"]), 5)
+        thiol = next(mol for mol in molecules if mol.GetProp("_Name") == "878")
+        original = next(MoleculeSelector._read_sdf(ROOT / "selection" / "reference_molecules" / "878.sdf"))
+        sulfur = original.GetConformer().GetAtomPosition(0)
+        hydrogen = original.GetConformer().GetAtomPosition(5)
+        sh = (sulfur.x-hydrogen.x, sulfur.y-hydrogen.y, sulfur.z-hydrogen.z)
+        length = math.sqrt(dot(sh, sh))
+        target = tuple(x / length for x in sh)
+        entry = next(item for item in axes["878"]
+                     if item["sources"][0]["axis_type"] == "chalcogen_sigma"
+                     and dot(item["axis"], target) > 0.999999)
+        self.assertEqual(entry["sources"][0]["center_atom_index"], 0)
+        marker = thiol.GetConformer().GetAtomPosition(entry["pseudo_atom_index"])
+        for value, center, axis in zip(marker, sulfur, target):
+            self.assertAlmostEqual(value, center + axis, delta=0.00006)
+
     def test_halogen_and_hydrogen_sigma_extend_bonds(self):
         mol = self.molecule("CCl")
         for smarts, axis_type, center in (("[Cl]", "halogen_sigma", 1),
@@ -279,7 +377,6 @@ class AlignmentTests(unittest.TestCase):
             ("COC", "ether", 2),
             ("C[Se]C", "chalcogen bond donor", 2),
             ("C[Te]C", "chalcogen bond donor", 2),
-            ("CS", "thiol", 1),
             ("CO", "alcohol", 1),
             ("COSC", None, 2),
         )
@@ -343,7 +440,7 @@ class AlignmentTests(unittest.TestCase):
     def test_thiol_lone_pair_and_hydrogen_directions(self):
         rows = self.prepare(self.molecule("CS"), name="thiol")
         self.assertEqual([row["axis_type"] for row in rows], [
-            "chalcogen_sigma", "thiol_lone_pair_normal", "thiol_lone_pair_normal",
+            "chalcogen_sigma", "chalcogen_sigma", "thiol_lone_pair_normal", "thiol_lone_pair_normal",
             "thiol_outward_bisector", "hydrogen_sigma",
         ])
         mol = next(MoleculeSelector._read_sdf(self.sdf))
@@ -358,20 +455,21 @@ class AlignmentTests(unittest.TestCase):
             magnitude = math.sqrt(dot(vector, vector))
             vectors.append(tuple(value / magnitude for value in vector))
         axes = [json.loads(row["axis"]) for row in rows]
-        for row, axis in zip(rows[:4], axes[:4]):
+        for row, axis in zip(rows[:5], axes[:5]):
             self.assertEqual(row["center_atom_index"], 1)
             self.assertEqual(json.loads(row["center"]), list(center))
             self.assert_unit(axis)
         self.assertAlmostEqual(dot(axes[0], vectors[0]), -1, places=7)
-        self.assertAlmostEqual(dot(axes[1], axes[2]), -1, places=7)
-        for normal in axes[1:3]:
+        self.assertAlmostEqual(dot(axes[1], vectors[1]), -1, places=7)
+        self.assertAlmostEqual(dot(axes[2], axes[3]), -1, places=7)
+        for normal in axes[2:4]:
             for vector in vectors:
                 self.assertAlmostEqual(dot(normal, vector), 0, places=7)
-        self.assertAlmostEqual(dot(axes[3], axes[1]), 0, places=7)
-        self.assertAlmostEqual(dot(axes[3], vectors[0]), dot(axes[3], vectors[1]), places=7)
-        self.assertLess(dot(axes[3], vectors[0]), 0)
-        self.assertEqual(rows[4]["center_atom_index"], neighbors["H"])
-        self.assertAlmostEqual(dot(axes[4], vectors[1]), 1, places=7)
+        self.assertAlmostEqual(dot(axes[4], axes[2]), 0, places=7)
+        self.assertAlmostEqual(dot(axes[4], vectors[0]), dot(axes[4], vectors[1]), places=7)
+        self.assertLess(dot(axes[4], vectors[0]), 0)
+        self.assertEqual(rows[5]["center_atom_index"], neighbors["H"])
+        self.assertAlmostEqual(dot(axes[5], vectors[1]), 1, places=7)
 
     def test_thiol_implicit_hydrogen_warns_and_preserves_known_axis(self):
         mol = self.molecule("CS", explicit_hydrogens=False)
@@ -379,6 +477,7 @@ class AlignmentTests(unittest.TestCase):
             rows = self.prepare(mol, name="thiol")
         self.assertEqual([row["axis_type"] for row in rows], ["chalcogen_sigma"])
         self.assertIn("thiol plane", "\n".join(logs.output))
+        self.assertIn("S-H sigma extension", "\n".join(logs.output))
         self.assertIn("explicit hydrogen coordinates", "\n".join(logs.output))
 
     def test_thiol_degenerate_plane_is_an_error(self):
@@ -408,7 +507,7 @@ class AlignmentTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         mol = next(MoleculeSelector._read_sdf(output))
         axes = json.loads(mol.GetProp(SDF_AXES_PROPERTY))
-        self.assertEqual(len(axes), 5)
+        self.assertEqual(len(axes), 6)
         for entry in axes:
             self.assertEqual([s["selector"] for s in entry["sources"]], ["thiol", "hydrogen bond donor"])
             position = mol.GetConformer().GetAtomPosition(entry["pseudo_atom_index"])

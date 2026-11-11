@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Find functional groups or SMARTS matches in an SDF file."""
+"""Find molecular sites and optionally derive alignment axes or an annotated SDF."""
 
 import argparse
 import csv
@@ -10,10 +10,12 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from core.logging import configure_logging, get_logger
+from selection.axis_config import DEFAULT_CONFIG, AxisConfig
 from selection.batch import BatchSelector
 from selection.definitions import SELECTORS, NamedSelector, SelectorRegistry
 from selection.matching import MoleculeSelector
 from selection.output import CsvResultWriter
+from selection.pipeline import SelectionPipeline
 
 logger = get_logger("selection.selector")
 
@@ -21,6 +23,7 @@ _registry = SelectorRegistry()
 _molecule_selector = MoleculeSelector(_registry)
 _batch_selector = BatchSelector(_molecule_selector)
 _csv_writer = CsvResultWriter()
+_pipeline = SelectionPipeline(_molecule_selector)
 
 _normalize_name = _registry.normalize
 _named_selector = _registry.resolve
@@ -37,9 +40,13 @@ def main(argv=None):
     group.add_argument("--name", help="named functional group or interaction site")
     group.add_argument("--smarts", help="SMARTS query")
     group.add_argument("--list-selectors", action="store_true", help="list named selectors")
-    group.add_argument("--csv", type=Path, help="batch CSV with SDF paths and named selector columns")
+    group.add_argument("--csv", type=Path, help="batch CSV with one SDF path column")
     parser.add_argument("--delimiter", default=",", help="batch CSV delimiter (default: comma)")
-    parser.add_argument("-o", "--output", type=Path, help="write CSV to a new file instead of stdout")
+    parser.add_argument("--format", choices=("selection", "alignment", "sdf"), default="selection",
+                        help="output selection CSV (default), alignment CSV, or annotated SDF")
+    parser.add_argument("--axes-config", type=Path, default=None,
+                        help="YAML axis configuration for alignment or SDF output")
+    parser.add_argument("-o", "--output", type=Path, help="write to a new file instead of stdout")
     args = parser.parse_args(argv)
     configure_logging()
     if args.list_selectors:
@@ -47,6 +54,8 @@ def main(argv=None):
             parser.error("--list-selectors does not accept an SDF file")
         if args.output is not None:
             parser.error("--output is not supported with --list-selectors")
+        if args.format != "selection":
+            parser.error("--format is not supported with --list-selectors")
         for name, definition in SELECTORS.items():
             print(f"{name}: {definition.smarts if definition.smarts is not None else 'RDKit aromatic rings'}")
         return 0
@@ -58,16 +67,22 @@ def main(argv=None):
             parser.error("an SDF file is required")
         if args.name is None and args.smarts is None:
             parser.error("specify --name or --smarts")
+    if args.format == "sdf" and args.output is None:
+        parser.error("--format sdf requires --output")
+    if args.axes_config is not None and args.format == "selection":
+        parser.error("--axes-config requires --format alignment or sdf")
     try:
+        axis_config = AxisConfig.load(args.axes_config or DEFAULT_CONFIG) if args.format != "selection" else None
         if args.csv is not None:
             result = select_csv(args.csv, delimiter=args.delimiter)
         else:
             result = select_sdf(args.sdf_file, name=args.name, smarts=args.smarts)
+        result = _pipeline.prepare(result, args.format, sdf_file=args.sdf_file, axis_config=axis_config)
         if args.output is None:
-            write_results_csv(result, sys.stdout, sdf_file=args.sdf_file)
+            _pipeline.write(result, sys.stdout, args.format, sdf_file=args.sdf_file)
         else:
             with args.output.open("x", encoding="utf-8", newline="") as destination:
-                write_results_csv(result, destination, sdf_file=args.sdf_file)
+                _pipeline.write(result, destination, args.format, sdf_file=args.sdf_file)
     except (OSError, ValueError, RuntimeError, csv.Error) as exc:
         logger.error("%s", exc)
         return 1

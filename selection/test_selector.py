@@ -6,6 +6,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from rdkit import Chem
 
@@ -233,6 +234,21 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(len(first["results"][1]["molecules"][1]["matches"]), 1)
         self.assertEqual(len(result["rows"][1]["results"]), 1)
 
+    def test_single_column_batch_uses_all_selectors_and_reads_sdf_once(self):
+        self.write_molecules(["CSC", "CC(=O)[O-]"])
+        csv_file = self.path.parent / "input.csv"
+        csv_file.write_text("sdf\nmolecules.sdf\n", encoding="utf-8")
+        matcher = MoleculeSelector()
+        with patch.object(matcher, "_read_sdf", wraps=matcher._read_sdf) as read_sdf:
+            result = BatchSelector(matcher).select(csv_file)
+        read_sdf.assert_called_once()
+        results = result["rows"][0]["results"]
+        self.assertEqual([item["selector"]["name"] for item in results], list(matcher.registry.definitions))
+        thioether = next(item for item in results if item["selector"]["name"] == "thioether")
+        self.assertEqual(thioether["molecules"][0]["matches"][0]["site_atom_indices"], [1])
+        carboxylate = next(item for item in results if item["selector"]["name"] == "carboxylate")
+        self.assertEqual(set(carboxylate["molecules"][1]["matches"][0]["site_atom_indices"]), {2, 3})
+
     def test_csv_marks_letters_not_nonletters(self):
         self.write_molecules(["CSC"])
         csv_file = self.path.parent / "input.csv"
@@ -245,7 +261,9 @@ class SelectorTests(unittest.TestCase):
         csv_file = self.path.parent / "input.csv"
         cases = [
             ("", "header"),
-            ("path\nmolecules.sdf\n", "header"),
+            ("path\nmolecules.sdf,extra\n", "expected 1 columns"),
+            ("path\nmissing.sdf\n", "CSV line 2"),
+            ("path\n", "no data"),
             ("path,unknown\nmolecules.sdf,x\n", "unknown selector"),
             ("path,thioether,sulfide\nmolecules.sdf,x,\n", "duplicate CSV"),
             ("path,thiol\nmolecules.sdf\n", "expected 2 columns"),

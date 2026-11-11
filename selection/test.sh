@@ -3,6 +3,6 @@
 
 
 # python3 downloader.py sample.csv -o ./sample_csv/
-python3 selector.py --csv reference_molecules.csv >> test_out.csv
+python3 selector.py --csv reference_molecules.csv --format sdf -o reference_combined.sdf
 
   
