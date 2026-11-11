@@ -106,6 +106,220 @@ Python tools can share the logging configuration in `core.logging`: call
 `get_logger("tool_name")` in modules. The downloader requires Python 3.10 or
 newer.
 
+### Select functional groups and interaction sites
+
+Install the selector dependency and process a list of SDF paths:
+
+```bash
+python3 -m pip install -r selection/requirements.txt
+python3 selection/selector.py --csv selection/reference_molecules.csv -o matches.csv
+python3 selection/selector.py --csv selection/reference_molecules.csv --format alignment -o axes.csv
+python3 selection/selector.py --csv selection/reference_molecules.csv --format sdf -o axes.sdf
+```
+
+The single program detects all named selectors for each input molecule and
+produces selection CSV (the default), alignment CSV, or annotated SDF. No
+intermediate selection file is needed for alignment or SDF output. To list
+the selectors, use `python3 selection/selector.py --list-selectors`.
+
+The selector code separates named definitions (`selection/definitions.py`),
+SDF matching (`selection/matching.py`), batch input (`selection/batch.py`),
+alignment (`selection/alignment.py`), and pipeline orchestration
+(`selection/pipeline.py`); `selection/selector.py` is the CLI entry point.
+
+The batch CSV has one column with a header and one SDF path per row:
+
+```csv
+sdf
+molecules/sulfide.sdf
+molecules/aromatic.sdf
+```
+
+Relative SDF paths are resolved relative to the CSV file. Use `--delimiter ';'`
+to read older multi-column input with a different delimiter. A batch error
+returns a nonzero exit without partial output. The `--csv` option cannot be
+combined with a positional SDF, `--name`, or `--smarts`.
+
+For compatibility, multi-column batch CSVs with selector headers and marked
+cells still select only the marked selectors. Single-SDF `--name` and
+`--smarts` queries remain available and can also use any output format.
+
+Results are CSV on stdout by default. `--output`/`-o` writes a new file
+instead and refuses to overwrite an existing file. Output always uses commas,
+regardless of the batch input `--delimiter`. Each match is one row; a
+molecule with no matches has a row with empty match fields. The columns are
+`csv_line` (batch input line; empty for single-SDF input), `sdf_file`,
+`record_index`, `molecule_name`, `selector`, `smarts`, `atom_index_base`,
+`match_index`, `atom_indices`, and `site_atom_indices`. Output `sdf_file`
+paths are relative to the command's working directory, even when `--output`
+writes to another directory. Both record and match
+indices are zero-based. Atom-index cells contain JSON arrays of zero-based
+indices, for example `"[0,1,2]"`, from the original SDF record; CSV quoting
+preserves arrays containing commas. Explicit hydrogens are retained.
+`atom_indices` identifies the whole SMARTS match and `site_atom_indices`
+identifies the highlighted interaction site.
+For example, `thioether` matches C–S–C but highlights only S. Custom SMARTS
+highlights all matched atoms. Named matches sharing the same highlighted sites
+are reported once. Names are case-insensitive; spaces, hyphens, and underscores
+are interchangeable.
+
+### Derive alignment axes
+
+With `--format alignment`, the program reads the original SDF record and
+highlighted atom indices for each match, retaining explicit hydrogen atoms.
+It writes CSV to stdout or, with `-o`, to a new file without overwriting.
+Each output row retains the selector
+columns and adds `axis_type`, `axis_name`, `center_atom_index`, `center`, and `axis`.
+The latter two are JSON arrays of three coordinates in the SDF coordinate
+frame; `axis` is a unit vector pointing outward from `center`. Atom indices
+are zero-based. Ring axes use the ring centroid and leave
+`center_atom_index` empty. A match can produce multiple rows, including
+duplicate geometries from different selectors.
+
+#### Configure axes
+
+The bundled `selection/axes.config` is a YAML file loaded automatically for
+alignment CSV and SDF output. Every named definition has an `enabled`
+boolean and may have a `directions` mapping to enable or disable individual
+numbered directions:
+
+```yaml
+axes:
+  aromatic_ring_normal:
+    enabled: true
+    directions: {1: true, 2: false}
+```
+
+This is an excerpt: a custom config must contain **all** axis definitions
+from the bundled file. Copy and edit it, then use
+`--axes-config path/to/axes.config` with either the unified selector or the
+legacy alignment command. Configurations with unknown or missing names,
+duplicate keys, non-boolean switches, or invalid direction numbers are
+errors. Setting `enabled: false` disables the entire definition; unspecified
+direction numbers inherit `enabled`. Selection CSV is unaffected.
+
+The output `axis_name` is the definition name followed by a 1-based direction
+number, for example `aromatic_ring_normal_1` and `aromatic_ring_normal_2`.
+Numbers restart for each site and are global across molecules and selectors:
+disabling direction 2 applies to every instance of that definition. Direction
+order follows the SDF atom/bond ordering and RDKit ring ordering, not a
+universal spatial orientation. Renumbering atoms or changing input ordering
+can swap which physical direction is numbered 1 or 2. Axis calculation and
+geometry validation occur before filtering; disabling a direction does not
+repair invalid or degenerate input geometry.
+
+Alignment CSV rows also include `group_type`, `group_atom_indices` and
+`group_charge`. For a carboxylate oxygen these identify the delocalized
+carboxylate group, its zero-based carbon and oxygen indices, and its total
+formal charge of −1; they are empty for other sites. The charge is a
+group-level annotation, not a calculated partial charge.
+
+Supported structural geometries are:
+
+- Carboxylate: both oxygens use the same geometric rules regardless of the
+  input resonance form. Each has an outward C–O extension and two in-plane
+  candidate directions at 120 degrees to the O–C bond. The plane is defined
+  by the carbon and both oxygens.
+- Singly bonded O, S, Se or Te: an outward bond extension centered on the
+  chalcogen for each bond to a non-hydrogen atom. For example, a thioether
+  has one axis for each of its two C–S bonds. Chalcogen–H bonds only produce
+  such a chalcogen-centered axis for thiols as described below.
+- Thioethers (C–S–C): in addition to the two bond extensions, two opposite
+  unit normals to the C–S–C plane and the outward in-plane C–S–C angle
+  bisector, all centered on sulfur. These are geometric candidate directions
+  for lone-pair interactions, not calculated electron-pair positions.
+- Thiols (C–S–H): the same two plane normals and outward angle bisector,
+  centered on sulfur. Both C–S and H–S have sulfur-centered extensions
+  opposite their respective bonded atom. The S–H donor axis remains centered
+  on hydrogen. The H–S extension and plane axes require an explicitly
+  positioned hydrogen and are skipped with a warning otherwise.
+- Double-bonded O, S or Se: the outward bond extension; when the other atom is
+  carbon with two explicitly positioned substituents, also two in-plane
+  lone-pair directions at 120 degrees to the bond from the chalcogen to carbon.
+- Singly bonded halogens and hydrogen: the outward bond extension, centered on
+  the halogen or hydrogen. For selected N/O/S/Se sites, explicit bonded
+  hydrogens also produce hydrogen axes.
+- Neutral nitrile nitrogen: the outward C–N extension. Neutral two-coordinate
+  aromatic or unsaturated ring nitrogen without hydrogen: the outward
+  in-plane angle bisector. Neutral C=N–H imine nitrogen: the outward
+  in-plane C–N–H angle bisector.
+- Named aromatic rings: both directions of the ring-plane normal at the
+  centroid, including separate axes for fused rings.
+
+These are geometric approximations, not calculated electron densities or
+evidence of an interaction. A site is classified from its actual structure,
+not inferred from the selector name, so axes do not by themselves establish
+whether the selected site is an interaction donor or acceptor. Unsupported
+sites are skipped with a warning. A hydrogen direction requires an explicitly
+positioned hydrogen; missing hydrogens are not generated or guessed.
+SDF records used for matches must have 3D coordinates; invalid CSV, missing
+SDFs, malformed records, invalid indices, and degenerate geometry are errors.
+Input errors produce no output file.
+
+To visualize the axes as pseudo-atoms, use SDF output instead:
+
+```bash
+python3 selection/selector.py --csv selection/reference_molecules.csv --format sdf -o axes.sdf
+```
+
+The input is the one-column SDF-path CSV. The output contains one SDF molecule per
+referenced source record, including records without supported axes (which are
+written unchanged with a warning). Each distinct axis adds an unbonded RDKit
+dummy atom (`*`, atomic number 0), positioned at `center + axis`, one
+ångström from the center. For aromatic rings, the center is the ring centroid.
+Identical center and direction coordinates within 1e-8 are deduplicated.
+Original atoms, bonds, coordinates and properties are retained. The SDF
+properties `quick_qm_source` and `quick_qm_alignment_axes` contain JSON source
+and axis metadata; each axis lists the zero-based pseudo-atom index and all
+selector rows that produced it, their axis names, and carboxylate group metadata where
+applicable. Original bond orders and atom formal charges are not altered.
+Existing source properties with these names
+are rejected rather than overwritten. SDF output requires `-o` and does not
+overwrite an existing file.
+
+The former `selection/alignment.py` command remains available for processing
+an existing selection-result CSV. Its input SDF paths are resolved relative
+to the command's working directory, as before.
+
+Named patterns include common functional groups and hydrogen-bond donor and
+acceptor sites. The latter use RDKit's Lipinski SMARTS definitions. These are
+structural heuristics, not a prediction that an interaction actually occurs.
+Named functional-group SMARTS are intentionally limited definitions, not an
+exhaustive chemical classification. Invalid input or an unreadable SDF record
+causes a nonzero exit; no matches is a successful result.
+
+The `carboxylate` selector identifies deprotonated carboxylic acids
+(`R–COO⁻`, including formate) and highlights both oxygen atoms as one group.
+It recognizes either assignment of the single and double C–O bonds. It does
+not match neutral carboxylic acids, esters, carbonates or other resonance
+groups. The `carbonyl` and `negative charge` selectors retain their literal
+bond-order and formal-charge semantics; use `carboxylate` to select both
+oxygens in one match.
+
+Additional interaction-site selectors include:
+
+- `halogen bond donor`: carbon-bound, neutral Cl, Br or I; the halogen is
+  highlighted. Fluorine and free halide ions are excluded.
+- `positive charge` and `negative charge`: atoms with formal charges from +1
+  to +4 and -1 to -4 respectively, including charged metals. Protonation and
+  charge must already be represented in the input.
+- `aromatic ring` (also `pi-pi` or `cation-pi ring`): each RDKit-perceived
+  aromatic ring is returned as a set of its atoms, including heteroaromatic
+  rings. Fused rings can share atoms. The CSV `smarts` field is empty
+  because this selector uses RDKit ring perception rather than a SMARTS.
+- `chalcogen bond donor`: neutral divalent S, Se or Te bound to two carbon
+  atoms, highlighting the chalcogen.
+- `metal center`: positively charged Li, Na, K, Mg, Ca, Mn, Fe, Co, Ni, Cu,
+  Zn, Cd, Hg, Pt or Pd; `metal coordination ligand` selects potential
+  coordinating atoms.
+
+`halogen bond acceptor`, `chalcogen bond acceptor`, and
+`metal coordination ligand` reuse RDKit's Lipinski hydrogen-bond acceptor
+pattern as an approximate candidate filter. These definitions are deliberately
+incomplete; for example, they do not capture every metal ligand or chalcogen
+donor. They identify potential sites only and do not test geometry, ring
+orientation, protonation equilibria, interaction strength or actual bonding.
+
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
