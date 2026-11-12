@@ -10,6 +10,7 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from alignment import LOGGER_NAMESPACE
 from alignment.axis_input import AxisFilter, AxisInput, AxisRow
 from alignment.geometry import PairAligner
 from alignment.output import write_output
@@ -17,9 +18,9 @@ from alignment.pose_generation import PoseGenerator
 from alignment.reference_frame import ReferenceSelector
 from alignment.scan_planning import DistancePlan, load_config, scan_plans, triplets
 from alignment.torsion_optimization import TorsionOptimizer
-from core.logging import configure_logging, get_logger
+from molecule_utilities.logging import configure_logging, get_logger
 
-logger = get_logger("alignment.aligner")
+logger = get_logger("alignment.aligner", namespace=LOGGER_NAMESPACE)
 
 
 def main(argv=None):
@@ -81,7 +82,7 @@ def main(argv=None):
     parser.add_argument("--polar-merge-tolerance", help="duplicate position tolerance in Å (default: 0.05)")
     parser.add_argument("--scan-merge-tolerance", help="cross-scan position tolerance in Å (default: 0.05)")
     args = parser.parse_args(argv)
-    configure_logging()
+    configure_logging(namespace=LOGGER_NAMESPACE)
     try:
         settings = load_config(args.config)
         optimization = settings.get("torsion_optimization", {})

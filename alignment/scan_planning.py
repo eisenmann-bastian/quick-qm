@@ -10,7 +10,7 @@ from pathlib import Path
 import yaml
 
 from alignment.axis_input import FILTER_FIELDS
-from selection.axis_config import UniqueKeyLoader
+from alignment.axis_config import UniqueKeyLoader
 
 
 @dataclass(frozen=True)
@@ -244,5 +244,4 @@ def scan_plans(settings, args):
             radius, phi, theta, phi_unit, theta_unit, tolerance = polar_options(config, args)
             result.append(ScanPlan(system, (radius, phi, theta), True, phi_unit, theta_unit, tolerance))
     return result
-
 

@@ -9,7 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
-from selection.matching import MoleculeSelector
+from molecule_selector.matching import MoleculeSelector
 
 FILTER_FIELDS = ("molecule_name", "selector", "axis_type")
 REQUIRED_FIELDS = (*FILTER_FIELDS, "sdf_file", "record_index", "center_atom_index", "center", "axis")
@@ -75,7 +75,7 @@ class AxisInput:
                         raise ValueError("axis must have nonzero finite length")
                     sdf = sdf.resolve()
                     if sdf not in self.molecules:
-                        self.molecules[sdf] = list(MoleculeSelector._read_sdf(sdf))
+                        self.molecules[sdf] = list(MoleculeSelector.read_sdf(sdf))
                     molecules = self.molecules[sdf]
                     if record_index >= len(molecules):
                         raise ValueError("record_index is outside the SDF")
@@ -142,5 +142,4 @@ class AxisFilter:
                        for group in filters)
 
         return (not self.include or matches_any(self.include)) and not matches_any(self.exclude)
-
 

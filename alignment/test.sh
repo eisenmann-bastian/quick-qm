@@ -2,4 +2,4 @@
 set -eu
 cd "$(dirname "$0")/.."
 export PYTHONDONTWRITEBYTECODE=1
-exec "${PYTHON:-python3}" -m unittest alignment.test_aligner alignment.test_torsion_optimization "$@"
+exec "${PYTHON:-python3}" -m unittest alignment.test_aligner alignment.test_torsion_optimization alignment.test_cross_repository "$@"

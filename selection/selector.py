@@ -9,15 +9,16 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from core.logging import configure_logging, get_logger
-from selection.axis_config import DEFAULT_CONFIG, AxisConfig
-from selection.batch import BatchSelector
-from selection.definitions import SELECTORS, NamedSelector, SelectorRegistry
-from selection.matching import MoleculeSelector
-from selection.output import CsvResultWriter
-from selection.pipeline import SelectionPipeline
+from molecule_utilities.logging import configure_logging, get_logger
+from alignment import LOGGER_NAMESPACE
+from alignment.axis_config import DEFAULT_CONFIG, AxisConfig
+from molecule_selector.batch import BatchSelector
+from molecule_selector.definitions import SELECTORS, NamedSelector, SelectorRegistry
+from molecule_selector.matching import MoleculeSelector
+from molecule_selector.output import CsvResultWriter
+from alignment.selection_pipeline import SelectionPipeline
 
-logger = get_logger("selection.selector")
+logger = get_logger("selection.selector", namespace=LOGGER_NAMESPACE)
 
 _registry = SelectorRegistry()
 _molecule_selector = MoleculeSelector(_registry)
@@ -48,7 +49,7 @@ def main(argv=None):
                         help="YAML axis configuration for alignment or SDF output")
     parser.add_argument("-o", "--output", type=Path, help="write to a new file instead of stdout")
     args = parser.parse_args(argv)
-    configure_logging()
+    configure_logging(namespace=LOGGER_NAMESPACE)
     if args.list_selectors:
         if args.sdf_file is not None:
             parser.error("--list-selectors does not accept an SDF file")

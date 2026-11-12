@@ -9,9 +9,10 @@ from pathlib import Path
 
 from rdkit import Chem
 
-from core.logging import get_logger
+from molecule_utilities.logging import get_logger
+from alignment import LOGGER_NAMESPACE
 
-logger = get_logger("alignment.aligner")
+logger = get_logger("alignment.aligner", namespace=LOGGER_NAMESPACE)
 
 
 def write_output(output, output_format, pairs, destinations, overwrite):
@@ -161,5 +162,3 @@ def write_output(output, output_format, pairs, destinations, overwrite):
                 shutil.rmtree(staging)
             except OSError as cleanup_error:
                 logger.error("could not clean up temporary output %s: %s", staging, cleanup_error)
-
-

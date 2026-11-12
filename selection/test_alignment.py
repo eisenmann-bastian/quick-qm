@@ -358,7 +358,7 @@ class AlignmentTests(unittest.TestCase):
             self.assert_unit(axis)
 
     def test_unsupported_and_no_matches(self):
-        with self.assertLogs("quick_qm.selection.alignment", level="WARNING") as logs:
+        with self.assertLogs("molecule_aligner.selection.alignment", level="WARNING") as logs:
             rows = self.prepare(self.molecule("C[N+](C)(C)C"), name="positive charge")
         self.assertEqual(rows, [])
         self.assertIn("not yet supported", "\n".join(logs.output))
@@ -366,7 +366,7 @@ class AlignmentTests(unittest.TestCase):
 
     def test_hydrogen_without_coordinates_is_not_invented(self):
         mol = self.molecule("CO", explicit_hydrogens=False)
-        with self.assertLogs("quick_qm.selection.alignment", level="WARNING") as logs:
+        with self.assertLogs("molecule_aligner.selection.alignment", level="WARNING") as logs:
             rows = self.prepare(mol, name="hydrogen bond donor")
         self.assertEqual([row["axis_type"] for row in rows], ["chalcogen_sigma"])
         self.assertIn("explicit hydrogen coordinates", "\n".join(logs.output))
@@ -473,7 +473,7 @@ class AlignmentTests(unittest.TestCase):
 
     def test_thiol_implicit_hydrogen_warns_and_preserves_known_axis(self):
         mol = self.molecule("CS", explicit_hydrogens=False)
-        with self.assertLogs("quick_qm.selection.alignment", level="WARNING") as logs:
+        with self.assertLogs("molecule_aligner.selection.alignment", level="WARNING") as logs:
             rows = self.prepare(mol, name="thiol")
         self.assertEqual([row["axis_type"] for row in rows], ["chalcogen_sigma"])
         self.assertIn("thiol plane", "\n".join(logs.output))

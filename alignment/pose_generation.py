@@ -2,9 +2,10 @@
 
 from alignment.geometry import PairAligner
 from alignment.polar_scan import PositionMerger, spherical_position
-from core.logging import get_logger
+from molecule_utilities.logging import get_logger
+from alignment import LOGGER_NAMESPACE
 
-logger = get_logger("alignment.aligner")
+logger = get_logger("alignment.aligner", namespace=LOGGER_NAMESPACE)
 
 
 class PoseGenerator:
@@ -80,4 +81,3 @@ class PoseGenerator:
                     if cross_duplicates:
                         logger.warning("axis pair %d scan %d: merged %d positions from earlier scans within %g Å",
                                        axis_pair, scan_index, cross_duplicates, merge_tolerance)
-

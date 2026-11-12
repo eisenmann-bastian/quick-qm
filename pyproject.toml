@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "molecule-aligner"
+version = "0.1.0"
+description = "Derive molecular axes and align molecular structures"
+requires-python = ">=3.10"
+dependencies = [
+    "rdkit>=2024.9",
+    "numpy>=1.23",
+    "PyYAML>=6.0,<7",
+    "molecule-selector>=0.1.0,<0.2",
+    "molecular-utilities @ git+https://github.com/eisenmann-bastian/molecular-utilities.git@3ceb6ad2842129882840c83062dd4c78fcdefe7b",
+]
+
+[project.scripts]
+molecule-axes = "alignment.axes:main"
+molecule-aligner = "alignment.aligner:main"
+molecule-aligner-select = "selection.selector:main"
+
+[tool.setuptools.packages.find]
+include = ["alignment*", "selection*"]
+namespaces = true
+exclude = ["*.test*", "tests*"]
+
+[tool.setuptools.package-data]
+alignment = ["axes.config"]
