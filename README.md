@@ -18,7 +18,7 @@ provided by a separate GitHub project. Supply SDF files to the selector as
 described below.
 
 The selector and shared logging are provided by the separate
-[`molecule-selector`](https://github.com/eisenmann-bastian/molecular-selector)
+[`molecular-selector`](https://github.com/eisenmann-bastian/molecular-selector)
 and [`molecular-utilities`](https://github.com/eisenmann-bastian/molecular-utilities)
 packages. Create and activate a Python environment, then install this project:
 
@@ -26,15 +26,14 @@ packages. Create and activate a Python environment, then install this project:
 python -m pip install -e .
 ```
 
-Both dependencies are fetched from GitHub at the revisions pinned in
+Both dependencies are fetched from GitHub as specified in
 `pyproject.toml`; installation requires Git and network access. Shared logging
 lives in `molecular_utilities.logging`; CLI log messages use the
 `molecular_aligner` namespace and standard error. The old `core.logging`
 compatibility module has been removed.
 
-The current selector pin predates its `molecular_utilities` import update.
-After publishing that selector change, update the selector pin in this project
-and its requirements files to the new revision.
+The selector dependency requires a published selector revision whose
+distribution name is `molecular-selector`.
 
 The installed commands are `molecule-axes`, `molecular-aligner`, and
 `molecular-aligner-select`. The previous `molecule-aligner` and

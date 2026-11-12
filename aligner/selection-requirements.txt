@@ -1,4 +1,4 @@
 rdkit>=2024.9
 PyYAML>=6.0,<7
-molecule-selector @ git+https://github.com/eisenmann-bastian/molecular-selector.git@14e41d4a32c97778a7f2619ecb1b7db537e3c5b8
+molecular-selector @ git+https://github.com/eisenmann-bastian/molecular-selector.git
 molecular-utilities @ git+https://github.com/eisenmann-bastian/molecular-utilities.git@4c0c47d64b6766f52f95d375533e99a59623da32

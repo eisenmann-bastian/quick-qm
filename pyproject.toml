@@ -11,7 +11,7 @@ dependencies = [
     "rdkit>=2024.9",
     "numpy>=1.23",
     "PyYAML>=6.0,<7",
-    "molecule-selector @ git+https://github.com/eisenmann-bastian/molecular-selector.git",
+    "molecular-selector @ git+https://github.com/eisenmann-bastian/molecular-selector.git",
     "molecular-utilities @ git+https://github.com/eisenmann-bastian/molecular-utilities.git",
 ]
 
