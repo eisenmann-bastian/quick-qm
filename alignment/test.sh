@@ -1,1 +1,1 @@
-python3 aligner.py test_out_aligned.csv --config sample_configs/polar_grid.yaml --overwrite-output
+python3 aligner.py test_out_aligned.csv --config sample_configs/custom.yaml --overwrite-output

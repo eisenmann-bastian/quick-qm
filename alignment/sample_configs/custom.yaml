@@ -1,0 +1,26 @@
+# Maximize the minimum van der Waals surface clearance at each scan position.
+rigid:
+  include:
+    - molecule_name: "^175$"
+flexible:
+  include:
+    - molecule_name: "^6582$"
+output: scan_torsion
+overwrite_output: false
+flexible_orientation: toward-center
+grid_based_scan:
+  y:
+    distance: 3.0
+  x:
+    scan_start: -1.0
+    scan_end: 1.0
+    scan_count: 1
+torsion_optimization:
+  enabled: true
+  score: minimum_distance
+  objective: maximize
+  include_vdw: true
+  exclude_flexible_site: true
+  exclude_rigid_site: false
+  steps_per_iteration: 12
+  iterations: 3

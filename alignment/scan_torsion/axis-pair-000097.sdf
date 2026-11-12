@@ -1,0 +1,555 @@
+pair-000289
+     RDKit          3D
+
+ 19 17  0  0  0  0  0  0  0  0999 V2000
+   -0.6906   -1.1195    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6023    1.1668    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4054   -0.0498    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1125    0.0025    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7934    0.4532   -0.8908 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7688   -1.0820    0.0004 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7937    0.4539    0.8902 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6394   -2.2618   -0.0005 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1366   -4.0444   -0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7847   -2.7055   -0.0008 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1676   -5.1164    0.0011 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9870   -1.8003   -0.0277 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1196   -4.2992   -0.0277 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4722   -5.8527    0.7487 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1662   -4.7444    0.2306 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1717   -5.5804   -0.9881 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6812   -0.7755    0.2004 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4415   -1.8278   -1.0217 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7209   -2.1196    0.7178 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0
+  2  4  2  0
+  3  4  1  0
+  3  5  1  0
+  3  6  1  0
+  3  7  1  0
+  8 10  2  0
+  9 10  1  0
+  9 11  1  0
+  9 13  1  0
+ 10 12  1  0
+ 11 14  1  0
+ 11 15  1  0
+ 11 16  1  0
+ 12 17  1  0
+ 12 18  1  0
+ 12 19  1  0
+M  CHG  1   1  -1
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (1) 
+175
+
+>  <PUBCHEM_CONFORMER_RMSD>  (1) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (1) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (1) 
+4
+1 -0.9
+2 -0.9
+3 -0.11
+4 0.91
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (1) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (1) 
+3
+1 1 acceptor
+1 2 acceptor
+3 1 2 4 anion
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (1) 
+4
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (1) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (1) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (1) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (1) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (1) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (1) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (1) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (1) 
+000000AF00000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (1) 
+1.0491
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (1) 
+15.277
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (1) 
+139733 1 9222419305866417282
+20096714 4 18050288068225412184
+21015797 1 9727635016030451018
+5943 1 11571732774193885094
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (1) 
+70.58
+1.31
+1.11
+0.56
+0.57
+0.01
+0
+-0.01
+0
+-0.37
+0
+0.04
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (1) 
+122.282
+
+>  <PUBCHEM_SHAPE_VOLUME>  (1) 
+47.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (1) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (1) 
+pair-000289
+
+>  <quick_qm_axis_pair_id>  (1) 
+axis-pair-000097
+
+>  <quick_qm_pose_index>  (1) 
+1
+
+>  <quick_qm_distance_angstrom>  (1) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (1) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (1) 
+grid
+
+>  <quick_qm_torsion_angle_degrees>  (1) 
+0.0
+
+>  <quick_qm_torsion_score>  (1) 
+1.1405732475576702
+
+>  <quick_qm_torsion_score_type>  (1) 
+minimum_distance
+
+>  <quick_qm_torsion_objective>  (1) 
+maximize
+
+>  <quick_qm_x_offset_angstrom>  (1) 
+-1.0
+
+>  <quick_qm_z_offset_angstrom>  (1) 
+0.0
+
+>  <quick_qm_reference_method>  (1) 
+A
+
+>  <quick_qm_x_axis>  (1) 
+[-0.0478148781795603, 0.9988562144591617, -1.6155088570997925e-05]
+
+>  <quick_qm_z_axis>  (1) 
+[-0.00018699737991553902, 7.222091871820015e-06, 0.9999999824899104]
+
+>  <quick_qm_rigid_source>  (1) 
+{"csv_line":"3","sdf_file":"reference_molecules/175.sdf","record_index":"0","molecule_name":"175","selector":"hydrogen bond acceptor","smarts":"[$([O,S;H1;v2]-[!$(*=[O,N,P,S])]),$([O,S;H0;v2]),$([O,S;-]),$([N&v3&!$(N-*=&!@[O,N,P,S])]),$([n&H0,o,s;+0])]","atom_index_base":"0","match_index":"0","atom_indices":"[0]","site_atom_indices":"[0]","axis_type":"carboxylate_lone_pair","center_atom_index":"0","center":"[-0.6906,-1.1195,0.0]","axis":"[-0.9988561970857736,-0.047814880363276746,-0.00018643817157316432]","group_type":"carboxylate","group_atom_indices":"[3,0,1]","group_charge":"-1"}
+
+>  <quick_qm_flexible_source>  (1) 
+{"csv_line":"6","sdf_file":"reference_molecules/6582.sdf","record_index":"0","molecule_name":"6582","selector":"hydrogen bond acceptor","smarts":"[$([O,S;H1;v2]-[!$(*=[O,N,P,S])]),$([O,S;H0;v2]),$([O,S;-]),$([N&v3&!$(N-*=&!@[O,N,P,S])]),$([n&H0,o,s;+0])]","atom_index_base":"0","match_index":"0","atom_indices":"[0]","site_atom_indices":"[0]","axis_type":"chalcogen_sigma","center_atom_index":"0","center":"[-0.5447,1.3323,-0.0013]","axis":"[-0.06073456647235891,0.9981310790229502,-0.006757331122259777]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000290
+     RDKit          3D
+
+ 19 17  0  0  0  0  0  0  0  0999 V2000
+   -0.6906   -1.1195    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6023    1.1668    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4054   -0.0498    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1125    0.0025    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7934    0.4532   -0.8908 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7688   -1.0820    0.0004 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7937    0.4539    0.8902 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6872   -1.2629   -0.0006 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6713   -2.4806   -0.0002 N   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9141   -1.3217   -0.0008 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0910   -3.8040    0.0009 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7684   -0.0828   -0.0277 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6844   -2.4114   -0.0278 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6128   -4.4063    0.7485 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0234   -3.7678    0.2304 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2416   -4.2429   -0.9884 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1542    0.7928    0.2005 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2082    0.0350   -1.0217 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5656   -0.1536    0.7178 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0
+  2  4  2  0
+  3  4  1  0
+  3  5  1  0
+  3  6  1  0
+  3  7  1  0
+  8 10  2  0
+  9 10  1  0
+  9 11  1  0
+  9 13  1  0
+ 10 12  1  0
+ 11 14  1  0
+ 11 15  1  0
+ 11 16  1  0
+ 12 17  1  0
+ 12 18  1  0
+ 12 19  1  0
+M  CHG  1   1  -1
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (2) 
+175
+
+>  <PUBCHEM_CONFORMER_RMSD>  (2) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (2) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (2) 
+4
+1 -0.9
+2 -0.9
+3 -0.11
+4 0.91
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (2) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (2) 
+3
+1 1 acceptor
+1 2 acceptor
+3 1 2 4 anion
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (2) 
+4
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (2) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (2) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (2) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (2) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (2) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (2) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (2) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (2) 
+000000AF00000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (2) 
+1.0491
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (2) 
+15.277
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (2) 
+139733 1 9222419305866417282
+20096714 4 18050288068225412184
+21015797 1 9727635016030451018
+5943 1 11571732774193885094
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (2) 
+70.58
+1.31
+1.11
+0.56
+0.57
+0.01
+0
+-0.01
+0
+-0.37
+0
+0.04
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (2) 
+122.282
+
+>  <PUBCHEM_SHAPE_VOLUME>  (2) 
+47.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (2) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (2) 
+pair-000290
+
+>  <quick_qm_axis_pair_id>  (2) 
+axis-pair-000097
+
+>  <quick_qm_pose_index>  (2) 
+2
+
+>  <quick_qm_distance_angstrom>  (2) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (2) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (2) 
+grid
+
+>  <quick_qm_torsion_angle_degrees>  (2) 
+0.0
+
+>  <quick_qm_torsion_score>  (2) 
+0.9782955873892893
+
+>  <quick_qm_torsion_score_type>  (2) 
+minimum_distance
+
+>  <quick_qm_torsion_objective>  (2) 
+maximize
+
+>  <quick_qm_x_offset_angstrom>  (2) 
+0.0
+
+>  <quick_qm_z_offset_angstrom>  (2) 
+0.0
+
+>  <quick_qm_reference_method>  (2) 
+A
+
+>  <quick_qm_x_axis>  (2) 
+[-0.0478148781795603, 0.9988562144591617, -1.6155088570997925e-05]
+
+>  <quick_qm_z_axis>  (2) 
+[-0.00018699737991553902, 7.222091871820015e-06, 0.9999999824899104]
+
+>  <quick_qm_rigid_source>  (2) 
+{"csv_line":"3","sdf_file":"reference_molecules/175.sdf","record_index":"0","molecule_name":"175","selector":"hydrogen bond acceptor","smarts":"[$([O,S;H1;v2]-[!$(*=[O,N,P,S])]),$([O,S;H0;v2]),$([O,S;-]),$([N&v3&!$(N-*=&!@[O,N,P,S])]),$([n&H0,o,s;+0])]","atom_index_base":"0","match_index":"0","atom_indices":"[0]","site_atom_indices":"[0]","axis_type":"carboxylate_lone_pair","center_atom_index":"0","center":"[-0.6906,-1.1195,0.0]","axis":"[-0.9988561970857736,-0.047814880363276746,-0.00018643817157316432]","group_type":"carboxylate","group_atom_indices":"[3,0,1]","group_charge":"-1"}
+
+>  <quick_qm_flexible_source>  (2) 
+{"csv_line":"6","sdf_file":"reference_molecules/6582.sdf","record_index":"0","molecule_name":"6582","selector":"hydrogen bond acceptor","smarts":"[$([O,S;H1;v2]-[!$(*=[O,N,P,S])]),$([O,S;H0;v2]),$([O,S;-]),$([N&v3&!$(N-*=&!@[O,N,P,S])]),$([n&H0,o,s;+0])]","atom_index_base":"0","match_index":"0","atom_indices":"[0]","site_atom_indices":"[0]","axis_type":"chalcogen_sigma","center_atom_index":"0","center":"[-0.5447,1.3323,-0.0013]","axis":"[-0.06073456647235891,0.9981310790229502,-0.006757331122259777]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000291
+     RDKit          3D
+
+ 19 17  0  0  0  0  0  0  0  0999 V2000
+   -0.6906   -1.1195    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6023    1.1668    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4054   -0.0498    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1125    0.0025    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7934    0.4532   -0.8908 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7688   -1.0820    0.0004 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.7937    0.4539    0.8902 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7350   -0.2641   -0.0006 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0023   -0.7918   -0.0002 N   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9175    0.0682   -0.0008 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8703   -2.2308    0.0008 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3362    1.5137   -0.0276 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9416   -0.4058   -0.0279 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5558   -2.6372    0.7483 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8461   -2.5341    0.2303 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1520   -2.5995   -0.9885 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4766    2.1501    0.2006 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7162    1.7645   -1.0216 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1150    1.6985    0.7179 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0
+  2  4  2  0
+  3  4  1  0
+  3  5  1  0
+  3  6  1  0
+  3  7  1  0
+  8 10  2  0
+  9 10  1  0
+  9 11  1  0
+  9 13  1  0
+ 10 12  1  0
+ 11 14  1  0
+ 11 15  1  0
+ 11 16  1  0
+ 12 17  1  0
+ 12 18  1  0
+ 12 19  1  0
+M  CHG  1   1  -1
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (3) 
+175
+
+>  <PUBCHEM_CONFORMER_RMSD>  (3) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (3) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (3) 
+4
+1 -0.9
+2 -0.9
+3 -0.11
+4 0.91
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (3) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (3) 
+3
+1 1 acceptor
+1 2 acceptor
+3 1 2 4 anion
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (3) 
+4
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (3) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (3) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (3) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (3) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (3) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (3) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (3) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (3) 
+000000AF00000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (3) 
+1.0491
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (3) 
+15.277
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (3) 
+139733 1 9222419305866417282
+20096714 4 18050288068225412184
+21015797 1 9727635016030451018
+5943 1 11571732774193885094
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (3) 
+70.58
+1.31
+1.11
+0.56
+0.57
+0.01
+0
+-0.01
+0
+-0.37
+0
+0.04
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (3) 
+122.282
+
+>  <PUBCHEM_SHAPE_VOLUME>  (3) 
+47.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (3) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (3) 
+pair-000291
+
+>  <quick_qm_axis_pair_id>  (3) 
+axis-pair-000097
+
+>  <quick_qm_pose_index>  (3) 
+3
+
+>  <quick_qm_distance_angstrom>  (3) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (3) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (3) 
+grid
+
+>  <quick_qm_torsion_angle_degrees>  (3) 
+0.0
+
+>  <quick_qm_torsion_score>  (3) 
+1.1405732475576693
+
+>  <quick_qm_torsion_score_type>  (3) 
+minimum_distance
+
+>  <quick_qm_torsion_objective>  (3) 
+maximize
+
+>  <quick_qm_x_offset_angstrom>  (3) 
+1.0
+
+>  <quick_qm_z_offset_angstrom>  (3) 
+0.0
+
+>  <quick_qm_reference_method>  (3) 
+A
+
+>  <quick_qm_x_axis>  (3) 
+[-0.0478148781795603, 0.9988562144591617, -1.6155088570997925e-05]
+
+>  <quick_qm_z_axis>  (3) 
+[-0.00018699737991553902, 7.222091871820015e-06, 0.9999999824899104]
+
+>  <quick_qm_rigid_source>  (3) 
+{"csv_line":"3","sdf_file":"reference_molecules/175.sdf","record_index":"0","molecule_name":"175","selector":"hydrogen bond acceptor","smarts":"[$([O,S;H1;v2]-[!$(*=[O,N,P,S])]),$([O,S;H0;v2]),$([O,S;-]),$([N&v3&!$(N-*=&!@[O,N,P,S])]),$([n&H0,o,s;+0])]","atom_index_base":"0","match_index":"0","atom_indices":"[0]","site_atom_indices":"[0]","axis_type":"carboxylate_lone_pair","center_atom_index":"0","center":"[-0.6906,-1.1195,0.0]","axis":"[-0.9988561970857736,-0.047814880363276746,-0.00018643817157316432]","group_type":"carboxylate","group_atom_indices":"[3,0,1]","group_charge":"-1"}
+
+>  <quick_qm_flexible_source>  (3) 
+{"csv_line":"6","sdf_file":"reference_molecules/6582.sdf","record_index":"0","molecule_name":"6582","selector":"hydrogen bond acceptor","smarts":"[$([O,S;H1;v2]-[!$(*=[O,N,P,S])]),$([O,S;H0;v2]),$([O,S;-]),$([N&v3&!$(N-*=&!@[O,N,P,S])]),$([n&H0,o,s;+0])]","atom_index_base":"0","match_index":"0","atom_indices":"[0]","site_atom_indices":"[0]","axis_type":"chalcogen_sigma","center_atom_index":"0","center":"[-0.5447,1.3323,-0.0013]","axis":"[-0.06073456647235891,0.9981310790229502,-0.006757331122259777]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$

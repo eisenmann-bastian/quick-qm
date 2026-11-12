@@ -1,12 +1,14 @@
 # Phi sweeps a full circle; the repeated 360-degree endpoint is merged.
 rigid:
-  molecule_name: "^241$"
-  selector: "^aromatic ring$"
-  axis_type: "^aromatic_normal$"
+  include:
+    - molecule_name: "^241$"
+      selector: "^aromatic ring$"
+      axis_type: "^aromatic_normal$"
 flexible:
-  molecule_name: "^878$"
-  selector: "^thiol$"
-  axis_type: "^hydrogen_sigma$"
+  include:
+    - molecule_name: "^878$"
+      selector: "^thiol$"
+      axis_type: "^hydrogen_sigma$"
 output_format: pair-files
 output: scan_polar_grid
 overwrite_output: false

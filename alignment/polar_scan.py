@@ -21,14 +21,27 @@ class PositionMerger:
         self.cells = {}
 
     def add(self, position):
+        if self.contains(position):
+            return False
+        self.remember(position)
+        return True
+
+    def contains(self, position):
         cell = tuple(math.floor(value / self.tolerance) for value in position)
         for delta in itertools.product((-1, 0, 1), repeat=3):
             neighbor = tuple(a + b for a, b in zip(cell, delta))
             for previous in self.cells.get(neighbor, ()):
                 if math.dist(position, previous) <= self.tolerance:
-                    return False
+                    return True
+        return False
+
+    def remember(self, position):
+        cell = tuple(math.floor(value / self.tolerance) for value in position)
         self.cells.setdefault(cell, []).append(position)
-        return True
+
+    def extend(self, other):
+        for cell, positions in other.cells.items():
+            self.cells.setdefault(cell, []).extend(positions)
 
 
 def spherical_position(radius, phi, theta, phi_unit, theta_unit):

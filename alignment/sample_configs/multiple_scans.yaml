@@ -1,0 +1,27 @@
+# Run grid and polar scans in order, merging overlaps across scans.
+rigid:
+  include:
+    - molecule_name: "^241$"
+      selector: "^aromatic ring$"
+      axis_type: "^aromatic_normal$"
+flexible:
+  include:
+    - molecule_name: "^878$"
+      selector: "^thiol$"
+      axis_type: "^hydrogen_sigma$"
+output_format: pair-files
+output: scan_multiple
+overwrite_output: false
+scan_merge_tolerance: 0.05
+scans:
+  - grid_based_scan:
+      y:
+        scan_start: 2.0
+        scan_end: 3.0
+        scan_step: 0.5
+  - polar_coordinate_based_scan:
+      radius: {distance: 3.0}
+      phi: {scan_start: 0, scan_end: 360, scan_step: 90}
+      theta: {distance: 90}
+  - grid_based_scan:
+      y: {distance: 4.0}

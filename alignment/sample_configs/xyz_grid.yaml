@@ -1,13 +1,15 @@
 # Cartesian product: 2 Y positions x 3 X positions x 3 Z positions
 # gives 18 poses per rigid-flexible axis pair.
 rigid:
-  molecule_name: "^241$"
-  selector: "^aromatic ring$"
-  axis_type: "^aromatic_normal$"
+  include:
+    - molecule_name: "^241$"
+      selector: "^aromatic ring$"
+      axis_type: "^aromatic_normal$"
 flexible:
-  molecule_name: "^878$"
-  selector: "^thiol$"
-  axis_type: "^hydrogen_sigma$"
+  include:
+    - molecule_name: "^878$"
+      selector: "^thiol$"
+      axis_type: "^hydrogen_sigma$"
 output_format: pair-files
 output: scan_xyz_grid
 overwrite_output: false

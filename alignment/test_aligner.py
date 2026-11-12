@@ -218,6 +218,76 @@ class AlignerTests(unittest.TestCase):
         with (self.directory / "override.csv").open(newline="") as source:
             self.assertEqual(float(next(csv.DictReader(source))["distance_angstrom"]), 2.5)
 
+    def test_include_exclude_filter_combinations(self):
+        def filt(name, selector=".*", axis=".*"):
+            return {"molecule_name": name, "selector": selector, "axis_type": axis}
+
+        a = dict(molecule_name="alpha", selector="oxygen", axis_type="sigma")
+        b = dict(molecule_name="beta", selector="oxygen", axis_type="sigma")
+        c = dict(molecule_name="beta", selector="nitrogen", axis_type="sigma")
+        cases = [
+            ({}, [True, True, True]),
+            ({"include": [], "exclude": []}, [True, True, True]),
+            ({"include": [filt("^alpha$")]}, [True, False, False]),
+            ({"exclude": [filt("^beta$", "nitrogen")]}, [True, True, False]),
+            ({"include": [filt("alpha"), filt("beta")],
+              "exclude": [filt("beta", "oxygen"), filt("alpha")]}, [False, False, True]),
+            ({"include": [filt("alpha"), filt(".*")]}, [True, True, True]),
+            ({"include": [{"molecule_name": "^beta$"}]}, [False, True, True]),
+            ({"include": {"selector": "^oxygen$"}}, [True, True, False]),
+            ({"exclude": [{"axis_type": "^sigma$"}]}, [False, False, False]),
+            ({"include": [{"molecule_name": "^beta$", "selector": "^oxygen$"}]},
+             [False, True, False]),
+            ({"exclude": [{"molecule_name": "^beta$", "selector": "^oxygen$"}]},
+             [True, False, True]),
+            ({"include": [{"selector": "nitrogen"}, {"molecule_name": "^alpha$"}],
+              "exclude": [{"molecule_name": "^beta$"}]}, [True, False, False]),
+            ({"molecule_name": "^alpha$"}, [True, False, False]),
+            ([{"selector": "^nitrogen$"}], [False, False, True]),
+        ]
+        for config, expected in cases:
+            with self.subTest(config=config):
+                matcher = aligner.AxisFilter(config)
+                self.assertEqual([matcher.matches(row) for row in (a, b, c)], expected)
+        for bad in ({"include": None}, {"exclude": ".*"}, {"include": [{}]},
+                    {"include": [{"molecule_name": ".*", "unknown": ".*"}]},
+                    {"exclude": [{"unknown": ".*"}]}, {"include": [filt("[")]},
+                    {"include": [{"selector": None}]}, {"invalid": []}):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                aligner.AxisFilter(bad)
+
+    def test_filter_cli_yaml_overrides_and_default_cartesian_product(self):
+        result = self.run_cli("--output", "all")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "all.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual({(r["rigid_csv_line"], r["flexible_csv_line"]) for r in rows},
+                         {("2", "2"), ("2", "3"), ("3", "2"), ("3", "3")})
+        config = self.directory / "filters.yaml"
+        config.write_text(yaml.safe_dump({
+            "rigid": {"include": [{"selector": "oxygen"}, {"molecule_name": "flexible"}],
+                      "exclude": [{"molecule_name": "flexible"}]},
+            "flexible": {"exclude": [{"molecule_name": "rigid", "axis_type": "sigma"}]},
+        }), encoding="utf-8")
+        result = self.run_cli("--config", config, "--output", "filtered")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "filtered.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual([(r["rigid_csv_line"], r["flexible_csv_line"]) for r in rows], [("2", "3")])
+        result = self.run_cli("--config", config, "--output", "overridden",
+                              "--rigid", ".*", ".*", ".*",
+                              "--rigid-exclude", "rigid", ".*", ".*",
+                              "--flexible-exclude", "flexible", ".*", ".*")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "overridden.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual([(r["rigid_csv_line"], r["flexible_csv_line"]) for r in rows], [("3", "2")])
+        result = self.run_cli("--config", config, "--output", "empty",
+                              "--rigid-exclude", ".*", ".*", ".*")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("0 rigid", result.stderr)
+        self.assertFalse((self.directory / "empty.csv").exists())
+
     def test_scan_step_endpoints_and_decimal_divisibility(self):
         for include_start in (True, False):
             for include_end in (True, False):
@@ -701,7 +771,6 @@ class AlignerTests(unittest.TestCase):
             {"polar_coordinate_based_scan": {"theta": {"scan_start": 0, "scan_end": 181, "scan_count": 1, "include_end": False}}},
             {"polar_coordinate_based_scan": {"radius": {"distance": -1}}},
             {"polar_coordinate_based_scan": {"merge_tolerance": 0}},
-            {"polar_coordinate_based_scan": {}, "grid_based_scan": {}},
             {"distance_scan": {"y": {"distance": 2}}},
         ]
         config = self.directory / "bad-polar.yaml"
@@ -714,6 +783,73 @@ class AlignerTests(unittest.TestCase):
         result = self.run_cli(*self.filters(), "--coordinate-system", "polar", "--distance", 3)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("conflicts", result.stderr)
+
+    def test_multiple_mixed_scans_merge_and_record_provenance(self):
+        config = self.directory / "multiple.yaml"
+        config.write_text(yaml.safe_dump({"scans": [
+            {"grid_based_scan": {"y": {"scan_start": 2, "scan_end": 2.04, "scan_step": 0.02}}},
+            {"polar_coordinate_based_scan": {"radius": {"distance": 2}, "theta": {"distance": 0}}},
+            {"grid_based_scan": {"y": {"distance": 2.045}}},
+            {"grid_based_scan": {"y": {"distance": 3}}},
+        ]}), encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config, "--output", "multiple")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "multiple.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual([row["scan_index"] for row in rows], ["1", "1", "1", "4"])
+        self.assertEqual([row["pose_index"] for row in rows], ["1", "2", "3", "4"])
+        self.assertEqual([float(row["distance_angstrom"]) for row in rows], [2, 2.02, 2.04, 3])
+        self.assertIn("merged 1 positions from earlier scans", result.stderr)
+        molecules = list(MoleculeSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
+        self.assertEqual([m.GetProp("quick_qm_scan_index") for m in molecules], ["1", "1", "1", "4"])
+
+    def test_multiple_scan_tolerance_and_cli_overrides(self):
+        config = self.directory / "multiple.yaml"
+        config.write_text(yaml.safe_dump({
+            "scan_merge_tolerance": 0.1,
+            "scans": [
+                {"grid_based_scan": {"y": {"distance": 2}, "x": {"distance": 0}}},
+                {"grid_based_scan": {"y": {"distance": 3}, "x": {"distance": 0.06}}},
+                {"polar_coordinate_based_scan": {"radius": {"distance": 3},
+                                                   "phi": {"distance": 0}, "theta": {"distance": 90}}},
+                {"polar_coordinate_based_scan": {"radius": {"distance": 3},
+                                                   "phi": {"distance": 90}, "theta": {"distance": 90}}},
+            ],
+        }), encoding="utf-8")
+        args = [*self.filters(), "--config", config, "--distance", 4, "--polar-radius", 5]
+        result = self.run_cli(*args, "--output", "coarse")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "coarse.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual([r["scan_index"] for r in rows], ["1", "3", "4"])
+        self.assertEqual(float(rows[0]["distance_angstrom"]), 4)
+        self.assertEqual([float(r["polar_radius_angstrom"]) for r in rows[1:]], [5, 5])
+        result = self.run_cli(*args, "--scan-merge-tolerance", 0.01, "--output", "fine")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "fine.csv").open(newline="") as source:
+            self.assertEqual([r["scan_index"] for r in csv.DictReader(source)], ["1", "2", "3", "4"])
+
+    def test_multiple_scans_top_level_lists_and_validation(self):
+        config = self.directory / "multiple.yaml"
+        config.write_text(yaml.safe_dump({
+            "grid_based_scan": [{"y": {"distance": 1}}, {"y": {"distance": 2}}],
+            "polar_coordinate_based_scan": [{"radius": {"distance": 3}, "theta": {"distance": 0}}],
+        }, sort_keys=False), encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "aligned_pairs.csv").open(newline="") as source:
+            self.assertEqual([r["scan_index"] for r in csv.DictReader(source)], ["1", "2", "3"])
+        for invalid in (
+            {"scans": []}, {"scans": [{}]}, {"scans": [{"grid_based_scan": {}, "polar_coordinate_based_scan": {}}]},
+            {"scans": [{"grid_based_scan": []}]}, {"grid_based_scan": []},
+            {"scans": [{"grid_based_scan": {}}], "grid_based_scan": {}},
+            {"scan_merge_tolerance": 0}, {"scan_merge_tolerance": "nan"},
+        ):
+            with self.subTest(invalid=invalid):
+                config.write_text(yaml.safe_dump(invalid), encoding="utf-8")
+                result = self.run_cli(*self.filters(), "--config", config, "--output", "invalid")
+                self.assertNotEqual(result.returncode, 0, result.stderr)
+                self.assertFalse((self.directory / "invalid.csv").exists())
 
     def test_polar_cli_radians_and_sampling_override_per_pair(self):
         rows = self.write_rows()

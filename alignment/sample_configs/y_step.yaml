@@ -1,12 +1,14 @@
 # Y scan by fixed step: 2.0, 2.5, 3.0 angstroms per axis pair.
 rigid:
-  molecule_name: "^241$"
-  selector: "^aromatic ring$"
-  axis_type: "^aromatic_normal$"
+  include:
+    - molecule_name: "^241$"
+      selector: "^aromatic ring$"
+      axis_type: "^aromatic_normal$"
 flexible:
-  molecule_name: "^878$"
-  selector: "^thiol$"
-  axis_type: "^hydrogen_sigma$"
+  include:
+    - molecule_name: "^878$"
+      selector: "^thiol$"
+      axis_type: "^hydrogen_sigma$"
 output_format: pair-files
 output: scan_y_step
 overwrite_output: false

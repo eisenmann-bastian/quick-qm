@@ -1,13 +1,15 @@
 # Fixed Y and X offsets; Z has one interior point and both boundaries.
 # Z positions: -1.0, 0.0, 1.0 angstroms per axis pair.
 rigid:
-  molecule_name: "^241$"
-  selector: "^aromatic ring$"
-  axis_type: "^aromatic_normal$"
+  include:
+    - molecule_name: "^241$"
+      selector: "^aromatic ring$"
+      axis_type: "^aromatic_normal$"
 flexible:
-  molecule_name: "^878$"
-  selector: "^thiol$"
-  axis_type: "^hydrogen_sigma$"
+  include:
+    - molecule_name: "^878$"
+      selector: "^thiol$"
+      axis_type: "^hydrogen_sigma$"
 output_format: pair-files
 output: scan_z_count
 overwrite_output: false
