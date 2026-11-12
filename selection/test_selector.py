@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from rdkit import Chem
 
-import selector
+from selection import selector
 from selection.batch import BatchSelector
 from selection.definitions import NamedSelector, SelectorRegistry
 from selection.matching import MoleculeSelector

@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+alignment/aligned_pairs/
+alignment/aligned_pairs.csv
+alignment/scan_*.csv
+alignment/scan_*/
+selection/reference_combined.sdf
+selection/test_out.csv
+selection/test_out_aligned.csv
+selection/test_out_aligned.sdf
