@@ -14,10 +14,10 @@ if __package__ in (None, ""):
 from rdkit import Chem
 from rdkit.Geometry import Point3D
 
-from molecule_utilities.logging import configure_logging, get_logger
-from alignment import LOGGER_NAMESPACE
-from alignment.axis_config import AXIS_NAMES, DEFAULT_CONFIG, AxisConfig
-from alignment.axis_calculator import AlignmentCalculator
+from molecular_utilities.logging import configure_logging, get_logger
+from aligner import LOGGER_NAMESPACE
+from aligner.axis_config import AXIS_NAMES, DEFAULT_CONFIG, AxisConfig
+from aligner.axis_calculator import AlignmentCalculator
 from molecular_selector import carboxylate_sites
 from molecular_selector.matching import MolecularSelector
 

@@ -9,8 +9,8 @@ from pathlib import Path
 
 from rdkit import Chem
 
-from molecule_utilities.logging import get_logger
-from alignment import LOGGER_NAMESPACE
+from molecular_utilities.logging import get_logger
+from aligner import LOGGER_NAMESPACE
 
 logger = get_logger("alignment.aligner", namespace=LOGGER_NAMESPACE)
 

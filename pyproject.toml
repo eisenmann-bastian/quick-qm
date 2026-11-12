@@ -11,21 +11,21 @@ dependencies = [
     "rdkit>=2024.9",
     "numpy>=1.23",
     "PyYAML>=6.0,<7",
-    "molecule-selector @ git+https://github.com/eisenmann-bastian/molecular-selector.git@14e41d4a32c97778a7f2619ecb1b7db537e3c5b8",
-    "molecular-utilities @ git+https://github.com/eisenmann-bastian/molecular-utilities.git@3ceb6ad2842129882840c83062dd4c78fcdefe7b",
+    "molecule-selector @ git+https://github.com/eisenmann-bastian/molecular-selector.git",
+    "molecular-utilities @ git+https://github.com/eisenmann-bastian/molecular-utilities.git",
 ]
 
 [project.scripts]
-molecule-axes = "alignment.axes:main"
-molecular-aligner = "alignment.aligner:main"
-molecular-aligner-select = "selection.selector:main"
-molecule-aligner = "alignment.aligner:main"
-molecule-aligner-select = "selection.selector:main"
+molecule-axes = "aligner.axes:main"
+molecular-aligner = "aligner.aligner:main"
+molecular-aligner-select = "aligner.selector:main"
+molecule-aligner = "aligner.aligner:main"
+molecule-aligner-select = "aligner.selector:main"
 
 [tool.setuptools.packages.find]
-include = ["alignment*", "selection*"]
+include = ["aligner*"]
 namespaces = true
 exclude = ["*.test*", "tests*"]
 
 [tool.setuptools.package-data]
-alignment = ["axes.config"]
+aligner = ["axes.config"]

@@ -9,8 +9,8 @@ from pathlib import Path
 
 import yaml
 
-from alignment.axes import SDF_AXES_PROPERTY
-from alignment.axis_config import AXIS_NAMES, DEFAULT_CONFIG, AxisConfig
+from aligner.axes import SDF_AXES_PROPERTY
+from aligner.axis_config import AXIS_NAMES, DEFAULT_CONFIG, AxisConfig
 from molecular_selector.matching import MolecularSelector
 
 
@@ -31,7 +31,7 @@ class AxisConfigurationTests(unittest.TestCase):
 
     def command(self, *args):
         return subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "selector.py"), *map(str, args)],
+            [sys.executable, str(ROOT / "aligner" / "selector.py"), *map(str, args)],
             cwd=ROOT, capture_output=True, text=True,
         )
 
@@ -46,7 +46,7 @@ class AxisConfigurationTests(unittest.TestCase):
     def test_aromatic_direction_and_sdf_marker_are_filtered(self):
         self.settings["axes"]["aromatic_ring_normal"]["directions"][2] = False
         self.save()
-        ring = ROOT / "selection" / "reference_molecules" / "241.sdf"
+        ring = ROOT / "examples" / "reference_molecules" / "241.sdf"
         common = [ring, "--name", "aromatic ring", "--axes-config", self.config]
         result = self.command(*common, "--format", "alignment")
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -66,7 +66,7 @@ class AxisConfigurationTests(unittest.TestCase):
         self.settings["axes"]["chalcogen_bond_extension"]["directions"][2] = False
         self.settings["axes"]["thiol_plane_normal"]["directions"][1] = False
         self.save()
-        thiol = ROOT / "selection" / "reference_molecules" / "878.sdf"
+        thiol = ROOT / "examples" / "reference_molecules" / "878.sdf"
         result = self.command(thiol, "--name", "thiol", "--format", "alignment",
                               "--axes-config", self.config)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -77,7 +77,7 @@ class AxisConfigurationTests(unittest.TestCase):
     def test_group_switch_disables_both_normals(self):
         self.settings["axes"]["thiol_plane_normal"]["enabled"] = False
         self.save()
-        thiol = ROOT / "selection" / "reference_molecules" / "878.sdf"
+        thiol = ROOT / "examples" / "reference_molecules" / "878.sdf"
         result = self.command(thiol, "--name", "thiol", "--format", "alignment",
                               "--axes-config", self.config)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -86,7 +86,7 @@ class AxisConfigurationTests(unittest.TestCase):
         self.assertNotIn("thiol_plane_normal", [r["axis_name"].rsplit("_", 1)[0] for r in rows])
 
     def test_selection_output_does_not_apply_axis_filter(self):
-        thiol = ROOT / "selection" / "reference_molecules" / "878.sdf"
+        thiol = ROOT / "examples" / "reference_molecules" / "878.sdf"
         result = self.command(thiol, "--name", "thiol")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(len(list(csv.DictReader(io.StringIO(result.stdout)))), 1)
@@ -98,7 +98,7 @@ class AxisConfigurationTests(unittest.TestCase):
         for entry in self.settings["axes"].values():
             entry["enabled"] = False
         self.save()
-        ring = ROOT / "selection" / "reference_molecules" / "241.sdf"
+        ring = ROOT / "examples" / "reference_molecules" / "241.sdf"
         output = self.path / "none.sdf"
         result = self.command(ring, "--name", "aromatic ring", "--format", "sdf",
                               "--axes-config", self.config, "-o", output)
@@ -112,13 +112,13 @@ class AxisConfigurationTests(unittest.TestCase):
     def test_existing_alignment_cli_uses_same_config(self):
         self.settings["axes"]["aromatic_ring_normal"]["directions"][1] = False
         self.save()
-        ring = ROOT / "selection" / "reference_molecules" / "241.sdf"
+        ring = ROOT / "examples" / "reference_molecules" / "241.sdf"
         selected = self.command(ring, "--name", "aromatic ring")
         self.assertEqual(selected.returncode, 0, selected.stderr)
         input_path = self.path / "selection.csv"
         input_path.write_text(selected.stdout, encoding="utf-8")
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(input_path),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(input_path),
              "--axes-config", str(self.config)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -127,7 +127,7 @@ class AxisConfigurationTests(unittest.TestCase):
         self.assertEqual([row["axis_name"] for row in rows], ["aromatic_ring_normal_2"])
 
     def test_bad_config_fails_before_output(self):
-        ring = ROOT / "selection" / "reference_molecules" / "241.sdf"
+        ring = ROOT / "examples" / "reference_molecules" / "241.sdf"
         output = self.path / "failure.sdf"
         for content in (
             "axes: [",

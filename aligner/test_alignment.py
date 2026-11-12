@@ -12,8 +12,8 @@ from pathlib import Path
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-from alignment.axis_calculator import AlignmentCalculator
-from alignment.axes import (
+from aligner.axis_calculator import AlignmentCalculator
+from aligner.axes import (
     AlignmentCsv, AlignmentSdf, INPUT_COLUMNS, SDF_AXES_PROPERTY, SDF_SOURCE_PROPERTY,
 )
 from molecular_selector.matching import MolecularSelector
@@ -163,15 +163,15 @@ class AlignmentTests(unittest.TestCase):
 
     def test_reference_batch_carboxylate_pipeline(self):
         selected = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "selector.py"),
-             "--csv", str(ROOT / "selection" / "reference_molecules.csv")],
+            [sys.executable, str(ROOT / "aligner" / "selector.py"),
+             "--csv", str(ROOT / "examples" / "reference_molecules.csv")],
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertEqual(selected.returncode, 0, selected.stderr)
         self.csv.write_text(selected.stdout, encoding="utf-8")
         output = self.directory / "reference.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -185,9 +185,9 @@ class AlignmentTests(unittest.TestCase):
         self.assertTrue(all(s["group_charge"] == -1 for axis in axes for s in axis["sources"]))
 
     def test_combined_cli_path_only_batch_all_formats(self):
-        sdf = ROOT / "selection" / "reference_molecules" / "175.sdf"
+        sdf = ROOT / "examples" / "reference_molecules" / "175.sdf"
         self.csv.write_text(f"sdf\n{sdf}\n", encoding="utf-8")
-        command = [sys.executable, str(ROOT / "selection" / "selector.py"), "--csv", str(self.csv)]
+        command = [sys.executable, str(ROOT / "aligner" / "selector.py"), "--csv", str(self.csv)]
         selection = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(selection.returncode, 0, selection.stderr)
         rows = list(csv.DictReader(io.StringIO(selection.stdout)))
@@ -226,7 +226,7 @@ class AlignmentTests(unittest.TestCase):
         self.csv.write_text("sdf\nmolecule.sdf\n", encoding="utf-8")
         output = self.directory / "multiple.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "selector.py"), "--csv", str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "selector.py"), "--csv", str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -243,7 +243,7 @@ class AlignmentTests(unittest.TestCase):
             with self.subTest(format=output_format):
                 output = self.directory / f"bad-{output_format}"
                 result = subprocess.run(
-                    [sys.executable, str(ROOT / "selection" / "selector.py"), "--csv", str(self.csv),
+                    [sys.executable, str(ROOT / "aligner" / "selector.py"), "--csv", str(self.csv),
                      "--format", output_format, "-o", str(output)],
                     cwd=ROOT, capture_output=True, text=True,
                 )
@@ -254,8 +254,8 @@ class AlignmentTests(unittest.TestCase):
     def test_combined_cli_complete_reference_batch(self):
         output = self.directory / "reference-combined.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "selector.py"), "--csv",
-             str(ROOT / "selection" / "reference_molecules.csv"),
+            [sys.executable, str(ROOT / "aligner" / "selector.py"), "--csv",
+             str(ROOT / "examples" / "reference_molecules.csv"),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -268,7 +268,7 @@ class AlignmentTests(unittest.TestCase):
         self.assertEqual(len(axes["878"]), 6)
         self.assertEqual(len(axes["1068"]), 5)
         thiol = next(mol for mol in molecules if mol.GetProp("_Name") == "878")
-        original = next(MolecularSelector._read_sdf(ROOT / "selection" / "reference_molecules" / "878.sdf"))
+        original = next(MolecularSelector._read_sdf(ROOT / "examples" / "reference_molecules" / "878.sdf"))
         sulfur = original.GetConformer().GetAtomPosition(0)
         hydrogen = original.GetConformer().GetAtomPosition(5)
         sh = (sulfur.x-hydrogen.x, sulfur.y-hydrogen.y, sulfur.z-hydrogen.z)
@@ -501,7 +501,7 @@ class AlignmentTests(unittest.TestCase):
             writer.writerows(rows + [dict(rows[0], selector="hydrogen bond donor")])
         output = self.directory / "thiol.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -528,7 +528,7 @@ class AlignmentTests(unittest.TestCase):
             writer.writerows(rows + [dict(rows[0], selector="chalcogen bond donor")])
         output = self.directory / "thioether.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -614,7 +614,7 @@ class AlignmentTests(unittest.TestCase):
             CsvResultWriter().write(selected, destination, sdf_file=self.sdf)
         output = self.directory / "axes.csv"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -625,7 +625,7 @@ class AlignmentTests(unittest.TestCase):
     def test_cli_writes_relative_paths_and_refuses_overwrite(self):
         self.prepare(self.molecule("CCl"), smarts="[Cl]")
         output = self.directory / "axes.csv"
-        command = [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+        command = [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
                    "--output", str(output)]
         result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -653,7 +653,7 @@ class AlignmentTests(unittest.TestCase):
 
         output = self.directory / "axes.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -690,7 +690,7 @@ class AlignmentTests(unittest.TestCase):
                              tuple(conf.GetAtomPosition(index)))
 
         again = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -708,7 +708,7 @@ class AlignmentTests(unittest.TestCase):
             CsvResultWriter().write(selected, destination, sdf_file=self.sdf)
         output = self.directory / "rings.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -738,7 +738,7 @@ class AlignmentTests(unittest.TestCase):
             CsvResultWriter().write(selected, destination, sdf_file=self.sdf)
         output = self.directory / "axes.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -766,7 +766,7 @@ class AlignmentTests(unittest.TestCase):
             writer.writerows(all_rows)
         output = self.directory / "multiple.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )
@@ -784,7 +784,7 @@ class AlignmentTests(unittest.TestCase):
         self.prepare(mol, smarts="[Cl]")
         output = self.directory / "collision.sdf"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "selection" / "alignment.py"), str(self.csv),
+            [sys.executable, str(ROOT / "aligner" / "alignment.py"), str(self.csv),
              "--format", "sdf", "-o", str(output)],
             cwd=ROOT, capture_output=True, text=True,
         )

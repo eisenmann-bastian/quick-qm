@@ -9,6 +9,14 @@ alignment/aligned_pairs/
 alignment/aligned_pairs.csv
 alignment/scan_*.csv
 alignment/scan_*/
+aligner/aligned_pairs/
+aligner/aligned_pairs.csv
+aligner/scan_*.csv
+aligner/scan_*/
+examples/aligned_pairs/
+examples/aligned_pairs.csv
+examples/scan_*.csv
+examples/scan_*/
 selection/reference_combined.sdf
 selection/test_out.csv
 selection/test_out_aligned.csv

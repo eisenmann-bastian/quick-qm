@@ -8,8 +8,8 @@ import numpy as np
 import yaml
 from rdkit import Chem
 
-from alignment import test_aligner
-from alignment.torsion_optimization import TorsionOptimizer
+from aligner import test_aligner
+from aligner.torsion_optimization import TorsionOptimizer
 from molecular_selector.matching import MolecularSelector
 
 
@@ -84,7 +84,7 @@ class TorsionTests(unittest.TestCase):
 
     def test_missing_mmff_parameters_are_an_error(self):
         molecule = next(MolecularSelector._read_sdf(self.paths[0]))
-        with patch("alignment.torsion_optimization.AllChem.MMFFGetMoleculeProperties", return_value=None):
+        with patch("aligner.torsion_optimization.AllChem.MMFFGetMoleculeProperties", return_value=None):
             with self.assertRaisesRegex(ValueError, "MMFF94 parameters unavailable"):
                 TorsionOptimizer.mmff_energy(molecule, False)
 

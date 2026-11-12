@@ -2,7 +2,7 @@
 
 import io
 
-from alignment.axes import AlignmentCsv, AlignmentSdf
+from aligner.axes import AlignmentCsv, AlignmentSdf
 from molecular_selector.batch import BatchSelector
 from molecular_selector.matching import MolecularSelector
 from molecular_selector.output import CsvResultWriter

@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from rdkit import Chem
 
-from selection import selector
+from aligner import selector
 from molecular_selector.batch import BatchSelector
 from molecular_selector.definitions import NamedSelector, SelectorRegistry
 from molecular_selector.matching import MolecularSelector

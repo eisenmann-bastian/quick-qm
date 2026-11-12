@@ -9,8 +9,8 @@ from pathlib import Path
 
 import yaml
 
-from alignment.axis_input import FILTER_FIELDS
-from alignment.axis_config import UniqueKeyLoader
+from aligner.axis_input import FILTER_FIELDS
+from aligner.axis_config import UniqueKeyLoader
 
 
 @dataclass(frozen=True)

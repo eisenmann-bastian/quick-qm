@@ -14,14 +14,14 @@ import yaml
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-from alignment import aligner
-from alignment.aligner import PairAligner
-from alignment.reference_frame import ReferenceSelector
+from aligner import aligner
+from aligner.aligner import PairAligner
+from aligner.reference_frame import ReferenceSelector
 from molecular_selector.matching import MolecularSelector
 
 
 ROOT = Path(__file__).resolve().parent.parent
-SCRIPT = ROOT / "alignment" / "aligner.py"
+SCRIPT = ROOT / "aligner" / "aligner.py"
 
 
 class AlignerTests(unittest.TestCase):
@@ -188,11 +188,11 @@ class AlignerTests(unittest.TestCase):
         self.assertFalse((self.directory / "aligned_pairs").exists())
 
     def test_reference_csv_and_yaml_work_from_source_working_directory(self):
-        source = ROOT / "alignment"
+        source = ROOT / "examples"
         output = self.directory / "reference"
         result = subprocess.run(
             [sys.executable, str(SCRIPT), "test_out_aligned.csv", "--config",
-             str(source / "aligner.config"), "--output", str(output)],
+             str(ROOT / "examples" / "configs" / "aligner.config"), "--output", str(output)],
             cwd=source, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)

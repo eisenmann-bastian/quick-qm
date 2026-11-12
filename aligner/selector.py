@@ -9,14 +9,14 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from molecule_utilities.logging import configure_logging, get_logger
-from alignment import LOGGER_NAMESPACE
-from alignment.axis_config import DEFAULT_CONFIG, AxisConfig
+from molecular_utilities.logging import configure_logging, get_logger
+from aligner import LOGGER_NAMESPACE
+from aligner.axis_config import DEFAULT_CONFIG, AxisConfig
 from molecular_selector.batch import BatchSelector
 from molecular_selector.definitions import SELECTORS, NamedSelector, SelectorRegistry
 from molecular_selector.matching import MolecularSelector
 from molecular_selector.output import CsvResultWriter
-from alignment.selection_pipeline import SelectionPipeline
+from aligner.selection_pipeline import SelectionPipeline
 
 logger = get_logger("selection.selector", namespace=LOGGER_NAMESPACE)
 

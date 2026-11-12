@@ -1,9 +1,9 @@
 """Generate scan poses for rigid and flexible axis pairs."""
 
-from alignment.geometry import PairAligner
-from alignment.polar_scan import PositionMerger, spherical_position
-from molecule_utilities.logging import get_logger
-from alignment import LOGGER_NAMESPACE
+from aligner.geometry import PairAligner
+from aligner.polar_scan import PositionMerger, spherical_position
+from molecular_utilities.logging import get_logger
+from aligner import LOGGER_NAMESPACE
 
 logger = get_logger("alignment.aligner", namespace=LOGGER_NAMESPACE)
 
