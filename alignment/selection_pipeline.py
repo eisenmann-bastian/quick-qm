@@ -3,16 +3,16 @@
 import io
 
 from alignment.axes import AlignmentCsv, AlignmentSdf
-from molecule_selector.batch import BatchSelector
-from molecule_selector.matching import MoleculeSelector
-from molecule_selector.output import CsvResultWriter
+from molecular_selector.batch import BatchSelector
+from molecular_selector.matching import MolecularSelector
+from molecular_selector.output import CsvResultWriter
 
 
 class SelectionPipeline:
     """Run selection and optionally derive alignment results in memory."""
 
     def __init__(self, molecule_selector=None):
-        self.matcher = molecule_selector if molecule_selector is not None else MoleculeSelector()
+        self.matcher = molecule_selector if molecule_selector is not None else MolecularSelector()
         self.batch = BatchSelector(self.matcher)
         self.selection_writer = CsvResultWriter()
 

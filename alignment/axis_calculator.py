@@ -7,7 +7,7 @@ from rdkit import Chem
 
 from molecule_utilities.logging import get_logger
 from alignment import LOGGER_NAMESPACE
-from molecule_selector import carboxylate_sites
+from molecular_selector import carboxylate_sites
 
 logger = get_logger("selection.alignment", namespace=LOGGER_NAMESPACE)
 

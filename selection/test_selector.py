@@ -13,7 +13,7 @@ from rdkit import Chem
 from selection import selector
 from selection.batch import BatchSelector
 from selection.definitions import NamedSelector, SelectorRegistry
-from selection.matching import MoleculeSelector
+from selection.matching import MolecularSelector
 from selection.output import CsvResultWriter
 
 
@@ -34,7 +34,7 @@ class SelectorTests(unittest.TestCase):
     def test_components_share_custom_registry(self):
         self.write_molecules(["CSC"])
         registry = SelectorRegistry({"sulfur": NamedSelector("[S:1]", ("sulphur",))})
-        matcher = MoleculeSelector(registry)
+        matcher = MolecularSelector(registry)
         input_file = self.path.parent / "custom.csv"
         input_file.write_text("file,sulphur\nmolecules.sdf,x\n", encoding="utf-8")
         result = BatchSelector(matcher).select(input_file)
@@ -238,7 +238,7 @@ class SelectorTests(unittest.TestCase):
         self.write_molecules(["CSC", "CC(=O)[O-]"])
         csv_file = self.path.parent / "input.csv"
         csv_file.write_text("sdf\nmolecules.sdf\n", encoding="utf-8")
-        matcher = MoleculeSelector()
+        matcher = MolecularSelector()
         with patch.object(matcher, "_read_sdf", wraps=matcher._read_sdf) as read_sdf:
             result = BatchSelector(matcher).select(csv_file)
         read_sdf.assert_called_once()

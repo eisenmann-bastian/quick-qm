@@ -15,7 +15,7 @@ from rdkit.Chem import AllChem
 from selection.alignment import (
     AlignmentCalculator, AlignmentCsv, AlignmentSdf, INPUT_COLUMNS, SDF_AXES_PROPERTY, SDF_SOURCE_PROPERTY,
 )
-from selection.matching import MoleculeSelector
+from selection.matching import MolecularSelector
 from selection.output import CsvResultWriter
 
 
@@ -45,7 +45,7 @@ class AlignmentTests(unittest.TestCase):
         writer = Chem.SDWriter(str(self.sdf))
         writer.write(mol)
         writer.close()
-        selected = MoleculeSelector().select(self.sdf, name=name, smarts=smarts)
+        selected = MolecularSelector().select(self.sdf, name=name, smarts=smarts)
         with self.csv.open("w", newline="", encoding="utf-8") as destination:
             CsvResultWriter().write(selected, destination, sdf_file=self.sdf)
         return AlignmentCsv().read(self.csv)
@@ -75,7 +75,7 @@ class AlignmentTests(unittest.TestCase):
     def test_carboxylate_geometry_is_resonance_invariant(self):
         mol = self.molecule("CC(=O)[O-]")
         first = self.prepare(mol, name="carboxylate")
-        original = next(MoleculeSelector._read_sdf(self.sdf))
+        original = next(MolecularSelector._read_sdf(self.sdf))
         conformer = original.GetConformer()
         carbon = conformer.GetAtomPosition(1)
         p1, p2 = conformer.GetAtomPosition(2), conformer.GetAtomPosition(3)
@@ -135,7 +135,7 @@ class AlignmentTests(unittest.TestCase):
         processor = AlignmentCsv()
         rows = processor.read(self.csv, include_unmatched=True)
         annotated = AlignmentSdf.build(processor.records, rows)[0]
-        original = next(MoleculeSelector._read_sdf(self.sdf))
+        original = next(MolecularSelector._read_sdf(self.sdf))
         self.assertEqual(Chem.MolToSmiles(annotated, isomericSmiles=True).count("[O-]"), 1)
         for bond in original.GetBonds():
             other = annotated.GetBondBetweenAtoms(bond.GetBeginAtomIdx(), bond.GetEndAtomIdx())
@@ -151,7 +151,7 @@ class AlignmentTests(unittest.TestCase):
         output = self.directory / "carboxylate.sdf"
         with output.open("w", encoding="utf-8", newline="") as destination:
             AlignmentSdf.write([annotated], destination)
-        restored = next(MoleculeSelector._read_sdf(output))
+        restored = next(MolecularSelector._read_sdf(output))
         self.assertEqual(len(json.loads(restored.GetProp(SDF_AXES_PROPERTY))), 6)
         for index in range(original.GetNumAtoms()):
             self.assertEqual(restored.GetAtomWithIdx(index).GetFormalCharge(),
@@ -175,7 +175,7 @@ class AlignmentTests(unittest.TestCase):
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        records = list(MoleculeSelector._read_sdf(output))
+        records = list(MolecularSelector._read_sdf(output))
         acetate = next(m for m in records if m.GetProp("_Name") == "175")
         axes = json.loads(acetate.GetProp(SDF_AXES_PROPERTY))
         self.assertEqual(len(axes), 6)
@@ -206,7 +206,7 @@ class AlignmentTests(unittest.TestCase):
         sdf_result = subprocess.run(command + ["--format", "sdf", "-o", str(output)],
                                     cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(sdf_result.returncode, 0, sdf_result.stderr)
-        annotated = list(MoleculeSelector._read_sdf(output))
+        annotated = list(MolecularSelector._read_sdf(output))
         self.assertEqual(len(annotated), 1)
         metadata = json.loads(annotated[0].GetProp(SDF_AXES_PROPERTY))
         self.assertEqual(len(metadata), 6)
@@ -215,7 +215,7 @@ class AlignmentTests(unittest.TestCase):
         again = subprocess.run(command + ["--format", "sdf", "-o", str(output)],
                                cwd=ROOT, capture_output=True, text=True)
         self.assertNotEqual(again.returncode, 0)
-        self.assertEqual(len(list(MoleculeSelector._read_sdf(output))), 1)
+        self.assertEqual(len(list(MolecularSelector._read_sdf(output))), 1)
 
     def test_combined_cli_path_only_multirecord_and_unmatched(self):
         writer = Chem.SDWriter(str(self.sdf))
@@ -230,7 +230,7 @@ class AlignmentTests(unittest.TestCase):
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        records = list(MoleculeSelector._read_sdf(output))
+        records = list(MolecularSelector._read_sdf(output))
         self.assertEqual(len(records), 2)
         self.assertEqual(len(json.loads(records[0].GetProp(SDF_AXES_PROPERTY))), 1)
         self.assertEqual(json.loads(records[1].GetProp(SDF_AXES_PROPERTY)), [])
@@ -259,7 +259,7 @@ class AlignmentTests(unittest.TestCase):
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        molecules = list(MoleculeSelector._read_sdf(output))
+        molecules = list(MolecularSelector._read_sdf(output))
         self.assertEqual([mol.GetProp("_Name") for mol in molecules], ["241", "175", "878", "1068", "6582"])
         axes = {mol.GetProp("_Name"): json.loads(mol.GetProp(SDF_AXES_PROPERTY)) for mol in molecules}
         self.assertEqual(len(axes["241"]), 2)
@@ -267,7 +267,7 @@ class AlignmentTests(unittest.TestCase):
         self.assertEqual(len(axes["878"]), 6)
         self.assertEqual(len(axes["1068"]), 5)
         thiol = next(mol for mol in molecules if mol.GetProp("_Name") == "878")
-        original = next(MoleculeSelector._read_sdf(ROOT / "selection" / "reference_molecules" / "878.sdf"))
+        original = next(MolecularSelector._read_sdf(ROOT / "selection" / "reference_molecules" / "878.sdf"))
         sulfur = original.GetConformer().GetAtomPosition(0)
         hydrogen = original.GetConformer().GetAtomPosition(5)
         sh = (sulfur.x-hydrogen.x, sulfur.y-hydrogen.y, sulfur.z-hydrogen.z)
@@ -313,7 +313,7 @@ class AlignmentTests(unittest.TestCase):
             with self.subTest(smiles=smiles):
                 mol = self.molecule(smiles)
                 rows = self.prepare(mol, smarts=smarts)
-                mol = next(MoleculeSelector._read_sdf(self.sdf))
+                mol = next(MolecularSelector._read_sdf(self.sdf))
                 row = next(r for r in rows if r["axis_type"] == kind)
                 axis = json.loads(row["axis"])
                 self.assert_unit(axis)
@@ -358,7 +358,7 @@ class AlignmentTests(unittest.TestCase):
             self.assert_unit(axis)
 
     def test_unsupported_and_no_matches(self):
-        with self.assertLogs("molecule_aligner.selection.alignment", level="WARNING") as logs:
+        with self.assertLogs("molecular_aligner.selection.alignment", level="WARNING") as logs:
             rows = self.prepare(self.molecule("C[N+](C)(C)C"), name="positive charge")
         self.assertEqual(rows, [])
         self.assertIn("not yet supported", "\n".join(logs.output))
@@ -366,7 +366,7 @@ class AlignmentTests(unittest.TestCase):
 
     def test_hydrogen_without_coordinates_is_not_invented(self):
         mol = self.molecule("CO", explicit_hydrogens=False)
-        with self.assertLogs("molecule_aligner.selection.alignment", level="WARNING") as logs:
+        with self.assertLogs("molecular_aligner.selection.alignment", level="WARNING") as logs:
             rows = self.prepare(mol, name="hydrogen bond donor")
         self.assertEqual([row["axis_type"] for row in rows], ["chalcogen_sigma"])
         self.assertIn("explicit hydrogen coordinates", "\n".join(logs.output))
@@ -384,7 +384,7 @@ class AlignmentTests(unittest.TestCase):
             with self.subTest(smiles=smiles):
                 molecule = self.molecule(smiles)
                 rows = self.prepare(molecule, name=name, smarts="[S]" if name is None else None)
-                molecule = next(MoleculeSelector._read_sdf(self.sdf))
+                molecule = next(MolecularSelector._read_sdf(self.sdf))
                 rows = [row for row in rows if row["axis_type"] == "chalcogen_sigma"]
                 self.assertEqual(len(rows), count)
                 index = rows[0]["center_atom_index"]
@@ -415,7 +415,7 @@ class AlignmentTests(unittest.TestCase):
             "thioether_lone_pair_normal", "thioether_lone_pair_normal",
             "thioether_outward_bisector",
         ])
-        mol = next(MoleculeSelector._read_sdf(self.sdf))
+        mol = next(MolecularSelector._read_sdf(self.sdf))
         conformer = mol.GetConformer()
         center = conformer.GetAtomPosition(1)
         neighbors = []
@@ -443,7 +443,7 @@ class AlignmentTests(unittest.TestCase):
             "chalcogen_sigma", "chalcogen_sigma", "thiol_lone_pair_normal", "thiol_lone_pair_normal",
             "thiol_outward_bisector", "hydrogen_sigma",
         ])
-        mol = next(MoleculeSelector._read_sdf(self.sdf))
+        mol = next(MolecularSelector._read_sdf(self.sdf))
         sulfur = mol.GetAtomWithIdx(1)
         neighbors = {atom.GetSymbol(): atom.GetIdx() for atom in sulfur.GetNeighbors()}
         conformer = mol.GetConformer()
@@ -473,7 +473,7 @@ class AlignmentTests(unittest.TestCase):
 
     def test_thiol_implicit_hydrogen_warns_and_preserves_known_axis(self):
         mol = self.molecule("CS", explicit_hydrogens=False)
-        with self.assertLogs("molecule_aligner.selection.alignment", level="WARNING") as logs:
+        with self.assertLogs("molecular_aligner.selection.alignment", level="WARNING") as logs:
             rows = self.prepare(mol, name="thiol")
         self.assertEqual([row["axis_type"] for row in rows], ["chalcogen_sigma"])
         self.assertIn("thiol plane", "\n".join(logs.output))
@@ -505,7 +505,7 @@ class AlignmentTests(unittest.TestCase):
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        mol = next(MoleculeSelector._read_sdf(output))
+        mol = next(MolecularSelector._read_sdf(output))
         axes = json.loads(mol.GetProp(SDF_AXES_PROPERTY))
         self.assertEqual(len(axes), 6)
         for entry in axes:
@@ -532,7 +532,7 @@ class AlignmentTests(unittest.TestCase):
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        mol = next(MoleculeSelector._read_sdf(output))
+        mol = next(MolecularSelector._read_sdf(output))
         axes = json.loads(mol.GetProp(SDF_AXES_PROPERTY))
         self.assertEqual(len(axes), 5)
         for entry in axes:
@@ -594,7 +594,7 @@ class AlignmentTests(unittest.TestCase):
         writer.write(first)
         writer.write(second)
         writer.close()
-        selected = MoleculeSelector().select(self.sdf, smarts="[Cl]")
+        selected = MolecularSelector().select(self.sdf, smarts="[Cl]")
         with self.csv.open("w", newline="", encoding="utf-8") as destination:
             CsvResultWriter().write(selected, destination, sdf_file=self.sdf)
         rows = AlignmentCsv().read(self.csv)
@@ -608,7 +608,7 @@ class AlignmentTests(unittest.TestCase):
         writer = Chem.SDWriter(str(self.sdf))
         writer.write(mol)
         writer.close()
-        selected = MoleculeSelector().select(self.sdf, smarts="[Cl]")
+        selected = MolecularSelector().select(self.sdf, smarts="[Cl]")
         with self.csv.open("w", newline="", encoding="utf-8") as destination:
             CsvResultWriter().write(selected, destination, sdf_file=self.sdf)
         output = self.directory / "axes.csv"
@@ -657,7 +657,7 @@ class AlignmentTests(unittest.TestCase):
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        records = list(MoleculeSelector._read_sdf(output))
+        records = list(MolecularSelector._read_sdf(output))
         self.assertEqual(len(records), 1)
         annotated = records[0]
         self.assertEqual(annotated.GetProp("_Name"), "acetone")
@@ -683,7 +683,7 @@ class AlignmentTests(unittest.TestCase):
                 math.sqrt(sum((value - center) ** 2 for value, center in zip(position, entry["center"]))),
                 1.0, delta=0.0001,
             )
-        original = next(MoleculeSelector._read_sdf(self.sdf))
+        original = next(MolecularSelector._read_sdf(self.sdf))
         for index in range(original.GetNumAtoms()):
             self.assertEqual(tuple(original.GetConformer().GetAtomPosition(index)),
                              tuple(conf.GetAtomPosition(index)))
@@ -694,7 +694,7 @@ class AlignmentTests(unittest.TestCase):
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertNotEqual(again.returncode, 0)
-        self.assertEqual(len(list(MoleculeSelector._read_sdf(output))), 1)
+        self.assertEqual(len(list(MolecularSelector._read_sdf(output))), 1)
 
     def test_sdf_output_ring_centroid_and_unmatched_multirecord(self):
         ring, unmatched = self.molecule("c1ccccc1"), self.molecule("CC")
@@ -702,7 +702,7 @@ class AlignmentTests(unittest.TestCase):
         writer.write(ring)
         writer.write(unmatched)
         writer.close()
-        selected = MoleculeSelector().select(self.sdf, name="aromatic ring")
+        selected = MolecularSelector().select(self.sdf, name="aromatic ring")
         with self.csv.open("w", newline="", encoding="utf-8") as destination:
             CsvResultWriter().write(selected, destination, sdf_file=self.sdf)
         output = self.directory / "rings.sdf"
@@ -713,7 +713,7 @@ class AlignmentTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("no supported alignment axes", result.stderr)
-        records = list(MoleculeSelector._read_sdf(output))
+        records = list(MolecularSelector._read_sdf(output))
         self.assertEqual(len(records), 2)
         self.assertEqual(records[0].GetNumAtoms(), ring.GetNumAtoms() + 2)
         self.assertEqual(records[1].GetNumAtoms(), unmatched.GetNumAtoms())
@@ -732,7 +732,7 @@ class AlignmentTests(unittest.TestCase):
         writer = Chem.SDWriter(str(self.sdf))
         writer.write(mol)
         writer.close()
-        selected = MoleculeSelector().select(self.sdf, smarts="[Cl]")
+        selected = MolecularSelector().select(self.sdf, smarts="[Cl]")
         with self.csv.open("w", newline="", encoding="utf-8") as destination:
             CsvResultWriter().write(selected, destination, sdf_file=self.sdf)
         output = self.directory / "axes.sdf"
@@ -755,7 +755,7 @@ class AlignmentTests(unittest.TestCase):
             writer.close()
         all_rows = []
         for path, smarts in ((self.sdf, "[Cl]"), (second_path, "[Br]")):
-            selected = MoleculeSelector().select(path, smarts=smarts)
+            selected = MolecularSelector().select(path, smarts=smarts)
             stream = io.StringIO()
             CsvResultWriter().write(selected, stream, sdf_file=path)
             all_rows.extend(csv.DictReader(io.StringIO(stream.getvalue())))
@@ -770,7 +770,7 @@ class AlignmentTests(unittest.TestCase):
             cwd=ROOT, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        records = list(MoleculeSelector._read_sdf(output))
+        records = list(MolecularSelector._read_sdf(output))
         self.assertEqual(len(records), 2)
         for record, path in zip(records, (self.sdf, second_path)):
             source = json.loads(record.GetProp(SDF_SOURCE_PROPERTY))

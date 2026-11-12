@@ -11,7 +11,7 @@ import yaml
 
 from selection.alignment import SDF_AXES_PROPERTY
 from selection.axis_config import AXIS_NAMES, DEFAULT_CONFIG, AxisConfig
-from selection.matching import MoleculeSelector
+from selection.matching import MolecularSelector
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -57,7 +57,7 @@ class AxisConfigurationTests(unittest.TestCase):
         output = self.path / "ring.sdf"
         result = self.command(*common, "--format", "sdf", "-o", output)
         self.assertEqual(result.returncode, 0, result.stderr)
-        mol = next(MoleculeSelector._read_sdf(output))
+        mol = next(MolecularSelector._read_sdf(output))
         axes = json.loads(mol.GetProp(SDF_AXES_PROPERTY))
         self.assertEqual(len(axes), 1)
         self.assertEqual(axes[0]["sources"][0]["axis_name"], "aromatic_ring_normal_1")
@@ -104,8 +104,8 @@ class AxisConfigurationTests(unittest.TestCase):
                               "--axes-config", self.config, "-o", output)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("no supported alignment axes", result.stderr)
-        result_mol = next(MoleculeSelector._read_sdf(output))
-        original = next(MoleculeSelector._read_sdf(ring))
+        result_mol = next(MolecularSelector._read_sdf(output))
+        original = next(MolecularSelector._read_sdf(ring))
         self.assertEqual(result_mol.GetNumAtoms(), original.GetNumAtoms())
         self.assertEqual(json.loads(result_mol.GetProp(SDF_AXES_PROPERTY)), [])
 

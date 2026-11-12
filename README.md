@@ -1,4 +1,4 @@
-# Molecular axis selection and alignment
+# Molecular aligner
 
 Select molecular interaction sites from SDF files, derive candidate axes, and
 generate aligned molecular pairs for geometric scanning and optional torsion
@@ -18,21 +18,23 @@ provided by a separate GitHub project. Supply SDF files to the selector as
 described below.
 
 The selector and shared logging are provided by the separate
-`molecule-selector` and `molecular-utilities` packages. For local development,
-clone the selector repository alongside this repository, create and activate a
-Python environment, and run:
+[`molecule-selector`](https://github.com/eisenmann-bastian/molecular-selector)
+and [`molecular-utilities`](https://github.com/eisenmann-bastian/molecular-utilities)
+packages. Create and activate a Python environment, then install this project:
 
 ```bash
-python -m pip install -e ../molecule-selector
 python -m pip install -e .
 ```
 
-The shared utilities dependency is fetched from GitHub at the revision pinned
-in `pyproject.toml`; installation requires Git and network access. The selector
-dependency is installed from the sibling checkout until it is available from a
-package index. Shared logging lives in `molecule_utilities.logging`; CLI log
-messages use the `molecule_aligner` namespace and standard error. The old
-`core.logging` compatibility module has been removed.
+Both dependencies are fetched from GitHub at the revisions pinned in
+`pyproject.toml`; installation requires Git and network access. Shared logging
+lives in `molecule_utilities.logging`; CLI log messages use the
+`molecular_aligner` namespace and standard error. The old `core.logging`
+compatibility module has been removed.
+
+The installed commands are `molecule-axes`, `molecular-aligner`, and
+`molecular-aligner-select`. The previous `molecule-aligner` and
+`molecule-aligner-select` commands remain available as compatibility aliases.
 
 ### Select functional groups and interaction sites
 

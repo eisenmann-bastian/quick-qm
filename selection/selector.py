@@ -12,16 +12,16 @@ if __package__ in (None, ""):
 from molecule_utilities.logging import configure_logging, get_logger
 from alignment import LOGGER_NAMESPACE
 from alignment.axis_config import DEFAULT_CONFIG, AxisConfig
-from molecule_selector.batch import BatchSelector
-from molecule_selector.definitions import SELECTORS, NamedSelector, SelectorRegistry
-from molecule_selector.matching import MoleculeSelector
-from molecule_selector.output import CsvResultWriter
+from molecular_selector.batch import BatchSelector
+from molecular_selector.definitions import SELECTORS, NamedSelector, SelectorRegistry
+from molecular_selector.matching import MolecularSelector
+from molecular_selector.output import CsvResultWriter
 from alignment.selection_pipeline import SelectionPipeline
 
 logger = get_logger("selection.selector", namespace=LOGGER_NAMESPACE)
 
 _registry = SelectorRegistry()
-_molecule_selector = MoleculeSelector(_registry)
+_molecule_selector = MolecularSelector(_registry)
 _batch_selector = BatchSelector(_molecule_selector)
 _csv_writer = CsvResultWriter()
 _pipeline = SelectionPipeline(_molecule_selector)

@@ -17,7 +17,7 @@ from rdkit.Chem import AllChem
 from alignment import aligner
 from alignment.aligner import PairAligner
 from alignment.reference_frame import ReferenceSelector
-from selection.matching import MoleculeSelector
+from selection.matching import MolecularSelector
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -48,7 +48,7 @@ class AlignerTests(unittest.TestCase):
         rows = []
         for path, name, kind, axis in ((self.paths[0], "rigid", "oxygen", [1, 0, 0]),
                                         (self.paths[1], "flexible", "halogen", [0, 1, 0])):
-            mol = next(MoleculeSelector._read_sdf(path))
+            mol = next(MolecularSelector._read_sdf(path))
             p = mol.GetConformer().GetAtomPosition(1)
             rows.append(dict(sdf_file=str(path), record_index=0, molecule_name=name, selector=kind,
                              axis_type="sigma", center_atom_index=1,
@@ -83,9 +83,9 @@ class AlignerTests(unittest.TestCase):
         rcenter = np.array(json.loads(row["rigid_center"]))
         fcenter = np.array(json.loads(row["flexible_aligned_center"]))
         np.testing.assert_allclose(fcenter, rcenter + expected * rigid_axis, atol=1e-12)
-        pair = next(MoleculeSelector._read_sdf(self.directory / row["sdf_file"]))
-        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
-        flexible = next(MoleculeSelector._read_sdf(self.paths[1]))
+        pair = next(MolecularSelector._read_sdf(self.directory / row["sdf_file"]))
+        rigid = next(MolecularSelector._read_sdf(self.paths[0]))
+        flexible = next(MolecularSelector._read_sdf(self.paths[1]))
         self.assertEqual(pair.GetNumAtoms(), rigid.GetNumAtoms() + flexible.GetNumAtoms())
         self.assertEqual(pair.GetNumBonds(), rigid.GetNumBonds() + flexible.GetNumBonds())
         self.assertEqual(len(Chem.GetMolFrags(pair)), 2)
@@ -110,7 +110,7 @@ class AlignerTests(unittest.TestCase):
         }), encoding="utf-8")
         result = self.run_cli("--config", config)
         self.assertEqual(result.returncode, 0, result.stderr)
-        molecules = list(MoleculeSelector._read_sdf(self.directory / "all.sdf"))
+        molecules = list(MolecularSelector._read_sdf(self.directory / "all.sdf"))
         with (self.directory / "all.csv").open(newline="", encoding="utf-8") as source:
             metadata = list(csv.DictReader(source))
         self.assertEqual(len(molecules), 4)
@@ -305,10 +305,10 @@ class AlignerTests(unittest.TestCase):
                 self.assertEqual([int(row["pose_index"]) for row in rows], list(range(1, len(expected) + 1)))
                 self.assertEqual({row["axis_pair_id"] for row in rows}, {"axis-pair-000001"})
                 for row in rows:
-                    pair = list(MoleculeSelector._read_sdf(self.directory / row["sdf_file"]))[int(row["sdf_record_index"])]
+                    pair = list(MolecularSelector._read_sdf(self.directory / row["sdf_file"]))[int(row["sdf_record_index"])]
                     self.assertEqual(pair.GetProp("quick_qm_pose_index"), row["pose_index"])
                     self.assertEqual(pair.GetProp("quick_qm_distance_angstrom"), row["distance_angstrom"])
-                    rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
+                    rigid = next(MolecularSelector._read_sdf(self.paths[0]))
                     point = pair.GetConformer().GetAtomPosition(rigid.GetNumAtoms() + 1)
                     np.testing.assert_allclose(point, json.loads(row["flexible_aligned_center"]), atol=0.00006)
 
@@ -387,7 +387,7 @@ class AlignerTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         with (self.directory / "scan.csv").open(newline="") as source:
             metadata = list(csv.DictReader(source))
-        molecules = list(MoleculeSelector._read_sdf(self.directory / "scan.sdf"))
+        molecules = list(MolecularSelector._read_sdf(self.directory / "scan.sdf"))
         self.assertEqual(len(metadata), 12)
         self.assertEqual(len(molecules), 12)
         self.assertEqual([int(row["sdf_record_index"]) for row in metadata], list(range(12)))
@@ -466,7 +466,7 @@ class AlignerTests(unittest.TestCase):
             group = metadata[i * 3:(i + 1) * 3]
             self.assertEqual({row["sdf_file"] for row in group}, {f"aligned_pairs/axis-pair-{i+1:06d}.sdf"})
             self.assertEqual([int(row["sdf_record_index"]) for row in group], [0, 1, 2])
-            molecules = list(MoleculeSelector._read_sdf(self.directory / group[0]["sdf_file"]))
+            molecules = list(MolecularSelector._read_sdf(self.directory / group[0]["sdf_file"]))
             self.assertEqual(len(molecules), 3)
             for record, row in zip(molecules, group):
                 self.assertEqual(record.GetProp("quick_qm_pair_id"), row["pair_id"])
@@ -489,7 +489,7 @@ class AlignerTests(unittest.TestCase):
         self.assertEqual(output.read_bytes(), original)
         result = self.run_cli(*self.filters(), "--distance", 9, "--overwrite-output")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(len(list(MoleculeSelector._read_sdf(output))), 1)
+        self.assertEqual(len(list(MolecularSelector._read_sdf(output))), 1)
         self.assertEqual(extra.read_text(encoding="utf-8"), "keep old file")
         self.assertEqual(unrelated.read_text(encoding="utf-8"), "keep")
         with (self.directory / "aligned_pairs.csv").open(newline="") as source:
@@ -624,8 +624,8 @@ class AlignerTests(unittest.TestCase):
         self.assertEqual(len(rows), 9)
         self.assertEqual([(float(r["x_offset_angstrom"]), float(r["z_offset_angstrom"])) for r in rows],
                          [(x, z) for x in (-1, 0, 1) for z in (-2, 0, 2)])
-        molecules = list(MoleculeSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
-        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
+        molecules = list(MolecularSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
+        rigid = next(MolecularSelector._read_sdf(self.paths[0]))
         for row, mol in zip(rows, molecules):
             xaxis, yaxis, zaxis = (np.array(json.loads(row[key])) for key in ("x_axis", "rigid_axis", "z_axis"))
             np.testing.assert_allclose(np.cross(xaxis, yaxis), zaxis, atol=1e-12)
@@ -648,9 +648,9 @@ class AlignerTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         with (self.directory / "aligned_pairs.csv").open(newline="") as source:
             rows = list(csv.DictReader(source))
-        molecules = list(MoleculeSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
-        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
-        flexible = next(MoleculeSelector._read_sdf(self.paths[1]))
+        molecules = list(MolecularSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
+        rigid = next(MolecularSelector._read_sdf(self.paths[0]))
+        flexible = next(MolecularSelector._read_sdf(self.paths[1]))
         self.assertEqual(len(rows), 3)
         for row, molecule in zip(rows, molecules):
             rcenter = np.array(json.loads(row["rigid_center"]))
@@ -711,8 +711,8 @@ class AlignerTests(unittest.TestCase):
         with (self.directory / "aligned_pairs.csv").open(newline="") as source:
             rows = list(csv.DictReader(source))
         self.assertEqual(len(rows), 4)
-        mols = list(MoleculeSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
-        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
+        mols = list(MolecularSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
+        rigid = next(MolecularSelector._read_sdf(self.paths[0]))
         for row, molecule, expected in zip(rows, mols, [(2, 0), (0, 2), (-2, 0), (0, -2)]):
             self.assertEqual(row["coordinate_system"], "polar")
             self.assertEqual(row["polar_phi_unit"], "degrees")
@@ -745,7 +745,7 @@ class AlignerTests(unittest.TestCase):
             rows = list(csv.DictReader(source))
         self.assertEqual(len(rows), 6)
         self.assertEqual([int(row["sdf_record_index"]) for row in rows], list(range(6)))
-        self.assertEqual(len(list(MoleculeSelector._read_sdf(self.directory / "polar.sdf"))), 6)
+        self.assertEqual(len(list(MolecularSelector._read_sdf(self.directory / "polar.sdf"))), 6)
         self.assertEqual({row["polar_theta_unit"] for row in rows}, {"radians"})
         self.assertEqual(sum(float(row["polar_radius_angstrom"]) == 0 for row in rows), 1)
 
@@ -800,7 +800,7 @@ class AlignerTests(unittest.TestCase):
         self.assertEqual([row["pose_index"] for row in rows], ["1", "2", "3", "4"])
         self.assertEqual([float(row["distance_angstrom"]) for row in rows], [2, 2.02, 2.04, 3])
         self.assertIn("merged 1 positions from earlier scans", result.stderr)
-        molecules = list(MoleculeSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
+        molecules = list(MolecularSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
         self.assertEqual([m.GetProp("quick_qm_scan_index") for m in molecules], ["1", "1", "1", "4"])
 
     def test_multiple_scan_tolerance_and_cli_overrides(self):

@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from molecule_selector import MoleculeSelector
+from molecular_selector import MolecularSelector
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -15,7 +15,7 @@ class CrossRepositoryTests(unittest.TestCase):
     def test_cli_logging_does_not_configure_selector_namespace(self):
         from alignment import aligner
 
-        selector_logger = logging.getLogger("molecule_selector")
+        selector_logger = logging.getLogger("molecular_selector")
         previous = (selector_logger.level, selector_logger.handlers[:], selector_logger.propagate)
         with tempfile.TemporaryDirectory() as directory:
             status = aligner.main([str(Path(directory) / "missing.csv")])
@@ -37,7 +37,7 @@ class CrossRepositoryTests(unittest.TestCase):
                 with self.subTest(command=command):
                     result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
                     self.assertEqual(result.returncode, 1, result.stderr)
-                    self.assertIn("ERROR molecule_aligner.", result.stderr)
+                    self.assertIn("ERROR molecular_aligner.", result.stderr)
                     self.assertEqual(result.stdout, "")
 
     def test_selection_axes_and_alignment(self):
@@ -47,7 +47,7 @@ class CrossRepositoryTests(unittest.TestCase):
             axes = output / "axes.csv"
             structures = output / "pairs.sdf"
             commands = [
-                [sys.executable, "-m", "molecule_selector", "--csv",
+                [sys.executable, "-m", "molecular_selector", "--csv",
                  str(ROOT / "selection" / "reference_molecules.csv"), "-o", str(selections)],
                 [sys.executable, str(ROOT / "alignment" / "axes.py"), str(selections), "-o", str(axes)],
                 [sys.executable, str(ROOT / "alignment" / "aligner.py"), str(axes),
@@ -60,7 +60,7 @@ class CrossRepositoryTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr)
             with structures.with_suffix(".csv").open(newline="", encoding="utf-8") as source:
                 rows = list(csv.DictReader(source))
-            molecules = list(MoleculeSelector.read_sdf(structures))
+            molecules = list(MolecularSelector.read_sdf(structures))
             self.assertGreater(len(rows), 0)
             self.assertEqual(len(molecules), len(rows))
             self.assertTrue(all(row["rigid_source"] and row["flexible_source"] for row in rows))

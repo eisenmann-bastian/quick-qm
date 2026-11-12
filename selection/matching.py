@@ -1,3 +1,3 @@
-"""Compatibility import; use molecule_selector.matching for new code."""
+"""Compatibility import; use molecular_selector.matching for new code."""
 
-from molecule_selector.matching import MoleculeSelector
+from molecular_selector.matching import MolecularSelector

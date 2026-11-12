@@ -10,7 +10,7 @@ from rdkit import Chem
 
 from alignment import test_aligner
 from alignment.torsion_optimization import TorsionOptimizer
-from selection.matching import MoleculeSelector
+from selection.matching import MolecularSelector
 
 
 class TorsionTests(unittest.TestCase):
@@ -26,12 +26,12 @@ class TorsionTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         with (self.directory / f"{name}.csv").open(newline="") as source:
             row = next(csv.DictReader(source))
-        pair = next(MoleculeSelector._read_sdf(self.directory / row["sdf_file"]))
+        pair = next(MolecularSelector._read_sdf(self.directory / row["sdf_file"]))
         return row, pair
 
     def test_distance_scores_and_transform(self):
-        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
-        flexible = next(MoleculeSelector._read_sdf(self.paths[1]))
+        rigid = next(MolecularSelector._read_sdf(self.paths[0]))
+        flexible = next(MolecularSelector._read_sdf(self.paths[1]))
         for score_type in ("average_distance", "minimum_distance"):
             for objective in ("minimize", "maximize"):
                 with self.subTest(score=score_type, objective=objective):
@@ -68,8 +68,8 @@ class TorsionTests(unittest.TestCase):
             "enabled": True, "score": "mmff94_interaction", "objective": "minimize",
             "steps_per_iteration": 6, "iterations": 1,
         })
-        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
-        flexible = next(MoleculeSelector._read_sdf(self.paths[1]))
+        rigid = next(MolecularSelector._read_sdf(self.paths[0]))
+        flexible = next(MolecularSelector._read_sdf(self.paths[1]))
         from rdkit.Chem import AllChem
 
         def energy(mol, inter):
@@ -83,7 +83,7 @@ class TorsionTests(unittest.TestCase):
         self.assertEqual(row["torsion_score_type"], "mmff94_interaction")
 
     def test_missing_mmff_parameters_are_an_error(self):
-        molecule = next(MoleculeSelector._read_sdf(self.paths[0]))
+        molecule = next(MolecularSelector._read_sdf(self.paths[0]))
         with patch("alignment.torsion_optimization.AllChem.MMFFGetMoleculeProperties", return_value=None):
             with self.assertRaisesRegex(ValueError, "MMFF94 parameters unavailable"):
                 TorsionOptimizer.mmff_energy(molecule, False)
@@ -100,7 +100,7 @@ class TorsionTests(unittest.TestCase):
             }, "--no-optimize-torsion")
             self.assertEqual(baseline["torsion_score"], "")
             coords = baseline_pair.GetConformer().GetPositions()
-            rigid_count = next(MoleculeSelector._read_sdf(self.paths[0])).GetNumAtoms()
+            rigid_count = next(MolecularSelector._read_sdf(self.paths[0])).GetNumAtoms()
             flexible_indices = [i for i in range(len(coords) - rigid_count) if i != 1]
             baseline_score = np.mean(np.linalg.norm(coords[:rigid_count, None, :] -
                                                    coords[None, rigid_count + np.array(flexible_indices), :], axis=2))
@@ -119,7 +119,7 @@ class TorsionTests(unittest.TestCase):
     def test_site_exclusions_and_missing_site_errors(self):
         row = type("Row", (), {"line": 2, "center_index": 1,
                                "fields": {"site_atom_indices": "[1,2]", "atom_index_base": "0"}})()
-        mol = next(MoleculeSelector._read_sdf(self.paths[0]))
+        mol = next(MolecularSelector._read_sdf(self.paths[0]))
         indices = TorsionOptimizer.excluded(row, mol, True, [0])
         self.assertEqual(indices, list(range(3, mol.GetNumAtoms())))
         row.fields["site_atom_indices"] = "[999]"
@@ -135,7 +135,7 @@ class TorsionTests(unittest.TestCase):
 
     def test_selected_score_is_best_of_first_pass(self):
         baseline, pair = self.run_optimization("unoptimized", {"enabled": False})
-        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
+        rigid = next(MolecularSelector._read_sdf(self.paths[0]))
         coordinates = pair.GetConformer().GetPositions()
         rigid_count = rigid.GetNumAtoms()
         fixed = coordinates[:rigid_count]

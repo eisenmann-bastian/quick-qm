@@ -18,8 +18,8 @@ from molecule_utilities.logging import configure_logging, get_logger
 from alignment import LOGGER_NAMESPACE
 from alignment.axis_config import AXIS_NAMES, DEFAULT_CONFIG, AxisConfig
 from alignment.axis_calculator import AlignmentCalculator
-from molecule_selector import carboxylate_sites
-from molecule_selector.matching import MoleculeSelector
+from molecular_selector import carboxylate_sites
+from molecular_selector.matching import MolecularSelector
 
 logger = get_logger("selection.alignment", namespace=LOGGER_NAMESPACE)
 
@@ -77,7 +77,7 @@ class AlignmentCsv:
                 if not row["sdf_file"]:
                     raise ValueError("sdf_file must not be empty")
                 if sdf_path not in self.molecules:
-                    self.molecules[sdf_path] = list(MoleculeSelector.read_sdf(sdf_path))
+                    self.molecules[sdf_path] = list(MolecularSelector.read_sdf(sdf_path))
                 molecules = self.molecules[sdf_path]
                 if record_index >= len(molecules):
                     raise ValueError("record_index is outside the SDF")

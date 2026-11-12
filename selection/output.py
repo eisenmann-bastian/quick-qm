@@ -1,3 +1,3 @@
-"""Compatibility import; use molecule_selector.output for new code."""
+"""Compatibility import; use molecular_selector.output for new code."""
 
-from molecule_selector.output import CsvResultWriter
+from molecular_selector.output import CsvResultWriter
