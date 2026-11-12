@@ -23,6 +23,8 @@ import yaml
 from rdkit import Chem
 from rdkit.Geometry import Point3D
 
+from alignment.polar_scan import PositionMerger, spherical_position
+from alignment.reference_frame import ReferenceSelector
 from core.logging import configure_logging, get_logger
 from selection.axis_config import UniqueKeyLoader
 from selection.matching import MoleculeSelector
@@ -171,11 +173,21 @@ class PairAligner:
             raise ValueError(f"CSV line {row.line}: no valid van der Waals radius for {atom.GetSymbol()}")
         return float(radius)
 
-    def align(self, rigid, flexible, rigid_mol, flexible_mol, distance):
+    def align(self, rigid, flexible, rigid_mol, flexible_mol, distance, offset=None,
+              orientation="stable"):
         if distance is None:
             distance = self.radius(rigid, rigid_mol) + self.radius(flexible, flexible_mol)
         matrix = self.rotation(flexible.axis, -rigid.axis)
         target = rigid.center + distance * rigid.axis
+        if offset is not None:
+            target = target + offset
+        if orientation == "toward-center":
+            direction = rigid.center - target
+            length = np.linalg.norm(direction)
+            if not math.isfinite(length):
+                raise ValueError("non-finite center separation")
+            if length > 1e-12:
+                matrix = self.rotation(-rigid.axis, direction / length) @ matrix
         translation = target - matrix @ flexible.center
         moved = Chem.Mol(flexible_mol)
         conformer = moved.GetConformer()
@@ -216,7 +228,7 @@ class DistancePlan:
         return Fraction(number)
 
     @classmethod
-    def from_options(cls, settings, args):
+    def from_options(cls, settings, args, allow_negative=False, default_distance=None):
         def option(name, default=None):
             value = getattr(args, name)
             return value if value is not None else settings.get(name, default)
@@ -231,9 +243,9 @@ class DistancePlan:
             if any(value is not None for value in scan.values()):
                 raise ValueError("scan options require alignment_mode distance-scan")
             if distance is None:
-                return cls(mode)
+                return cls(mode, distance=default_distance)
             value = cls.number(distance, "distance")
-            if value < 0:
+            if value < 0 and not allow_negative:
                 raise ValueError("distance must be non-negative")
             return cls(mode, distance=float(value))
         if distance is not None:
@@ -242,8 +254,9 @@ class DistancePlan:
             raise ValueError("distance-scan requires scan_start and scan_end")
         start = cls.number(scan["scan_start"], "scan_start")
         end = cls.number(scan["scan_end"], "scan_end")
-        if start < 0 or end <= start:
-            raise ValueError("scan range must have 0 <= scan_start < scan_end")
+        if (start < 0 and not allow_negative) or end <= start:
+            raise ValueError("scan range must have scan_start < scan_end" +
+                             ("" if allow_negative else " and 0 <= scan_start"))
         for name in ("include_start", "include_end"):
             if scan[name] is None:
                 scan[name] = True
@@ -295,9 +308,9 @@ def load_config(path):
         raise ValueError(f"invalid configuration {path}: {exc}") from exc
     if not isinstance(data, dict):
         raise ValueError("configuration must be a YAML mapping")
-    unknown = set(data) - {"rigid", "flexible", "output", "output_format", "distance",
-                           "alignment_mode", "scan_start", "scan_end", "include_start",
-                           "include_end", "scan_step", "scan_count", "overwrite_output"}
+    unknown = set(data) - {"rigid", "flexible", "output", "output_format", "overwrite_output",
+                           "grid_based_scan", "polar_coordinate_based_scan",
+                           "reference_axis", "flexible_orientation"}
     if unknown:
         raise ValueError(f"unknown configuration keys: {', '.join(sorted(map(str, unknown)))}")
     return data
@@ -305,6 +318,61 @@ def load_config(path):
 
 def triplets(values):
     return [dict(zip(FILTER_FIELDS, group)) for group in values]
+
+
+def axis_plan(axis, scans, args, *, polar=False):
+    scan_keys = ("scan_start", "scan_end", "include_start", "include_end", "scan_step", "scan_count")
+    keys = ("distance", *scan_keys)
+    values = scans.get(axis, {})
+    section = "polar_coordinate_based_scan" if polar else "grid_based_scan"
+    if not isinstance(values, dict) or set(values) - set(keys):
+        raise ValueError(f"{section}.{axis} must be a mapping of distance and scan options")
+    prefix = f"polar_{axis}_" if polar else ("" if axis == "y" else f"{axis}_")
+    options = argparse.Namespace(**{key: getattr(args, prefix + key) for key in ("alignment_mode", *keys)})
+    requested = bool(values) or any(getattr(options, key) is not None for key in ("alignment_mode", *keys))
+    values = dict(values)
+    cli_scan = any(getattr(options, key) is not None for key in scan_keys)
+    if options.distance is not None and not cli_scan and options.alignment_mode != "distance-scan":
+        values = {key: value for key, value in values.items() if key not in scan_keys}
+    elif options.alignment_mode == "distance-scan" or cli_scan:
+        values.pop("distance", None)
+    if options.alignment_mode == "default":
+        values = {key: value for key, value in values.items() if key not in scan_keys}
+    values["alignment_mode"] = "distance-scan" if any(key in values for key in scan_keys) or cli_scan else "default"
+    try:
+        plan = DistancePlan.from_options(values, options, allow_negative=not polar and axis != "y",
+                                         default_distance=None if axis in ("y", "radius") else 0.0)
+    except ValueError as exc:
+        raise ValueError(f"{section}.{axis}: {exc}") from exc
+    return plan, requested
+
+
+def polar_options(scans, args):
+    if not isinstance(scans, dict) or set(scans) - {"radius", "phi", "theta", "phi_unit", "theta_unit", "merge_tolerance"}:
+        raise ValueError("polar_coordinate_based_scan must contain only radius, phi, theta, angle units and merge_tolerance")
+    units = []
+    plans = []
+    for angle in ("phi", "theta"):
+        unit = getattr(args, f"polar_{angle}_unit") or scans.get(f"{angle}_unit", "degrees")
+        if unit not in ("degrees", "radians"):
+            raise ValueError(f"polar {angle}_unit must be degrees or radians")
+        plan, _ = axis_plan(angle, scans, args, polar=True)
+        maximum = (360 if angle == "phi" else 180) if unit == "degrees" else (2 * math.pi if angle == "phi" else math.pi)
+        bounds = [plan.distance] if plan.mode == "default" else [float(plan.start), float(plan.start + plan.step * (plan.count - 1 + plan.first))]
+        # Validate declared boundaries too, including excluded endpoints.
+        if plan.mode == "distance-scan":
+            raw_end = getattr(args, f"polar_{angle}_scan_end")
+            bounds.append(float(DistancePlan.number(raw_end if raw_end is not None else scans[angle]["scan_end"], "scan_end")))
+        if any(value is None or value < 0 or value > maximum + 1e-12 for value in bounds):
+            raise ValueError(f"polar {angle} must be between 0 and {maximum} {unit}")
+        units.append(unit)
+        plans.append(plan)
+    tolerance = args.polar_merge_tolerance if args.polar_merge_tolerance is not None else scans.get("merge_tolerance", 0.05)
+    tolerance = float(DistancePlan.number(tolerance, "merge_tolerance"))
+    if tolerance <= 0:
+        raise ValueError("polar merge_tolerance must be positive")
+    radius, _ = axis_plan("radius", scans, args, polar=True)
+    return radius, plans[0], plans[1], units[0], units[1], tolerance
 
 
 def main(argv=None):
@@ -317,6 +385,9 @@ def main(argv=None):
     parser.add_argument("--output-format", choices=("pair-files", "single"), help="SDF layout (default: pair-files)")
     parser.add_argument("--overwrite-output", action=argparse.BooleanOptionalAction, default=None,
                         help="replace matching output files (default: false)")
+    parser.add_argument("--flexible-orientation", choices=("stable", "toward-center"),
+                        help="orientation after placement (default: stable)")
+    parser.add_argument("--coordinate-system", choices=("grid", "polar"))
     parser.add_argument("--distance", type=float, help="fixed center separation in Å; default: sum of van der Waals radii")
     parser.add_argument("--alignment-mode", choices=("default", "distance-scan"))
     parser.add_argument("--scan-start", help="scan lower boundary in Å")
@@ -326,10 +397,36 @@ def main(argv=None):
     sampling = parser.add_mutually_exclusive_group()
     sampling.add_argument("--scan-step", help="fixed scan step in Å")
     sampling.add_argument("--scan-count", type=int, help="number of interior poses per axis pair; boundaries are additional")
+    for axis in ("x", "z"):
+        parser.add_argument(f"--{axis}-alignment-mode", choices=("default", "distance-scan"))
+        parser.add_argument(f"--{axis}-distance", help=f"fixed signed {axis} offset in Å")
+        parser.add_argument(f"--{axis}-scan-start", help=f"{axis} scan lower boundary in Å")
+        parser.add_argument(f"--{axis}-scan-end", help=f"{axis} scan upper boundary in Å")
+        parser.add_argument(f"--{axis}-include-start", action=argparse.BooleanOptionalAction, default=None)
+        parser.add_argument(f"--{axis}-include-end", action=argparse.BooleanOptionalAction, default=None)
+        lateral_sampling = parser.add_mutually_exclusive_group()
+        lateral_sampling.add_argument(f"--{axis}-scan-step", help=f"{axis} scan step in Å")
+        lateral_sampling.add_argument(f"--{axis}-scan-count", type=int, help=f"number of interior {axis} poses")
+    for axis in ("radius", "phi", "theta"):
+        parser.add_argument(f"--polar-{axis}-alignment-mode", choices=("default", "distance-scan"))
+        parser.add_argument(f"--polar-{axis}", dest=f"polar_{axis}_distance", help=f"fixed polar {axis}")
+        parser.add_argument(f"--polar-{axis}-scan-start")
+        parser.add_argument(f"--polar-{axis}-scan-end")
+        parser.add_argument(f"--polar-{axis}-include-start", action=argparse.BooleanOptionalAction, default=None)
+        parser.add_argument(f"--polar-{axis}-include-end", action=argparse.BooleanOptionalAction, default=None)
+        sampling_group = parser.add_mutually_exclusive_group()
+        sampling_group.add_argument(f"--polar-{axis}-scan-step")
+        sampling_group.add_argument(f"--polar-{axis}-scan-count", type=int)
+    parser.add_argument("--polar-phi-unit", choices=("degrees", "radians"))
+    parser.add_argument("--polar-theta-unit", choices=("degrees", "radians"))
+    parser.add_argument("--polar-merge-tolerance", help="duplicate position tolerance in Å (default: 0.05)")
     args = parser.parse_args(argv)
     configure_logging()
     try:
         settings = load_config(args.config)
+        orientation = args.flexible_orientation if args.flexible_orientation is not None else settings.get("flexible_orientation", "stable")
+        if orientation not in ("stable", "toward-center"):
+            raise ValueError("flexible_orientation must be 'stable' or 'toward-center'")
         rigid = AxisFilter(triplets(args.rigid) if args.rigid is not None else settings.get("rigid"))
         flexible = AxisFilter(triplets(args.flexible) if args.flexible is not None else settings.get("flexible"))
         output_format = args.output_format or settings.get("output_format", "pair-files")
@@ -344,7 +441,30 @@ def main(argv=None):
         csv_output = output.with_suffix(".csv") if output_format == "single" else output.parent / (output.name + ".csv")
         if output == csv_output:
             raise ValueError("SDF output and CSV output must be different paths")
-        plan = DistancePlan.from_options(settings, args)
+        grid_present = "grid_based_scan" in settings
+        polar_present = "polar_coordinate_based_scan" in settings
+        grid_cli_names = ("alignment_mode", "distance", "scan_start", "scan_end", "include_start",
+                          "include_end", "scan_step", "scan_count")
+        grid_cli = any(getattr(args, prefix + name) is not None
+                       for prefix in ("", "x_", "z_") for name in grid_cli_names)
+        polar_cli = any(value is not None for name, value in vars(args).items() if name.startswith("polar_"))
+        if (grid_present or grid_cli) and (polar_present or polar_cli):
+            raise ValueError("grid and polar scan settings cannot be combined")
+        coordinate_system = args.coordinate_system or ("polar" if polar_present or polar_cli else "grid")
+        if (coordinate_system == "polar" and (grid_present or grid_cli)) or (
+                coordinate_system == "grid" and (polar_present or polar_cli)):
+            raise ValueError("coordinate-system conflicts with configured scan settings")
+        if coordinate_system == "grid":
+            scans = settings.get("grid_based_scan", {})
+            if not isinstance(scans, dict) or set(scans) - {"x", "y", "z"}:
+                raise ValueError("grid_based_scan must be a mapping containing only x, y and z")
+            plan, _ = axis_plan("y", scans, args)
+            x_plan, x_requested = axis_plan("x", scans, args)
+            z_plan, z_requested = axis_plan("z", scans, args)
+        else:
+            polar_config = settings.get("polar_coordinate_based_scan", {})
+            radius_plan, phi_plan, theta_plan, phi_unit, theta_unit, tolerance = polar_options(polar_config, args)
+        reference_selector = ReferenceSelector(settings.get("reference_axis"))
         overwrite = args.overwrite_output if args.overwrite_output is not None else settings.get("overwrite_output", False)
         if type(overwrite) is not bool:
             raise ValueError("overwrite_output must be a boolean")
@@ -352,6 +472,9 @@ def main(argv=None):
             raise ValueError(f"output already exists: {output} or {csv_output}")
         reader = AxisInput()
         rigid_rows, flexible_rows = reader.read(args.input_csv, rigid, flexible)
+        needs_frame = coordinate_system == "polar" or x_requested or z_requested
+        frames = {row.line: reference_selector.select(row, reader.molecule(row))
+                  for row in rigid_rows} if needs_frame else {}
         if output_format == "pair-files":
             destinations = [output / f"axis-pair-{index:06d}.sdf"
                             for index in range(1, len(rigid_rows) * len(flexible_rows) + 1)]
@@ -374,17 +497,50 @@ def main(argv=None):
         def generate_pairs():
             axis_pair = 0
             for r in rigid_rows:
+                frame = frames.get(r.line)
                 for f in flexible_rows:
                     axis_pair += 1
-                    for pose_index, distance in enumerate(plan.distances(), 1):
+                    pose_index = 0
+                    if coordinate_system == "polar":
+                        merger = PositionMerger(tolerance)
+                        duplicates = 0
+                        def placements():
+                            nonlocal duplicates
+                            for radius in radius_plan.distances():
+                                if radius is None:
+                                    radius = (aligner.radius(r, reader.molecule(r))
+                                              + aligner.radius(f, reader.molecule(f)))
+                                for phi in phi_plan.distances():
+                                    for theta in theta_plan.distances():
+                                        point = spherical_position(radius, phi, theta, phi_unit, theta_unit)
+                                        if not merger.add((point.x, point.y, point.z)):
+                                            duplicates += 1
+                                            continue
+                                        yield point.y, point.x, point.z, point
+                        positions = placements()
+                    else:
+                        def grid_placements():
+                            for distance in plan.distances():
+                                for x in x_plan.distances():
+                                    for z in z_plan.distances():
+                                        yield distance, x, z, None
+                        positions = grid_placements()
+                    for distance, x, z, point in positions:
+                        pose_index += 1
+                        offset = None if frame is None else x * frame.x + z * frame.z
                         mol, matrix, translation, target, separation = aligner.align(
-                            r, f, reader.molecule(r), reader.molecule(f), distance
+                            r, f, reader.molecule(r), reader.molecule(f), distance, offset, orientation
                         )
-                        yield (axis_pair, pose_index, r, f, mol, matrix, translation, target, separation)
+                        yield (axis_pair, pose_index, r, f, mol, matrix, translation, target,
+                               separation, x, z, frame, orientation, point,
+                               phi_unit if point is not None else "", theta_unit if point is not None else "")
+                    if coordinate_system == "polar" and duplicates:
+                        logger.warning("axis pair %d: merged %d polar positions within %g Å",
+                                       axis_pair, duplicates, tolerance)
 
         pairs = generate_pairs()
-        write_output(output, output_format, pairs, destinations, overwrite)
-        logger.info("wrote %d aligned poses and %s", len(rigid_rows) * len(flexible_rows) * plan.count, csv_output)
+        count = write_output(output, output_format, pairs, destinations, overwrite)
+        logger.info("wrote %d aligned poses and %s", count, csv_output)
     except (OSError, ValueError, RuntimeError, csv.Error) as exc:
         logger.error("%s", exc)
         return 1
@@ -395,7 +551,10 @@ def write_output(output, output_format, pairs, destinations, overwrite):
     fields = ("pair_id", "axis_pair_id", "pose_index", "sdf_file", "sdf_record_index", "rigid_csv_line", "flexible_csv_line",
               "rigid_source", "flexible_source", "distance_angstrom", "rigid_center",
               "flexible_original_center", "flexible_aligned_center", "rigid_axis",
-              "flexible_original_axis", "flexible_aligned_axis", "rotation", "translation")
+              "flexible_original_axis", "flexible_aligned_axis", "rotation", "translation",
+              "x_offset_angstrom", "z_offset_angstrom", "x_axis", "z_axis",
+              "reference_method", "reference_atom_index", "reference_point", "flexible_orientation",
+              "coordinate_system", "polar_radius_angstrom", "polar_phi", "polar_phi_unit", "polar_theta", "polar_theta_unit")
     staging = Path(tempfile.mkdtemp(prefix=".aligner-", dir=output.parent))
     preserve_staging = False
     writer = None
@@ -406,7 +565,9 @@ def write_output(output, output_format, pairs, destinations, overwrite):
             current_axis_pair = None
             table = csv.DictWriter(metadata, fieldnames=fields, lineterminator="\n")
             table.writeheader()
-            for index, (axis_pair, pose_index, rigid, flexible, molecule, matrix, translation, target, distance) in enumerate(pairs, 1):
+            index = 0
+            for index, (axis_pair, pose_index, rigid, flexible, molecule, matrix, translation, target,
+                        distance, x, z, frame, orientation, point, phi_unit, theta_unit) in enumerate(pairs, 1):
                 pair_id = f"pair-{index:06d}"
                 axis_pair_id = f"axis-pair-{axis_pair:06d}"
                 sdf = output / f"{axis_pair_id}.sdf" if output_format == "pair-files" else output
@@ -415,6 +576,20 @@ def write_output(output, output_format, pairs, destinations, overwrite):
                 molecule.SetProp("quick_qm_axis_pair_id", axis_pair_id)
                 molecule.SetProp("quick_qm_pose_index", str(pose_index))
                 molecule.SetProp("quick_qm_distance_angstrom", str(distance))
+                molecule.SetProp("quick_qm_flexible_orientation", orientation)
+                molecule.SetProp("quick_qm_coordinate_system", "polar" if point is not None else "grid")
+                if point is not None:
+                    molecule.SetProp("quick_qm_polar_radius_angstrom", str(point.radius))
+                    molecule.SetProp("quick_qm_polar_phi", str(point.phi))
+                    molecule.SetProp("quick_qm_polar_phi_unit", phi_unit)
+                    molecule.SetProp("quick_qm_polar_theta", str(point.theta))
+                    molecule.SetProp("quick_qm_polar_theta_unit", theta_unit)
+                molecule.SetProp("quick_qm_x_offset_angstrom", str(x))
+                molecule.SetProp("quick_qm_z_offset_angstrom", str(z))
+                if frame is not None:
+                    molecule.SetProp("quick_qm_reference_method", frame.method)
+                    molecule.SetProp("quick_qm_x_axis", json.dumps(frame.x.tolist()))
+                    molecule.SetProp("quick_qm_z_axis", json.dumps(frame.z.tolist()))
                 molecule.SetProp("quick_qm_rigid_source", json.dumps(rigid.fields, separators=(",", ":")))
                 molecule.SetProp("quick_qm_flexible_source", json.dumps(flexible.fields, separators=(",", ":")))
                 if output_format == "pair-files" and current_axis_pair != axis_pair:
@@ -437,6 +612,19 @@ def write_output(output, output_format, pairs, destinations, overwrite):
                     "flexible_original_axis": encode(flexible.axis.tolist()),
                     "flexible_aligned_axis": encode((matrix @ flexible.axis).tolist()),
                     "rotation": encode(matrix.tolist()), "translation": encode(translation.tolist()),
+                    "x_offset_angstrom": x, "z_offset_angstrom": z,
+                    "x_axis": encode(frame.x.tolist()) if frame is not None else "",
+                    "z_axis": encode(frame.z.tolist()) if frame is not None else "",
+                    "reference_method": frame.method if frame is not None else "",
+                    "reference_atom_index": frame.atom_index if frame is not None and frame.atom_index is not None else "",
+                    "reference_point": encode(frame.point.tolist()) if frame is not None else "",
+                    "flexible_orientation": orientation,
+                    "coordinate_system": "polar" if point is not None else "grid",
+                    "polar_radius_angstrom": point.radius if point is not None else "",
+                    "polar_phi": point.phi if point is not None else "",
+                    "polar_phi_unit": phi_unit,
+                    "polar_theta": point.theta if point is not None else "",
+                    "polar_theta_unit": theta_unit,
                 })
             if writer is not None:
                 writer.flush()
@@ -454,11 +642,11 @@ def write_output(output, output_format, pairs, destinations, overwrite):
                     created_directory = True
                 elif output.is_symlink() or not output.is_dir():
                     raise ValueError("pair-files output must be a directory, not a file or symlink")
-            for index, (source, destination) in enumerate(zip(staged_files, destinations)):
+            for file_index, (source, destination) in enumerate(zip(staged_files, destinations)):
                 if destination.is_dir():
                     raise ValueError(f"output file is a directory: {destination}")
                 if overwrite and os.path.lexists(destination):
-                    backup = staging / f"backup-{index}"
+                    backup = staging / f"backup-{file_index}"
                     os.replace(destination, backup)
                     backups.append((backup, destination))
                 if overwrite:
@@ -485,6 +673,7 @@ def write_output(output, output_format, pairs, destinations, overwrite):
                 except OSError as cleanup_error:
                     logger.error("could not remove output directory %s: %s", output, cleanup_error)
             raise
+        return index
     finally:
         if writer is not None:
             writer.close()

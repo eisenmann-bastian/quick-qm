@@ -1,5 +1,6 @@
 import csv
 import json
+import math
 import os
 import subprocess
 import sys
@@ -15,6 +16,7 @@ from rdkit.Chem import AllChem
 
 from alignment import aligner
 from alignment.aligner import PairAligner
+from alignment.reference_frame import ReferenceSelector
 from selection.matching import MoleculeSelector
 
 
@@ -104,7 +106,7 @@ class AlignerTests(unittest.TestCase):
         config.write_text(yaml.safe_dump({
             "rigid": [dict(molecule_name="rigid", selector="oxy", axis_type="sigma")],
             "flexible": [dict(molecule_name="flex", selector="hal", axis_type="sigma")],
-            "output_format": "single", "output": "all.sdf", "distance": 4.5,
+            "output_format": "single", "output": "all.sdf", "grid_based_scan": {"y": {"distance": 4.5}},
         }), encoding="utf-8")
         result = self.run_cli("--config", config)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -208,7 +210,7 @@ class AlignerTests(unittest.TestCase):
         config.write_text(yaml.safe_dump({
             "rigid": {"molecule_name": "does-not-match", "selector": ".*", "axis_type": ".*"},
             "flexible": {"molecule_name": "flexible", "selector": ".*", "axis_type": ".*"},
-            "distance": 1.0,
+            "grid_based_scan": {"y": {"distance": 1.0}},
         }), encoding="utf-8")
         result = self.run_cli("--config", config, "--rigid", "rigid", ".*", ".*",
                               "--distance", "2.5", "-o", "override")
@@ -307,9 +309,9 @@ class AlignerTests(unittest.TestCase):
         config.write_text(yaml.safe_dump({
             "rigid": dict(molecule_name="rigid", selector=".*", axis_type=".*"),
             "flexible": dict(molecule_name="flexible", selector=".*", axis_type=".*"),
-            "output_format": "single", "output": "scan.sdf", "alignment_mode": "distance-scan",
-            "scan_start": 0, "scan_end": 3, "scan_step": 1,
-            "include_start": False, "include_end": False,
+            "output_format": "single", "output": "scan.sdf",
+            "grid_based_scan": {"y": {"scan_start": 0, "scan_end": 3, "scan_step": 1,
+                                     "include_start": False, "include_end": False}},
         }), encoding="utf-8")
         result = self.run_cli("--config", config, "--scan-count", 2, "--include-start")
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -331,8 +333,8 @@ class AlignerTests(unittest.TestCase):
         settings = {
             "rigid": dict(molecule_name="rigid", selector=".*", axis_type=".*"),
             "flexible": dict(molecule_name="flexible", selector=".*", axis_type=".*"),
-            "alignment_mode": "distance-scan", "scan_start": 0, "scan_end": 1,
-            "scan_count": 4, "include_start": "false",
+            "grid_based_scan": {"y": {"scan_start": 0, "scan_end": 1,
+                                     "scan_count": 4, "include_start": "false"}},
         }
         config.write_text(yaml.safe_dump(settings), encoding="utf-8")
         result = self.run_cli("--config", config)
@@ -340,12 +342,41 @@ class AlignerTests(unittest.TestCase):
         self.assertIn("include_start must be a boolean", result.stderr)
         self.assertFalse((self.directory / "aligned_pairs.csv").exists())
 
-        settings["include_start"] = False
+        settings["grid_based_scan"]["y"]["include_start"] = False
         config.write_text(yaml.safe_dump(settings), encoding="utf-8")
         result = self.run_cli("--config", config, "--scan-step", "0.5")
         self.assertEqual(result.returncode, 0, result.stderr)
         with (self.directory / "aligned_pairs.csv").open(newline="") as source:
             self.assertEqual([float(row["distance_angstrom"]) for row in csv.DictReader(source)], [0.5, 1])
+
+    def test_grouped_scan_validation_and_fixed_override(self):
+        config = self.directory / "grouped.yaml"
+        invalid = (
+            {"alignment_mode": "distance-scan"},
+            {"x": {"distance": 1}},
+            {"grid_based_scan": {"Y": {"distance": 1}}},
+            {"grid_based_scan": []},
+            {"grid_based_scan": {"x": {"alignment_mode": "distance-scan"}}},
+            {"grid_based_scan": {"y": {"scan_start": -1, "scan_end": 1, "scan_count": 1}}},
+            {"grid_based_scan": {"y": {"distance": 2, "scan_start": 1, "scan_end": 3, "scan_count": 1}}},
+        )
+        for value in invalid:
+            with self.subTest(value=value):
+                config.write_text(yaml.safe_dump(value), encoding="utf-8")
+                result = self.run_cli(*self.filters(), "--config", config)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertFalse((self.directory / "aligned_pairs.csv").exists())
+        config.write_text(yaml.safe_dump({"grid_based_scan": {
+            "y": {"scan_start": 1, "scan_end": 3, "scan_count": 1},
+            "x": {"scan_start": -1, "scan_end": 1, "scan_step": 1},
+        }}), encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config, "--distance", 4, "--x-distance", -2)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "aligned_pairs.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(float(rows[0]["distance_angstrom"]), 4)
+        self.assertEqual(float(rows[0]["x_offset_angstrom"]), -2)
 
     def test_pair_files_group_scan_poses_per_axis_pair(self):
         rows = self.write_rows()
@@ -477,6 +508,306 @@ class AlignerTests(unittest.TestCase):
         self.assertEqual(status, 1)
         self.assertEqual((output.read_bytes(), metadata.read_bytes()), before)
         self.assertFalse(list(self.directory.glob(".aligner-*")))
+
+    def test_reference_priority_and_degenerate_fallback(self):
+        mol = Chem.AddHs(Chem.MolFromSmiles("CCO"))
+        conformer = Chem.Conformer(mol.GetNumAtoms())
+        for i in range(mol.GetNumAtoms()):
+            conformer.SetAtomPosition(i, (float(i), float(i * i), 1.0))
+        mol.AddConformer(conformer)
+        row = aligner.AxisRow(7, {}, Path("test.sdf"), 0, 2,
+                              np.array([2.0, 4.0, 1.0]), np.array([0.0, 0.0, 1.0]))
+        candidates = sorted({other.GetIdx() for neighbor in mol.GetAtomWithIdx(2).GetNeighbors()
+                             for other in neighbor.GetNeighbors() if other.GetIdx() != 2})
+        a = ReferenceSelector().select(row, mol)
+        b = ReferenceSelector({"priority": ["B", "A"]}).select(row, mol)
+        self.assertEqual((a.method, a.atom_index), ("A", candidates[0]))
+        self.assertEqual((b.method, b.atom_index), ("B", candidates[-1]))
+        c = ReferenceSelector({"priority": ["A", "B", "C"],
+                               "enabled": {"A": False, "B": False}}).select(row, mol)
+        self.assertEqual((c.method, c.atom_index), ("C", None))
+        np.testing.assert_allclose(np.dot(a.x, row.axis), 0, atol=1e-12)
+        np.testing.assert_allclose(a.z, np.cross(a.x, row.axis), atol=1e-12)
+        np.testing.assert_allclose(np.linalg.norm(a.x), 1)
+        np.testing.assert_allclose(np.linalg.norm(a.z), 1)
+        position = mol.GetConformer().GetAtomPosition(candidates[0])
+        row_parallel = aligner.AxisRow(8, {}, Path("test.sdf"), 0, 2,
+                                       np.array([position.x, position.y, position.z - 1]),
+                                       np.array([0.0, 0.0, 1.0]))
+        self.assertEqual(ReferenceSelector({"priority": ["A", "B"]}).select(row_parallel, mol).method, "B")
+        center = aligner.AxisRow(9, {}, Path("test.sdf"), 0, None,
+                                 np.zeros(3), np.array([0.0, 1.0, 0.0]))
+        with self.assertRaisesRegex(ValueError, "CSV line 9.*no usable reference"):
+            ReferenceSelector().select(center, mol)
+        with self.assertRaisesRegex(ValueError, "no usable reference"):
+            ReferenceSelector({"enabled": {"A": False, "B": False, "C": False}}).select(row, mol)
+
+    def test_lateral_cartesian_grid_geometry_and_provenance(self):
+        result = self.run_cli(*self.filters(), "--distance", 2,
+                              "--x-alignment-mode", "distance-scan", "--x-scan-start", -1,
+                              "--x-scan-end", 1, "--x-scan-count", 1,
+                              "--z-alignment-mode", "distance-scan", "--z-scan-start", -2,
+                              "--z-scan-end", 2, "--z-scan-count", 1)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "aligned_pairs.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual(len(rows), 9)
+        self.assertEqual([(float(r["x_offset_angstrom"]), float(r["z_offset_angstrom"])) for r in rows],
+                         [(x, z) for x in (-1, 0, 1) for z in (-2, 0, 2)])
+        molecules = list(MoleculeSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
+        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
+        for row, mol in zip(rows, molecules):
+            xaxis, yaxis, zaxis = (np.array(json.loads(row[key])) for key in ("x_axis", "rigid_axis", "z_axis"))
+            np.testing.assert_allclose(np.cross(xaxis, yaxis), zaxis, atol=1e-12)
+            center = np.array(json.loads(row["rigid_center"]))
+            target = center + 2 * yaxis + float(row["x_offset_angstrom"]) * xaxis + float(row["z_offset_angstrom"]) * zaxis
+            np.testing.assert_allclose(json.loads(row["flexible_aligned_center"]), target, atol=1e-12)
+            point = mol.GetConformer().GetAtomPosition(rigid.GetNumAtoms() + 1)
+            np.testing.assert_allclose(point, target, atol=0.00006)
+            np.testing.assert_allclose(json.loads(row["flexible_aligned_axis"]), -yaxis, atol=1e-12)
+            self.assertEqual(mol.GetProp("quick_qm_reference_method"), row["reference_method"])
+            self.assertEqual(mol.GetProp("quick_qm_x_offset_angstrom"), row["x_offset_angstrom"])
+
+    def test_toward_center_rotation_preserves_centers_and_internal_geometry(self):
+        config = self.directory / "orientation.yaml"
+        config.write_text(yaml.safe_dump({"flexible_orientation": "toward-center"}), encoding="utf-8")
+        args = [*self.filters(), "--distance", 2, "--x-alignment-mode", "distance-scan",
+                "--x-scan-start", -1, "--x-scan-end", 1, "--x-scan-count", 1,
+                "--z-distance", 0.5]
+        result = self.run_cli(*args, "--config", config)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "aligned_pairs.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        molecules = list(MoleculeSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
+        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
+        flexible = next(MoleculeSelector._read_sdf(self.paths[1]))
+        self.assertEqual(len(rows), 3)
+        for row, molecule in zip(rows, molecules):
+            rcenter = np.array(json.loads(row["rigid_center"]))
+            fcenter = np.array(json.loads(row["flexible_aligned_center"]))
+            direction = rcenter - fcenter
+            direction /= np.linalg.norm(direction)
+            matrix = np.array(json.loads(row["rotation"]))
+            translation = np.array(json.loads(row["translation"]))
+            np.testing.assert_allclose(json.loads(row["flexible_aligned_axis"]), direction, atol=1e-12)
+            np.testing.assert_allclose(matrix.T @ matrix, np.eye(3), atol=1e-12)
+            self.assertAlmostEqual(np.linalg.det(matrix), 1)
+            self.assertEqual(row["flexible_orientation"], "toward-center")
+            self.assertEqual(molecule.GetProp("quick_qm_flexible_orientation"), "toward-center")
+            for i in range(flexible.GetNumAtoms()):
+                original = np.array(flexible.GetConformer().GetAtomPosition(i))
+                transformed = np.array(molecule.GetConformer().GetAtomPosition(rigid.GetNumAtoms() + i))
+                np.testing.assert_allclose(transformed, matrix @ original + translation, atol=0.00006)
+            np.testing.assert_allclose(molecule.GetConformer().GetAtomPosition(rigid.GetNumAtoms() + 1),
+                                       fcenter, atol=0.00006)
+        result = self.run_cli(*args, "--config", config, "--flexible-orientation", "stable", "-o", "stable")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "stable.csv").open(newline="") as source:
+            stable_rows = list(csv.DictReader(source))
+        for stable, changed in zip(stable_rows, rows):
+            np.testing.assert_allclose(json.loads(stable["flexible_aligned_center"]),
+                                       json.loads(changed["flexible_aligned_center"]), atol=1e-12)
+            np.testing.assert_allclose(json.loads(stable["flexible_aligned_axis"]),
+                                       -np.array(json.loads(stable["rigid_axis"])), atol=1e-12)
+            self.assertEqual(stable["flexible_orientation"], "stable")
+
+    def test_toward_center_zero_and_on_axis_cases_and_invalid_mode(self):
+        for distance in (0, 3):
+            name = f"zero-{distance}"
+            result = self.run_cli(*self.filters(), "--distance", distance, "-o", name,
+                                  "--flexible-orientation", "toward-center")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            with (self.directory / f"{name}.csv").open(newline="") as source:
+                row = next(csv.DictReader(source))
+            np.testing.assert_allclose(json.loads(row["flexible_aligned_axis"]),
+                                       -np.array(json.loads(row["rigid_axis"])), atol=1e-12)
+        config = self.directory / "bad-orientation.yaml"
+        config.write_text(yaml.safe_dump({"flexible_orientation": "invalid"}), encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("flexible_orientation", result.stderr)
+        self.assertFalse((self.directory / "aligned_pairs.csv").exists())
+
+    def test_polar_cardinal_positions_and_orientation(self):
+        config = self.directory / "polar.yaml"
+        config.write_text(yaml.safe_dump({"polar_coordinate_based_scan": {
+            "radius": {"distance": 2},
+            "phi": {"scan_start": 0, "scan_end": 360, "scan_step": 90},
+            "theta": {"distance": 90},
+        }, "flexible_orientation": "toward-center"}), encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("merged 1 polar positions", result.stderr)
+        with (self.directory / "aligned_pairs.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual(len(rows), 4)
+        mols = list(MoleculeSelector._read_sdf(self.directory / rows[0]["sdf_file"]))
+        rigid = next(MoleculeSelector._read_sdf(self.paths[0]))
+        for row, molecule, expected in zip(rows, mols, [(2, 0), (0, 2), (-2, 0), (0, -2)]):
+            self.assertEqual(row["coordinate_system"], "polar")
+            self.assertEqual(row["polar_phi_unit"], "degrees")
+            self.assertAlmostEqual(float(row["polar_radius_angstrom"]), 2)
+            self.assertAlmostEqual(float(row["x_offset_angstrom"]), expected[0], places=10)
+            self.assertAlmostEqual(float(row["z_offset_angstrom"]), expected[1], places=10)
+            self.assertAlmostEqual(float(row["distance_angstrom"]), 0, places=10)
+            center = np.array(json.loads(row["rigid_center"]))
+            target = np.array(json.loads(row["flexible_aligned_center"]))
+            direction = center - target
+            np.testing.assert_allclose(json.loads(row["flexible_aligned_axis"]), direction / np.linalg.norm(direction), atol=1e-12)
+            np.testing.assert_allclose(molecule.GetConformer().GetAtomPosition(rigid.GetNumAtoms() + 1),
+                                       target, atol=0.00006)
+            self.assertEqual(molecule.GetProp("quick_qm_polar_phi"), row["polar_phi"])
+
+    def test_polar_radians_poles_zero_radius_and_single_output(self):
+        config = self.directory / "polar.yaml"
+        config.write_text(yaml.safe_dump({"polar_coordinate_based_scan": {
+            "radius": {"scan_start": 0, "scan_end": 1, "scan_step": 1},
+            "phi": {"scan_start": 0, "scan_end": 180, "scan_step": 90},
+            "phi_unit": "degrees",
+            "theta": {"scan_start": 0, "scan_end": math.pi, "scan_count": 1},
+            "theta_unit": "radians",
+        }}), encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config, "--output-format", "single",
+                              "--output", "polar.sdf", "--polar-merge-tolerance", 0.01)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("merged 12 polar positions", result.stderr)
+        with (self.directory / "polar.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual(len(rows), 6)
+        self.assertEqual([int(row["sdf_record_index"]) for row in rows], list(range(6)))
+        self.assertEqual(len(list(MoleculeSelector._read_sdf(self.directory / "polar.sdf"))), 6)
+        self.assertEqual({row["polar_theta_unit"] for row in rows}, {"radians"})
+        self.assertEqual(sum(float(row["polar_radius_angstrom"]) == 0 for row in rows), 1)
+
+    def test_polar_cli_scan_and_merge_tolerance(self):
+        args = [*self.filters(), "--coordinate-system", "polar", "--polar-radius", 2,
+                "--polar-phi-scan-start", 0, "--polar-phi-scan-end", 2,
+                "--polar-phi-scan-step", 1, "--polar-theta", 90]
+        result = self.run_cli(*args)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "aligned_pairs.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual([float(r["polar_phi"]) for r in rows], [0, 2])
+        self.assertIn("merged 1 polar positions", result.stderr)
+        result = self.run_cli(*args, "--polar-merge-tolerance", 0.01, "-o", "fine")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "fine.csv").open(newline="") as source:
+            self.assertEqual(len(list(csv.DictReader(source))), 3)
+
+    def test_polar_invalid_options_fail_without_output(self):
+        cases = [
+            {"polar_coordinate_based_scan": {"phi_unit": "grads"}},
+            {"polar_coordinate_based_scan": {"phi": {"distance": 361}}},
+            {"polar_coordinate_based_scan": {"theta": {"scan_start": 0, "scan_end": 181, "scan_count": 1, "include_end": False}}},
+            {"polar_coordinate_based_scan": {"radius": {"distance": -1}}},
+            {"polar_coordinate_based_scan": {"merge_tolerance": 0}},
+            {"polar_coordinate_based_scan": {}, "grid_based_scan": {}},
+            {"distance_scan": {"y": {"distance": 2}}},
+        ]
+        config = self.directory / "bad-polar.yaml"
+        for value in cases:
+            with self.subTest(value=value):
+                config.write_text(yaml.safe_dump(value), encoding="utf-8")
+                result = self.run_cli(*self.filters(), "--config", config)
+                self.assertNotEqual(result.returncode, 0, result.stderr)
+                self.assertFalse((self.directory / "aligned_pairs.csv").exists())
+        result = self.run_cli(*self.filters(), "--coordinate-system", "polar", "--distance", 3)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("conflicts", result.stderr)
+
+    def test_polar_cli_radians_and_sampling_override_per_pair(self):
+        rows = self.write_rows()
+        with self.input.open("a", encoding="utf-8", newline="") as output:
+            writer = csv.DictWriter(output, fieldnames=rows[0].keys())
+            writer.writerow(dict(rows[0], axis=json.dumps([-1, 0, 0])))
+            writer.writerow(dict(rows[1], axis=json.dumps([0, -1, 0])))
+        config = self.directory / "polar.yaml"
+        config.write_text(yaml.safe_dump({"polar_coordinate_based_scan": {
+            "radius": {"distance": 2},
+            "phi": {"scan_start": 0, "scan_end": math.pi, "scan_count": 1},
+            "theta": {"distance": 90},
+            "phi_unit": "radians",
+        }}), encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config, "--polar-phi-scan-step",
+                              str(math.pi), "--no-polar-phi-include-end")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "aligned_pairs.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual(len(rows), 4)
+        self.assertEqual(len({row["axis_pair_id"] for row in rows}), 4)
+        self.assertTrue(all(row["polar_phi_unit"] == "radians" and float(row["polar_phi"]) == 0 for row in rows))
+
+    def test_lateral_yaml_priority_cli_overrides_and_3d_scan(self):
+        config = self.directory / "lateral.yaml"
+        config.write_text(yaml.safe_dump({
+            "grid_based_scan": {"x": {"scan_start": -1, "scan_end": 1, "scan_step": 1},
+                              "z": {"distance": -0.5}},
+            "reference_axis": {"priority": ["B", "A", "C"], "enabled": {"B": True}},
+        }), encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config, "--alignment-mode", "distance-scan",
+                              "--scan-start", 1, "--scan-end", 2, "--scan-step", 1,
+                              "--x-scan-count", 1, "--no-x-include-start", "--z-distance", 0.5)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "aligned_pairs.csv").open(newline="") as source:
+            rows = list(csv.DictReader(source))
+        self.assertEqual(len(rows), 4)
+        self.assertEqual({row["reference_method"] for row in rows}, {"B"})
+        self.assertEqual([(float(r["distance_angstrom"]), float(r["x_offset_angstrom"]),
+                           float(r["z_offset_angstrom"])) for r in rows],
+                         [(1, 0, 0.5), (1, 1, 0.5), (2, 0, 0.5), (2, 1, 0.5)])
+
+    def test_invalid_reference_and_lateral_scan_do_not_write_output(self):
+        config = self.directory / "invalid.yaml"
+        for value in ({"priority": ["A", "A"]}, {"priority": ["X"]}, {"enabled": {"A": "yes"}}):
+            config.write_text(yaml.safe_dump({"reference_axis": value}), encoding="utf-8")
+            result = self.run_cli(*self.filters(), "--config", config, "--x-distance", 1)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("reference_axis", result.stderr)
+            self.assertFalse((self.directory / "aligned_pairs.csv").exists())
+        config.write_text(yaml.safe_dump({"reference_axis": {"enabled": {"A": False, "B": False, "C": False}}}),
+                          encoding="utf-8")
+        result = self.run_cli(*self.filters(), "--config", config, "--x-distance", 1)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("CSV line 2: no usable reference", result.stderr)
+        self.assertFalse((self.directory / "aligned_pairs").exists())
+        result = self.run_cli(*self.filters(), "--x-alignment-mode", "distance-scan",
+                              "--x-scan-start", -1, "--x-scan-end", 1, "--x-scan-step", 0.3)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("evenly divisible", result.stderr)
+        self.assertFalse((self.directory / "aligned_pairs.csv").exists())
+
+    def test_ring_origin_fallback_and_missing_reference_preserves_results(self):
+        rows = self.write_rows()
+        rows[0].update(center_atom_index="", axis_type="aromatic_normal",
+                       center=json.dumps([1, 0, 0]), axis=json.dumps([0, 1, 0]))
+        with self.input.open("w", encoding="utf-8", newline="") as output:
+            writer = csv.DictWriter(output, fieldnames=rows[0].keys())
+            writer.writeheader()
+            writer.writerows(rows)
+        filters = ["--rigid", "rigid", ".*", "aromatic_normal",
+                   "--flexible", "flexible", ".*", "sigma"]
+        result = self.run_cli(*filters, "--x-distance", 1, "--output-format", "single", "-o", "ring.sdf")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with (self.directory / "ring.csv").open(newline="") as source:
+            row = next(csv.DictReader(source))
+        self.assertEqual(row["reference_method"], "C")
+        self.assertEqual(row["reference_atom_index"], "")
+        np.testing.assert_allclose(json.loads(row["x_axis"]), [-1, 0, 0])
+        np.testing.assert_allclose(json.loads(row["z_axis"]), [0, 0, -1])
+        before = (self.directory / "ring.sdf").read_bytes(), (self.directory / "ring.csv").read_bytes()
+        rows[0]["center"] = json.dumps([0, 0, 0])
+        with self.input.open("w", encoding="utf-8", newline="") as output:
+            writer = csv.DictWriter(output, fieldnames=rows[0].keys())
+            writer.writeheader()
+            writer.writerows(rows)
+        result = self.run_cli(*filters, "--x-distance", 1, "--output-format", "single",
+                              "-o", "ring.sdf", "--overwrite-output")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("no usable reference", result.stderr)
+        self.assertEqual(((self.directory / "ring.sdf").read_bytes(),
+                          (self.directory / "ring.csv").read_bytes()), before)
+        result = self.run_cli(*filters, "--output-format", "single", "-o", "y-only.sdf")
+        self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":

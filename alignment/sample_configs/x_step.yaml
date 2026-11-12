@@ -1,0 +1,22 @@
+# Fixed Y distance; X scans from -1.0 to 1.0 in 0.5 angstrom steps.
+rigid:
+  molecule_name: "^241$"
+  selector: "^aromatic ring$"
+  axis_type: "^aromatic_normal$"
+flexible:
+  molecule_name: "^878$"
+  selector: "^thiol$"
+  axis_type: "^hydrogen_sigma$"
+output_format: pair-files
+output: scan_x_step
+overwrite_output: false
+grid_based_scan:
+  y:
+    distance: 3.0
+  x:
+    scan_start: -1.0
+    scan_end: 1.0
+    scan_step: 0.5
+reference_axis:
+  priority: [A, B, C]
+  enabled: {A: true, B: true, C: true}

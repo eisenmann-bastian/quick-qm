@@ -1,0 +1,3186 @@
+pair-000001
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.6816    0.5605    3.1706 S   0  0  0  0  0  0  0  0  0  0  0  0
+    0.4695    1.7139    3.8453 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5075    1.2288    3.9126 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.3888    2.5898    3.1966 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7785    2.0353    4.8430 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0607    0.3536    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (1) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (1) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (1) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (1) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (1) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (1) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (1) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (1) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (1) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (1) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (1) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (1) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (1) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (1) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (1) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (1) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (1) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (1) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (1) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (1) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (1) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (1) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (1) 
+pair-000001
+
+>  <quick_qm_axis_pair_id>  (1) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (1) 
+1
+
+>  <quick_qm_distance_angstrom>  (1) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (1) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (1) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (1) 
+-1.0
+
+>  <quick_qm_z_offset_angstrom>  (1) 
+-0.5
+
+>  <quick_qm_reference_method>  (1) 
+C
+
+>  <quick_qm_x_axis>  (1) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (1) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (1) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (1) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000002
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.1313    1.1313    3.1995 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2149    2.2955    3.4939 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1707    1.7656    3.4956 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2290    3.0539    2.7071 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0765    2.7861    4.4606 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7072    0.7071    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (2) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (2) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (2) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (2) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (2) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (2) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (2) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (2) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (2) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (2) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (2) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (2) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (2) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (2) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (2) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (2) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (2) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (2) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (2) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (2) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (2) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (2) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (2) 
+pair-000002
+
+>  <quick_qm_axis_pair_id>  (2) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (2) 
+2
+
+>  <quick_qm_distance_angstrom>  (2) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (2) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (2) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (2) 
+-1.0
+
+>  <quick_qm_z_offset_angstrom>  (2) 
+0.0
+
+>  <quick_qm_reference_method>  (2) 
+C
+
+>  <quick_qm_x_axis>  (2) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (2) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (2) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (2) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000003
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.5606    1.6815    3.1706 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8604    2.7884    3.0705 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7822    2.2048    3.0064 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7767    3.4213    2.1835 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9000    3.4227    3.9596 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.3536    1.0607    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (3) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (3) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (3) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (3) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (3) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (3) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (3) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (3) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (3) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (3) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (3) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (3) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (3) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (3) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (3) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (3) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (3) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (3) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (3) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (3) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (3) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (3) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (3) 
+pair-000003
+
+>  <quick_qm_axis_pair_id>  (3) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (3) 
+3
+
+>  <quick_qm_distance_angstrom>  (3) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (3) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (3) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (3) 
+-1.0
+
+>  <quick_qm_z_offset_angstrom>  (3) 
+0.5
+
+>  <quick_qm_reference_method>  (3) 
+C
+
+>  <quick_qm_x_axis>  (3) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (3) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (3) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (3) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000004
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.5836   -0.5835    3.3011 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7733    0.4245    3.9313 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7251    0.0464    3.5499 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6467    1.4612    3.6094 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7861    0.3885    5.0234 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.3536   -0.3535    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (4) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (4) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (4) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (4) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (4) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (4) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (4) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (4) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (4) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (4) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (4) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (4) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (4) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (4) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (4) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (4) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (4) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (4) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (4) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (4) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (4) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (4) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (4) 
+pair-000004
+
+>  <quick_qm_axis_pair_id>  (4) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (4) 
+4
+
+>  <quick_qm_distance_angstrom>  (4) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (4) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (4) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (4) 
+0.0
+
+>  <quick_qm_z_offset_angstrom>  (4) 
+-0.5
+
+>  <quick_qm_reference_method>  (4) 
+C
+
+>  <quick_qm_x_axis>  (4) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (4) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (4) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (4) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000005
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0001    0.0001    3.3411 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4296    1.0808    3.5469 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3075    0.6288    3.0786 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2342    2.0488    3.0785 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6301    1.2325    4.6104 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0001    0.0000    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (5) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (5) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (5) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (5) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (5) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (5) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (5) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (5) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (5) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (5) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (5) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (5) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (5) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (5) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (5) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (5) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (5) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (5) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (5) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (5) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (5) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (5) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (5) 
+pair-000005
+
+>  <quick_qm_axis_pair_id>  (5) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (5) 
+5
+
+>  <quick_qm_distance_angstrom>  (5) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (5) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (5) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (5) 
+0.0
+
+>  <quick_qm_z_offset_angstrom>  (5) 
+0.0
+
+>  <quick_qm_reference_method>  (5) 
+C
+
+>  <quick_qm_x_axis>  (5) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (5) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (5) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (5) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000006
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5835    0.5836    3.3011 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0110    1.6622    3.0702 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8022    1.1235    2.5428 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7237    2.5383    2.4833 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3886    1.9910    4.0415 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3535    0.3536    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (6) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (6) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (6) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (6) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (6) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (6) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (6) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (6) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (6) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (6) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (6) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (6) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (6) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (6) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (6) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (6) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (6) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (6) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (6) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (6) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (6) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (6) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (6) 
+pair-000006
+
+>  <quick_qm_axis_pair_id>  (6) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (6) 
+6
+
+>  <quick_qm_distance_angstrom>  (6) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (6) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (6) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (6) 
+0.0
+
+>  <quick_qm_z_offset_angstrom>  (6) 
+0.5
+
+>  <quick_qm_reference_method>  (6) 
+C
+
+>  <quick_qm_x_axis>  (6) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (6) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (6) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (6) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000007
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5604   -1.6814    3.1706 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0449   -0.7650    3.6300 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8221   -0.9151    2.8765 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8166    0.3015    3.6994 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4127   -1.1154    4.5975 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3535   -1.0606    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (7) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (7) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (7) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (7) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (7) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (7) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (7) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (7) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (7) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (7) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (7) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (7) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (7) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (7) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (7) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (7) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (7) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (7) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (7) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (7) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (7) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (7) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (7) 
+pair-000007
+
+>  <quick_qm_axis_pair_id>  (7) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (7) 
+7
+
+>  <quick_qm_distance_angstrom>  (7) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (7) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (7) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (7) 
+1.0
+
+>  <quick_qm_z_offset_angstrom>  (7) 
+-0.5
+
+>  <quick_qm_reference_method>  (7) 
+C
+
+>  <quick_qm_x_axis>  (7) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (7) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (7) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (7) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000008
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1311   -1.1311    3.1996 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6075   -0.0970    3.2733 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2671   -0.3308    2.4338 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3254    0.9576    3.2222 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1417   -0.2791    4.2091 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7070   -0.7071    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (8) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (8) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (8) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (8) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (8) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (8) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (8) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (8) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (8) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (8) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (8) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (8) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (8) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (8) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (8) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (8) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (8) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (8) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (8) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (8) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (8) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (8) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (8) 
+pair-000008
+
+>  <quick_qm_axis_pair_id>  (8) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (8) 
+8
+
+>  <quick_qm_distance_angstrom>  (8) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (8) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (8) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (8) 
+1.0
+
+>  <quick_qm_z_offset_angstrom>  (8) 
+0.0
+
+>  <quick_qm_reference_method>  (8) 
+C
+
+>  <quick_qm_x_axis>  (8) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (8) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (8) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (8) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000009
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6814   -0.5604    3.1707 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0840    0.5294    2.8553 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6274    0.1888    1.9703 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7311    1.5498    2.6862 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7596    0.5226    3.7141 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0606   -0.3535    2.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (9) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (9) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (9) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (9) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (9) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (9) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (9) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (9) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (9) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (9) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (9) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (9) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (9) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (9) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (9) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (9) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (9) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (9) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (9) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (9) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (9) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (9) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (9) 
+pair-000009
+
+>  <quick_qm_axis_pair_id>  (9) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (9) 
+9
+
+>  <quick_qm_distance_angstrom>  (9) 
+2.0
+
+>  <quick_qm_flexible_orientation>  (9) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (9) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (9) 
+1.0
+
+>  <quick_qm_z_offset_angstrom>  (9) 
+0.5
+
+>  <quick_qm_reference_method>  (9) 
+C
+
+>  <quick_qm_x_axis>  (9) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (9) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (9) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (9) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000010
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.5051    0.5017    4.2566 S   0  0  0  0  0  0  0  0  0  0  0  0
+    0.2042    1.6254    4.8038 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7706    1.1411    4.7057 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.2150    2.5318    4.1933 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.3645    1.8974    5.8500 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0607    0.3536    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (10) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (10) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (10) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (10) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (10) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (10) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (10) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (10) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (10) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (10) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (10) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (10) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (10) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (10) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (10) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (10) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (10) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (10) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (10) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (10) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (10) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (10) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (10) 
+pair-000010
+
+>  <quick_qm_axis_pair_id>  (10) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (10) 
+10
+
+>  <quick_qm_distance_angstrom>  (10) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (10) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (10) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (10) 
+-1.0
+
+>  <quick_qm_z_offset_angstrom>  (10) 
+-0.5
+
+>  <quick_qm_reference_method>  (10) 
+C
+
+>  <quick_qm_x_axis>  (10) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (10) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (10) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (10) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000011
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0071    1.0071    4.2722 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3676    2.1428    4.5455 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3161    1.6202    4.3986 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3068    2.9761    3.8410 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3291    2.5335    5.5654 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7072    0.7072    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (11) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (11) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (11) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (11) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (11) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (11) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (11) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (11) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (11) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (11) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (11) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (11) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (11) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (11) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (11) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (11) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (11) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (11) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (11) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (11) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (11) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (11) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (11) 
+pair-000011
+
+>  <quick_qm_axis_pair_id>  (11) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (11) 
+11
+
+>  <quick_qm_distance_angstrom>  (11) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (11) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (11) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (11) 
+-1.0
+
+>  <quick_qm_z_offset_angstrom>  (11) 
+0.0
+
+>  <quick_qm_reference_method>  (11) 
+C
+
+>  <quick_qm_x_axis>  (11) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (11) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (11) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (11) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000012
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.5018    1.5050    4.2566 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9166    2.6197    4.2493 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8322    2.0547    4.0572 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7925    3.3740    3.4682 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0013    3.1189    5.2178 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.3536    1.0607    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (12) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (12) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (12) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (12) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (12) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (12) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (12) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (12) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (12) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (12) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (12) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (12) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (12) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (12) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (12) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (12) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (12) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (12) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (12) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (12) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (12) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (12) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (12) 
+pair-000012
+
+>  <quick_qm_axis_pair_id>  (12) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (12) 
+12
+
+>  <quick_qm_distance_angstrom>  (12) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (12) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (12) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (12) 
+-1.0
+
+>  <quick_qm_z_offset_angstrom>  (12) 
+0.5
+
+>  <quick_qm_reference_method>  (12) 
+C
+
+>  <quick_qm_x_axis>  (12) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (12) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (12) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (12) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000013
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.5096   -0.5094    4.3229 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8791    0.5304    4.8177 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8086    0.1299    4.4052 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7329    1.5475    4.4455 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9536    0.5560    5.9077 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.3536   -0.3535    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (13) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (13) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (13) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (13) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (13) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (13) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (13) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (13) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (13) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (13) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (13) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (13) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (13) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (13) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (13) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (13) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (13) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (13) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (13) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (13) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (13) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (13) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (13) 
+pair-000013
+
+>  <quick_qm_axis_pair_id>  (13) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (13) 
+13
+
+>  <quick_qm_distance_angstrom>  (13) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (13) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (13) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (13) 
+0.0
+
+>  <quick_qm_z_offset_angstrom>  (13) 
+-0.5
+
+>  <quick_qm_reference_method>  (13) 
+C
+
+>  <quick_qm_x_axis>  (13) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (13) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (13) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (13) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000014
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0001    0.0001    4.3411 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4296    1.0808    4.5469 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3075    0.6288    4.0786 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2342    2.0488    4.0785 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6301    1.2325    5.6104 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0001    0.0001    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (14) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (14) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (14) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (14) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (14) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (14) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (14) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (14) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (14) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (14) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (14) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (14) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (14) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (14) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (14) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (14) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (14) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (14) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (14) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (14) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (14) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (14) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (14) 
+pair-000014
+
+>  <quick_qm_axis_pair_id>  (14) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (14) 
+14
+
+>  <quick_qm_distance_angstrom>  (14) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (14) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (14) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (14) 
+0.0
+
+>  <quick_qm_z_offset_angstrom>  (14) 
+0.0
+
+>  <quick_qm_reference_method>  (14) 
+C
+
+>  <quick_qm_x_axis>  (14) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (14) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (14) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (14) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000015
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5093    0.5095    4.3229 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9459    1.5971    4.2341 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7664    1.0878    3.7226 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6908    2.5054    3.6822 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2676    1.8700    5.2421 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3535    0.3536    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (15) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (15) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (15) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (15) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (15) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (15) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (15) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (15) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (15) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (15) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (15) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (15) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (15) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (15) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (15) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (15) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (15) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (15) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (15) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (15) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (15) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (15) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (15) 
+pair-000015
+
+>  <quick_qm_axis_pair_id>  (15) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (15) 
+15
+
+>  <quick_qm_distance_angstrom>  (15) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (15) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (15) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (15) 
+0.0
+
+>  <quick_qm_z_offset_angstrom>  (15) 
+0.5
+
+>  <quick_qm_reference_method>  (15) 
+C
+
+>  <quick_qm_x_axis>  (15) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (15) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (15) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (15) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000016
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5015   -1.5049    4.2567 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9654   -0.5265    4.6497 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7775   -0.7812    3.9642 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7378    0.5380    4.5531 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2849   -0.7320    5.6744 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3535   -1.0606    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (16) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (16) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (16) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (16) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (16) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (16) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (16) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (16) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (16) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (16) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (16) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (16) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (16) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (16) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (16) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (16) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (16) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (16) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (16) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (16) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (16) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (16) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (16) 
+pair-000016
+
+>  <quick_qm_axis_pair_id>  (16) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (16) 
+16
+
+>  <quick_qm_distance_angstrom>  (16) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (16) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (16) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (16) 
+1.0
+
+>  <quick_qm_z_offset_angstrom>  (16) 
+-0.5
+
+>  <quick_qm_reference_method>  (16) 
+C
+
+>  <quick_qm_x_axis>  (16) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (16) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (16) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (16) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000017
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0069   -1.0069    4.2723 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4736    0.0368    4.3896 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2127   -0.2764    3.6479 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2034    1.0796    4.2053 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9107   -0.0481    5.3875 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7070   -0.7071    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (17) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (17) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (17) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (17) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (17) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (17) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (17) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (17) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (17) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (17) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (17) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (17) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (17) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (17) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (17) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (17) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (17) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (17) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (17) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (17) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (17) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (17) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (17) 
+pair-000017
+
+>  <quick_qm_axis_pair_id>  (17) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (17) 
+17
+
+>  <quick_qm_distance_angstrom>  (17) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (17) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (17) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (17) 
+1.0
+
+>  <quick_qm_z_offset_angstrom>  (17) 
+0.0
+
+>  <quick_qm_reference_method>  (17) 
+C
+
+>  <quick_qm_x_axis>  (17) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (17) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (17) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (17) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$
+pair-000018
+     RDKit          3D
+
+ 18 17  0  0  0  0  0  0  0  0999 V2000
+   -1.2131   -0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2028    0.7064    0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0103   -1.3948    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0104    1.3948   -0.0001 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2028   -0.7063    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2131    0.6884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1577   -1.2244    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1393    1.2564    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0184   -2.4809   -0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0184    2.4808    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1394   -1.2563    0.0001 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1577    1.2245    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5049   -0.5016    4.2567 S   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9421    0.5766    4.0953 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6066    0.1958    3.3156 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6209    1.5865    3.8280 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4865    0.6137    5.0421 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0606   -0.3535    3.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  1  7  1  0
+  2  4  1  0
+  2  8  1  0
+  3  5  2  0
+  3  9  1  0
+  4  6  2  0
+  4 10  1  0
+  5  6  1  0
+  5 11  1  0
+  6 12  1  0
+ 13 14  1  0
+ 13 18  1  0
+ 14 15  1  0
+ 14 16  1  0
+ 14 17  1  0
+M  END
+>  <PUBCHEM_COMPOUND_CID>  (18) 
+241
+
+>  <PUBCHEM_CONFORMER_RMSD>  (18) 
+0.4
+
+>  <PUBCHEM_CONFORMER_DIVERSEORDER>  (18) 
+1
+
+>  <PUBCHEM_MMFF94_PARTIAL_CHARGES>  (18) 
+12
+1 -0.15
+10 0.15
+11 0.15
+12 0.15
+2 -0.15
+3 -0.15
+4 -0.15
+5 -0.15
+6 -0.15
+7 0.15
+8 0.15
+9 0.15
+
+>  <PUBCHEM_EFFECTIVE_ROTOR_COUNT>  (18) 
+0
+
+>  <PUBCHEM_PHARMACOPHORE_FEATURES>  (18) 
+1
+6 1 2 3 4 5 6 rings
+
+>  <PUBCHEM_HEAVY_ATOM_COUNT>  (18) 
+6
+
+>  <PUBCHEM_ATOM_DEF_STEREO_COUNT>  (18) 
+0
+
+>  <PUBCHEM_ATOM_UDEF_STEREO_COUNT>  (18) 
+0
+
+>  <PUBCHEM_BOND_DEF_STEREO_COUNT>  (18) 
+0
+
+>  <PUBCHEM_BOND_UDEF_STEREO_COUNT>  (18) 
+0
+
+>  <PUBCHEM_ISOTOPIC_ATOM_COUNT>  (18) 
+0
+
+>  <PUBCHEM_COMPONENT_COUNT>  (18) 
+1
+
+>  <PUBCHEM_CACTVS_TAUTO_COUNT>  (18) 
+1
+
+>  <PUBCHEM_CONFORMER_ID>  (18) 
+000000F100000001
+
+>  <PUBCHEM_MMFF94_ENERGY>  (18) 
+13.148
+
+>  <PUBCHEM_FEATURE_SELFOVERLAP>  (18) 
+5.074
+
+>  <PUBCHEM_SHAPE_FINGERPRINT>  (18) 
+16714656 1 18123201108121732318
+20096714 4 18339082562313515547
+21015797 1 9222644709913001990
+21040471 1 18194402190896164549
+
+>  <PUBCHEM_SHAPE_MULTIPOLES>  (18) 
+123.48
+1.59
+1.59
+0.62
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+>  <PUBCHEM_SHAPE_SELFOVERLAP>  (18) 
+251.998
+
+>  <PUBCHEM_SHAPE_VOLUME>  (18) 
+67.5
+
+>  <PUBCHEM_COORDINATE_TYPE>  (18) 
+2
+5
+10
+
+>  <quick_qm_pair_id>  (18) 
+pair-000018
+
+>  <quick_qm_axis_pair_id>  (18) 
+axis-pair-000001
+
+>  <quick_qm_pose_index>  (18) 
+18
+
+>  <quick_qm_distance_angstrom>  (18) 
+3.0
+
+>  <quick_qm_flexible_orientation>  (18) 
+toward-center
+
+>  <quick_qm_coordinate_system>  (18) 
+grid
+
+>  <quick_qm_x_offset_angstrom>  (18) 
+1.0
+
+>  <quick_qm_z_offset_angstrom>  (18) 
+0.5
+
+>  <quick_qm_reference_method>  (18) 
+C
+
+>  <quick_qm_x_axis>  (18) 
+[-0.7071067808954073, -0.7071067811024254, 2.3036950699818763e-05]
+
+>  <quick_qm_z_axis>  (18) 
+[-0.7071067811722251, 0.7071067811722986, 6.356564489303313e-06]
+
+>  <quick_qm_rigid_source>  (18) 
+{"csv_line":"2","sdf_file":"reference_molecules/241.sdf","record_index":"0","molecule_name":"241","selector":"aromatic ring","smarts":"","atom_index_base":"0","match_index":"0","atom_indices":"[0,2,4,5,3,1]","site_atom_indices":"[0,2,4,5,3,1]","axis_type":"aromatic_normal","center_atom_index":"","center":"[1.6666666666666566e-05,1.666666666666483e-05,0.0]","axis":"[2.078435391227503e-05,1.1794814203786762e-05,0.9999999997144465]","group_type":"","group_atom_indices":"","group_charge":""}
+
+>  <quick_qm_flexible_source>  (18) 
+{"csv_line":"4","sdf_file":"reference_molecules/878.sdf","record_index":"0","molecule_name":"878","selector":"thiol","smarts":"[S;X2;H1;+0:1]-[#6]","atom_index_base":"0","match_index":"0","atom_indices":"[0,1]","site_atom_indices":"[0]","axis_type":"hydrogen_sigma","center_atom_index":"5","center":"[1.055,0.4417,1.257]","axis":"[0.11408520866285683,0.3293557952051235,0.9372882829360203]","group_type":"","group_atom_indices":"","group_charge":""}
+
+$$$$

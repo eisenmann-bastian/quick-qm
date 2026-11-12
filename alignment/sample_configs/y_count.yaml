@@ -1,0 +1,20 @@
+# Y scan with three interior points; both boundaries are excluded.
+# Positions: 2.5, 3.0, 3.5 angstroms per axis pair.
+rigid:
+  molecule_name: "^241$"
+  selector: "^aromatic ring$"
+  axis_type: "^aromatic_normal$"
+flexible:
+  molecule_name: "^878$"
+  selector: "^thiol$"
+  axis_type: "^hydrogen_sigma$"
+output_format: single
+output: scan_y_count.sdf
+overwrite_output: false
+grid_based_scan:
+  y:
+    scan_start: 2.0
+    scan_end: 4.0
+    scan_count: 3
+    include_start: false
+    include_end: false

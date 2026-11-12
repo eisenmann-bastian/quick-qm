@@ -1,0 +1,30 @@
+# Phi sweeps a full circle; the repeated 360-degree endpoint is merged.
+rigid:
+  molecule_name: "^241$"
+  selector: "^aromatic ring$"
+  axis_type: "^aromatic_normal$"
+flexible:
+  molecule_name: "^878$"
+  selector: "^thiol$"
+  axis_type: "^hydrogen_sigma$"
+output_format: pair-files
+output: scan_polar_grid
+overwrite_output: false
+flexible_orientation: toward-center
+polar_coordinate_based_scan:
+  radius:
+    distance: 3.0
+  phi:
+    scan_start: 0
+    scan_end: 360
+    scan_step: 30
+  phi_unit: degrees
+  theta:
+    scan_start: 0
+    scan_end: 180
+    scan_step: 15
+  theta_unit: degrees
+  merge_tolerance: 0.05
+reference_axis:
+  priority: [A, B, C]
+  enabled: {A: true, B: true, C: true}

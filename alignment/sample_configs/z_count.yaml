@@ -1,0 +1,27 @@
+# Fixed Y and X offsets; Z has one interior point and both boundaries.
+# Z positions: -1.0, 0.0, 1.0 angstroms per axis pair.
+rigid:
+  molecule_name: "^241$"
+  selector: "^aromatic ring$"
+  axis_type: "^aromatic_normal$"
+flexible:
+  molecule_name: "^878$"
+  selector: "^thiol$"
+  axis_type: "^hydrogen_sigma$"
+output_format: pair-files
+output: scan_z_count
+overwrite_output: false
+grid_based_scan:
+  y:
+    distance: 3.0
+  x:
+    distance: 0.5
+  z:
+    scan_start: -1.0
+    scan_end: 1.0
+    scan_count: 1
+    include_start: true
+    include_end: true
+reference_axis:
+  priority: [C, A, B]
+  enabled: {A: true, B: false, C: true}

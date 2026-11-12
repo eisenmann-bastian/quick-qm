@@ -1,0 +1,31 @@
+# Cartesian product: 2 Y positions x 3 X positions x 3 Z positions
+# gives 18 poses per rigid-flexible axis pair.
+rigid:
+  molecule_name: "^241$"
+  selector: "^aromatic ring$"
+  axis_type: "^aromatic_normal$"
+flexible:
+  molecule_name: "^878$"
+  selector: "^thiol$"
+  axis_type: "^hydrogen_sigma$"
+output_format: pair-files
+output: scan_xyz_grid
+overwrite_output: false
+# Use toward-center to point the flexible axis at the rigid center in every pose.
+flexible_orientation: toward-center
+grid_based_scan:
+  x:
+    scan_start: -1.0
+    scan_end: 1.0
+    scan_count: 1
+  y:
+    scan_start: 2.0
+    scan_end: 3.0
+    scan_step: 1.0
+  z:
+    scan_start: -0.5
+    scan_end: 0.5
+    scan_step: 0.5
+reference_axis:
+  priority: [A, B, C]
+  enabled: {A: true, B: true, C: true}
