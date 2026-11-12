@@ -10,7 +10,7 @@ from rdkit import Chem
 
 from alignment import test_aligner
 from alignment.torsion_optimization import TorsionOptimizer
-from selection.matching import MolecularSelector
+from molecular_selector.matching import MolecularSelector
 
 
 class TorsionTests(unittest.TestCase):

@@ -11,10 +11,10 @@ from unittest.mock import patch
 from rdkit import Chem
 
 from selection import selector
-from selection.batch import BatchSelector
-from selection.definitions import NamedSelector, SelectorRegistry
-from selection.matching import MolecularSelector
-from selection.output import CsvResultWriter
+from molecular_selector.batch import BatchSelector
+from molecular_selector.definitions import NamedSelector, SelectorRegistry
+from molecular_selector.matching import MolecularSelector
+from molecular_selector.output import CsvResultWriter
 
 
 class SelectorTests(unittest.TestCase):

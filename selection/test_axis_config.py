@@ -9,9 +9,9 @@ from pathlib import Path
 
 import yaml
 
-from selection.alignment import SDF_AXES_PROPERTY
-from selection.axis_config import AXIS_NAMES, DEFAULT_CONFIG, AxisConfig
-from selection.matching import MolecularSelector
+from alignment.axes import SDF_AXES_PROPERTY
+from alignment.axis_config import AXIS_NAMES, DEFAULT_CONFIG, AxisConfig
+from molecular_selector.matching import MolecularSelector
 
 
 ROOT = Path(__file__).resolve().parent.parent

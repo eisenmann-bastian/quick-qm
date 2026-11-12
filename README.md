@@ -602,7 +602,7 @@ directories; no network access is required. `selection/test.sh` and
 
 ## Repository structure
 
-- `selection/`: compatibility CLI, adapters, sample inputs and integration tests.
+- `selection/`: compatibility CLI, sample inputs and integration tests.
 - `alignment/`: aligner CLI, axis input, geometry, scan planning, pose generation,
   torsion optimization and transactional output.
 - `alignment/sample_configs/`: runnable scan examples.
@@ -612,6 +612,9 @@ directories; no network access is required. `selection/test.sh` and
 
 The existing CLI paths and the `quick_qm` SDF property names are retained for
 compatibility. Generated output and Python caches are ignored by Git.
+The former `selection` import adapters have been removed: import selector
+classes from `molecular_selector` and axis classes from `alignment` instead.
+`selection/alignment.py` remains a command, but no longer re-exports axis classes.
 
 ## License
 

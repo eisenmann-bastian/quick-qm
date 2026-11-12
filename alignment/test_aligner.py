@@ -17,7 +17,7 @@ from rdkit.Chem import AllChem
 from alignment import aligner
 from alignment.aligner import PairAligner
 from alignment.reference_frame import ReferenceSelector
-from selection.matching import MolecularSelector
+from molecular_selector.matching import MolecularSelector
 
 
 ROOT = Path(__file__).resolve().parent.parent

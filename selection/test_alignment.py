@@ -12,11 +12,12 @@ from pathlib import Path
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-from selection.alignment import (
-    AlignmentCalculator, AlignmentCsv, AlignmentSdf, INPUT_COLUMNS, SDF_AXES_PROPERTY, SDF_SOURCE_PROPERTY,
+from alignment.axis_calculator import AlignmentCalculator
+from alignment.axes import (
+    AlignmentCsv, AlignmentSdf, INPUT_COLUMNS, SDF_AXES_PROPERTY, SDF_SOURCE_PROPERTY,
 )
-from selection.matching import MolecularSelector
-from selection.output import CsvResultWriter
+from molecular_selector.matching import MolecularSelector
+from molecular_selector.output import CsvResultWriter
 
 
 ROOT = Path(__file__).resolve().parent.parent
