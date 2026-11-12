@@ -1,0 +1,1 @@
+python3 aligner.py test_out_aligned.csv --config aligner_test.config
