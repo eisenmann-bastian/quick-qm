@@ -2,7 +2,7 @@
 
 Select molecular interaction sites from SDF files, derive candidate axes, and
 generate aligned molecular pairs for geometric scanning and optional torsion
-optimization. It does not run ORCA calculations.
+optimization.
 
 ## Features
 
